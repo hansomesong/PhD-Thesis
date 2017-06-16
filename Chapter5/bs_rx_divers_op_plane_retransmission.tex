@@ -1,0 +1,88 @@
+\section{Performance with Retransmission mechanism}
+In this section, we extend the performance analysis by taking into account retransmission and packet repetition mechanism. For BS attach method, retransmission in case of packet transmission failure is leveraged to reduce network packet loss rate. For macro diversity, devices always transmit one packet several times no matter whether previous packet transmission is successful.
+
+\subsection{Nearest and Best BS attach}
+In BS attach method, let $N_{\text{max}}$ be the maximum allowed transmissions. In case of retransmission, $p\lambda_{m}$ is the fresh space-time arrival packet intensity. We assume that each retransmission take place at random over long intervals following the collisions that give rise to them, therefore, the aggregate uplink packets stream still follows a Poisson Point Process with aggregate time-space intensity $\lambda_{\text{agg}}$. Formula $(\ref{eq:bs_nst_att_analytical})$ can be reused to calculate the failure probability of one transmission $p_f$ by replacing term $p\lambda_{m}$ by $\lambda_{\text{agg}}$ and denoting $L_{\text{agg}} = p\lambda_{\text{agg}}/\lambda_{b}$.
+\[
+	p_{f}=\left\{
+	\begin{array}{ll}
+	1-\left[ 1 + \left(A \theta_{T}^{\frac{2}{\gamma}} e^{\frac{2\sigma^2}{\gamma^2}}  L_{\text{agg}} \right) ^{C} \right] ^{-1}, & \text{nearest BS attach}\\
+	1-\left[ 1 + \left(A \theta_{T}^{\frac{2}{\gamma}} L_{\text{agg}} \right) \right] ^{-1}, & \text{best BS attach}
+	\end{array}
+	\right.
+\]
+The packet loss rate $P_{f}$ is the failure probability after $N_{max}$ transmissions, namely $P_{f} =  p_f^{N_{max}} $.
+
+According to Poisson's splitting property~\cite{meyn2012markov}, the aggregate packet arrival process can be divided into $N_{max}$ mutually independent Poisson arrivals processes. The relationship between $\lambda_{agg} $ and fresh space-time arrival packet intensity $p\lambda_{m}$ is as follows:
+\begin{align}
+\label{eq:relationship_intensity_fresh_agg}
+\lambda_{agg} = p \lambda_m\sum_{k=1}^{N_{max}}  p_f^{k-1}
+= p \lambda_m \frac{1-p_f^{N_{max}}}{1-p_f} = p\lambda_{m} \overline{N_{\text{TX}}},
+\end{align}
+which $\overline{N_{\text{TX}}} = (1-p_f^{N_{max}})/(1-p_f)$ is the average transmission number of one packet. In addition, $(\ref{eq:relationship_intensity_fresh_agg})$ can be derived with Markovian technique as shown in~\cite{nielsen2015tractable}. 
+
+Let $P_{f}^{\text{max}}$ be the maximum allowed packet loss rate. 
+With formula $(\ref{eq:bs_nst_att_analytical_retrans})(\ref{eq:relationship_intensity_fresh_agg})$, we get the maximum normalized load $L_{\text{max},n}$ with nearest BS attach approach and retransmission mechanism:
+%\begin{align}
+%\label{eq:bs_nst_att_max_load_retrans}
+%L_{\text{max},n} &=\frac{1}{ A \theta_{T}^{\frac{2}{\gamma}} e^{\frac{2\sigma^2}{\gamma^2}}  \overline{N_{\text{TX}}} } \left[ \frac{ \left( P_{f}^{\text{max}}\right) ^{1/N_{\text{max}}} }{1-(P_{f}^{\text{max}})^{1/N_{\text{max}}}}\right]  ^{1/C}
+%\end{align}
+\[
+L_{\text{max}}=\left\{
+\begin{array}{ll}
+\frac{1}{ A \theta_{T}^{\frac{2}{\gamma}} e^{\frac{2\sigma^2}{\gamma^2}} } \frac{1-(P_{f}^{\text{max}})^{1/N_{\text{max}}} }{1-P_{f}^{\text{max}}} \left[ \frac{ \left( P_{f}^{\text{max}}\right) ^{1/N_{\text{max}}} }{1-(P_{f}^{\text{max}})^{1/N_{\text{max}}}}\right]  ^{1/C}, & \text{nearest BS attach}\\
+\frac{1}{ A \theta_{T}^{\frac{2}{\gamma}}  } \frac{1-(P_{f}^{\text{max}})^{1/N_{\text{max}}} }{1-P_{f}^{\text{max}}} \left[ \frac{ \left( P_{f}^{\text{max}}\right) ^{1/N_{\text{max}}} }{1-(P_{f}^{\text{max}})^{1/N_{\text{max}}}}\right], & \text{best BS attach}
+\end{array}
+\right.
+\]
+
+\subsection{Selective Combining based Macro Diversity}
+For macro reception diversity, to reduce the network packet loss rate, the devices repeat packet transmission $N_{\text{rep}}$ times. We assume that the interval between two consecutive transmission is a random variable such that aggregate packet arrival process a PPP with intensity $p\lambda_{m}N_{\text{rep}}$. Note that $p\lambda_{m}$ is the fresh spatial-time packet arrival intensity.
+
+Let $P_{f, m}$ and $p_{f, m}$ respectively be the network packet loss rate and one transmission failure probability. Similarly,  $p_{f, m}$ can be calculated via $(\ref{eq:bs_rx_divers_analytical})$ by replacing $p\lambda_{m}$ with $p\lambda_{m}N_{\text{rep}}$.
+Thus:
+\begin{align}
+	P_{f, m} &= p_{f, m} ^ {N_{\text{rep}}} \nonumber\\
+	&= \exp\left\lbrace -N_{\text{rep}}\left[ N_{\text{rep}} L A \theta_{T}^{\frac{2}{\gamma}} \right] ^{-1}\right\rbrace \nonumber\\
+	&=\exp\left\lbrace - \left[ L A \theta_{T}^{\frac{2}{\gamma}} \right] ^{-1}\right\rbrace
+\end{align}
+Thus, the maximum normalized load with macro diversity and packet repetition $L_{\text{max},m} $ is:
+\begin{align}
+\label{eq:bs_rx_divers_max_load_rep}
+L_{\text{max},m} &= -\frac{1}{A \theta_{T}^{\frac{2}{\gamma}}\log(P_{f}^{\text{max}})}
+\end{align}
+
+
+The ration between $(\ref{eq:bs_nst_att_max_load_retrans})$ and $(\ref{eq:bs_rx_divers_max_load_rep})$ gives the macro diversity gain against nearest BS attach method:
+\begin{align}
+\label{eq:macro-diversity-gain_with_retrans}
+G_{\text{diversity},n} &= \left[ \frac{ \left( P_{f}^{\text{max}}\right) ^{1/N_{\text{max}}} }{1-(P_{f}^{\text{max}})^{1/N_{\text{max}}}}\right]  ^{-1/C}  \frac{\exp \left( \frac{\sqrt{2}\sigma}{\gamma}\right) ^2\overline{N_{\text{TX}}}}{ \log(1/P_{f}^{\text{max}})} \nonumber\\
+&= \left[ \frac{ p_{f}^{\text{max}} }{1-p_{f}^{\text{max}}   }\right]  ^{-1/C}  \frac{\exp \left( \frac{\sqrt{2}\sigma}{\gamma}\right) ^2\overline{N_{\text{TX}}}}{ N_{\text{rep}}\log(1/p_{f}^{\text{max}})} ,
+\end{align}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\columnwidth]{/Users/qsong/Documents/slotted_aloha_related_project/multiple_recepteur_capacity/macro_div_gain_retrans}
+	\caption{Macro diversity gain against nearest BS attach with respect to maximum allowed packet loss rate}
+	\label{fig:macrodivgainretrans}
+\end{figure}
+
+In Fig.~\ref{fig:macrodivgainretrans}, we illustrate the macro diversity gain in three cases. We observe that with packet loss rate constraint $10^{-3}$, if maximum transmission number and packet repetition is $3$, the macro diversity gain is reduced to about $2.0$. When maximum transmission number and packet repetition is $4$, the macro diversity gain is reduced to about $1.0$ which means that both method almost support the same number of devices. However, if when maximum transmission number and packet repetition is $5$, macro diversity has no advantages in front of nearest BS attach method.
+
+%\subsubsection{An alternative method to get a similar result}
+%We consider first a finite network, say on a disk of radius $R$ centered at the origin and condition on having a fixed number of base stations in this finite area. Recall that the base stations' locations are then identically independent distributed. The second step is to de-condition on the (Poisson) number of nodes and let the disk radius go to infinity.
+%
+%Given that there are $k$ base stations in $b(o, a)$, these points are identically independent distributed on the disk with radial density:
+%\begin{equation}
+%	f_R\left( r \right) = 
+%	\begin{cases}
+%		\frac{2r}{a^2} &\text{if $0 \leq r \leq a$}\\
+%		0 &\text{otherwise}
+%	\end{cases}
+%\end{equation}
+%Therefore, the outage packet over the disk area can be expressed as:
+%\begin{align}
+%	P_f \left[ S \right] &= \sum_{i=0}^{+\infty} Pr\left\lbrace N=n\right\rbrace P_f\left[  S | \left( r_1, r_2, ..., r_k \right) \right] \\
+%	P_f \left[ S \right] &= \sum_{i=0}^{+\infty} Pr\left\lbrace N=n\right\rbrace \prod_{1}^{k}(1-P_{s, r_{i}}) \\
+%	P_f\left[  S | \left( r_1, r_2, ..., r_k \right) \right]  &= \int_{\left( r_1, r_2, ..., r_k\right) }\prod_{i=1}^{k} \left( 1 - P_{s,i}\right) d\left( r_1, r_2, ..., r_k \right) 
+%\end{align}

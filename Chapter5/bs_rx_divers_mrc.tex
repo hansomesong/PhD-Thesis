@@ -1,0 +1,117 @@
+\subsection{Maximum Ratio Combining based Macro diversity}
+Due to the fact that a transmitted packet theoretically can be simultaneously received by all BS (ignorance of background noise), linear combining of signals at each BS can be leveraged so that the output SINR is maximized. Such a scheme is called Maximum Ratio Combining (MRC) based Macro diversity\qsong{It is better to give a reference to say this is studied by some LPWAN networks}. In this section, the performance of MRC-based Macro diversity in one-shot random access is evaluated.
+
+In the literature, it has been prove that if the weigh factors involved in MRC context is well designed, the output $\text{SINR}$ $\Theta$ of best combiner is expressed as \qsong{Perhaps we also need a reference for this...}:
+\begin{align}
+	\Theta = \sum_{y_j \in \Phi_{b}}^{} \text{SINR}_{y_j},
+\end{align}
+where $\text{SINR}_{y_j}$ is the received SINR at BS with label $y_j$.
+
+The Laplace Transform (LT) of $\Theta$ is by definition as follows:
+\begin{align}
+	\label{eq:lt-sinr-mrc-1}
+	\mathcal{L}_{\Theta}\left( s \right) &= \mathbb{E}\left[ e^{-s\Theta}\right] \nonumber\\
+	&=\mathbb{E}\left[ \exp( -s \sum_{y_j \in \Phi_{b}}^{} \Theta_{y_j} )\right]
+\end{align}
+
+Recall that the received SINR of target BS is defined as:
+\begin{align}
+	\theta &= \frac{H \exp(\chi) r^{-\gamma}}{I} \nonumber\\
+	&= \epsilon r^{-\gamma}
+\end{align}
+where term $\epsilon = H\exp(\chi)  / I$ is identically independently distributed RV for each BS.
+\begin{align}
+	\label{eq:lt-sinr-mrc-2}
+	\mathcal{L}_{\Theta}\left( s \right) &= \mathbb{E}\left[ \prod_{y_j \in \Phi_b}^{} \mathbb{E}_{\epsilon} \left[ \exp( -s \epsilon r^{-\gamma}) \right] \right] 
+\end{align}
+Applying Campbell theorem to $(\ref{eq:lt-sinr-mrc-1})$,
+\begin{align}
+	\mathcal{L}_{\Theta}\left( s \right) &= \exp \left\lbrace -\mathbb{E}_{\epsilon}\left[ \int_{0}^{+\infty} \left(1-\exp(-s\epsilon r^{-\gamma} )2 \pi \lambda_{b} r dr\right)  \right]   \right\rbrace 
+\end{align}
+
+Let us focus on the integral $D = \int_{0}^{+\infty} \left(1-\exp(-s\epsilon r^{-\gamma} ) \right) 2 \pi \lambda_{b} r dr $:
+\begin{align}
+	\label{itg:D}
+	D &= \int_{0}^{+\infty} \left(1-\exp(-s\epsilon r^{-\gamma/2} ) \right) \pi \lambda_{b} dr \nonumber\\
+	&= \pi \lambda_{b} \int_{0}^{+\infty} \left(1-\exp(-s\epsilon r^{-\gamma/2} ) \right) \frac{2}{\gamma} x^{\frac{2}{\gamma}  - 1} dx \text{ (substitution $x = r^{\gamma/2}$)}
+\end{align}
+To further calculate $(\ref{itg:D})$, we note that it is the expected value of RV $ \left(    (X/\epsilon s) ^{-1} \right)^{\frac{2}{\gamma}} $ where $X$  is an exponential RV with unit mean. Since $\mathbf{E}\left[ X^{p}\right] = \Gamma(1+p)$ by the definition of the gamma function. Hence, we have:
+\begin{align}
+	\mathbf{E} \left[ \left(    (X/\epsilon s) ^{-1} \right)^{\frac{2}{\gamma}}  \right] = (s \epsilon) ^{\frac{2}{\gamma}} \Gamma (1 - \frac{2}{\gamma}) \nonumber.
+\end{align}
+ 
+Finally, $(\ref{eq:lt-sinr-mrc-2})$ is simplified as:
+\begin{align}
+	\mathcal{L}_{\Theta}\left( s \right) &= \exp(-\lambda_{b} \pi \mathbb{E}\left[ \epsilon ^{\frac{2}{\gamma}} \right]  \Gamma(1-\frac{2}{\gamma}) s^{\frac{2}{\gamma}})
+\end{align}
+
+Let us now focus on term $\mathbb{E}\left[ \epsilon ^{\frac{2}{\gamma}} \right] $:
+\begin{align}
+	\mathbb{E}\left[ \epsilon ^{\frac{2}{\gamma}} \right]  = \mathbb{E}\left[ \left( H \exp(\chi)\right)  ^{\frac{2}{\gamma}} \right] \mathbb{E}\left[ I ^{-\frac{2}{\gamma}}\right] 
+\end{align}
+
+For term $\mathbb{E}\left[ I ^{-\frac{2}{\gamma}}\right] $, it is a negative fractional moment calculation problem, which is also a research subject in applied mathematical domain. \qsong{Still need to find some numerical technique in the literature to compute this. I think it is the last difficulty to be solved if we want to obtain a general analytical framework...}
+
+With substitution $s = -j\omega$, the characteristic function (CF) of $\Theta$:
+\begin{align}
+\phi_{\Theta}\left( \omega \right) &= \exp(-\lambda_{b} \pi \mathbb{E}\left[ \epsilon ^{\frac{2}{\gamma}} \right]  \Gamma(1-\frac{2}{\gamma}) \exp(-i\pi/\gamma) \omega^{\frac{2}{\gamma}}),  
+\end{align}
+where $\omega \geq 0$.
+
+As a continuous random variable, the cumulative distribution function $F_{\Theta}\left( x \right)$ of total SINR $\Theta$ can be directly derived from its characteristic function $\phi_{\Theta}\left(\omega\right)$, for example by use of Gil-Pelaez Theorem~\cite{gil1951note}. However, directly using Gil-Pelaez Theorem needs long time. Applying mathematical techniques used in finance domain~\cite{hirsa2012computational}, we seek to calculate the Fourier transform of $e^{-\eta x} F_{\Theta}\left( x \right)$ where term $e^{-\eta x}$ is a damping function with $\eta > 0$. 
+\begin{align}
+\label{eq:intermediate_formula_1}
+\int_{-\infty}^{+\infty} e^{i\omega x} e^{-\eta x} F_{Y_k}\left( x \right) dx = \frac{1}{\eta - iw} \phi_{Y_{k}}\left( \omega +i\eta \right) 
+\end{align}
+Applying Fourier inversion for ($\ref{eq:intermediate_formula_1}$), we obtain the expression for $F_{\Theta}\left( x \right)$ as follows:
+\begin{align}
+\label{eq:pr_c_m_case2}
+F_{\theta}\left( x \right)  &= \frac{e^{\eta x}}{2\pi} \int_{-\infty}^{+\infty} e^{-i \omega x} \frac{1}{\eta - i\omega} \phi_{\theta}\left( \omega +i\eta\right) d\omega  \nonumber\\
+&= \frac{e^{\eta x}}{\pi} \Re\left\lbrace  \int_{0}^{+\infty} e^{-i \omega x} \frac{1}{\eta - i\omega} \phi_{\theta}\left( \omega +i\eta\right) d\omega\right\rbrace, 
+\end{align}
+The cumulative distribution function $F_{\theta}\left( x \right)$ now can be derived directly from ($\ref{eq:pr_c_m_case2}$) using a single numerical integration.
+
+\subsection{A special case, $\gamma=4$}
+In this case, we study a special case where $\gamma=4$.
+\begin{align}
+	\mathbb{E}\left[ \left( H \exp(\chi)\right)  ^{\frac{1}{2}} \right]  = \Gamma(1+\frac{1}{2}) \exp \left( \frac{\sqrt{2}\sigma}{4}\right) ^2
+\end{align}
+Reference~\cite{haenggi2009interference} gives the PDF of cumulative interference $I$ suffered by device at the origin:
+\begin{align}
+	f_{I}(x) = \frac{p\lambda_{m}}{4} (\frac{\pi}{x})^{\frac{3}{2}} \exp(-\frac{\pi^4 p^2\lambda_{m}^2}{16x}), x >= 0
+\end{align}
+We can get the PDF of cumulative interference $I$ in the presence of Rayleigh fading and log-normal shadowing, just by scaling $\lambda_{m}$ as $ \lambda_{m} \exp(\frac{\sigma^2}{8})$:
+\begin{align}
+	f_{I}(x) = \frac{    p\lambda_{m}   \exp(\frac{\sigma^2}{8})  }{4} (\frac{\pi}{x})^{\frac{3}{2}} \exp(    -\frac{    \pi^4    p^2\lambda_{m}^2     \exp^2(\frac{\sigma^2}{8})    }{    16x    }    ), 
+\end{align} 
+Hence,
+\begin{align}
+	\mathbb{E}\left[ I ^{-\frac{1}{2}}\right] &= \int_{0}^{+\infty} x^{-\frac{1}{2}} f_{I}(x) dx \nonumber\\
+	&= \frac{4}{    \pi^{\frac{5}{2}}  p\lambda_{m} \exp(\frac{\sigma^2}{8}) }
+\end{align}
+
+\begin{align}
+	\mathbb{E}\left[ \epsilon ^{\frac{1}{2}} \right] & = 4\Gamma(\frac{3}{2})\pi^{-\frac{5}{2}} p^{-1}\lambda_{m}^{-1}\nonumber\\
+	&=2\pi^{-2} p^{-1}\lambda_{m}^{-1}
+\end{align}
+Therefore:
+\begin{align}
+	\mathcal{L}_{\Theta}\left( s \right) &= \exp(-\lambda_{b} \pi 2\pi^{-2}\lambda_{m}^{-1} \Gamma(\frac{1}{2}) s^{\frac{1}{2}}) \nonumber \\
+	&= \exp(-2\lambda_{b} p^{-1}\lambda_{m}^{-1}\pi^{-\frac{1}{2}}  s^{\frac{1}{2}}) 
+\end{align}
+Its CDF and CCDF:
+\begin{align}
+	F_{\Theta} (x) &=1 -\erf \left( 
+	\frac{\lambda_{b}p^{-1}\lambda_{m}^{-1}}{\sqrt{\pi x}}
+	\right) \\
+	F^c_{\Theta} (x) &=\erf(\frac{\lambda_{b} p^{-1}\lambda_{m}^{-1}}{\sqrt{\pi x}}) \nonumber\\
+	&= \erf(\frac{1}{\frac{p\lambda_{m}}{\lambda_{b}}\sqrt{\pi x}})
+\end{align}
+
+The packet loss rate performance in the case of applying maximum ratio combining is illustrated in Fig.~\ref{fig:newpacketlossratemprmrc}. It is not surprisingly to observe that maximum ratio combing bring significant performance improve.
+\begin{figure}
+	\centering
+	\includegraphics[width=1.0\columnwidth]{/Users/qsong/Documents/slotted_aloha_related_project/multiple_recepteur_capacity/new_packet_loss_rate_mpr_mrc}
+	\caption{Network packet loss rate with respect to normalized load $p\lambda_{m}/\lambda_{b}$ (ANA=analytical, SIM=simulation)}
+	\label{fig:newpacketlossratemprmrc}
+\end{figure}

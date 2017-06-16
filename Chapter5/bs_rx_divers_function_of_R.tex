@@ -1,0 +1,19 @@
+\section{Performance with known nearest BS}
+In this section, we assume that the nearest BS station, denoted as $r_{\text{min}}$, is known to the target device. We now study study the packet loss rate $P_{f}(r_{\text{min}})$ with macro reception diversity in this case. Network packet loss rate $P_{f}(r_{\text{min}})$ is expressed as follows:
+\begin{align}
+\label{eq:definition_pf1}
+P_{f}(r_{\text{min}}) &= ( 1-p_s( r_{\text{min}} ) ) \mathbb{E} \left[  \prod_{r_i \in \Phi_{b}} (1-p_{s}(r_i)) \right], \text{with } r_i \in \left[ r_{\text{min}}, +\infty\right],
+\end{align} 
+where $r_i$ refers to the distance between the device and BS with label $i$. Note that $r_i$ should be not less than distance to the nearest BS denoted by $r_{\text{min}}$, whose probability density function is given in $(\ref{eq:pdf_nearest_distance})$. Expression $(\ref{eq:definition_pf1})$ is actually the Probability Generating FunctionaL (PGFL) of Point point process $\Phi_{b}$ for Base Station, which states for some function $f(x)$ that $\mathbb{E}\left[ \prod_{x \in \Phi}f(x) \right] = \exp(-\lambda(\int_{\mathbb{R}^2}(1-f(x))dx))$. Thus, term in $\mathbb{E} \left[  \prod_{r_i \in \Phi_{b}} (1-p_{s}(r_i)) \right]$ in $(\ref{eq:definition_pf1})$ can be expressed as follows:
+\begin{align}
+\mathbb{E} \left[  \prod_{r_i \in \Phi_{b}} (1-p_{s}(r_i)) \right] &= \exp\left\lbrace -2\pi \lambda_{b} \int_{r_{\text{min}}}^{+\infty} p_{s}(r)rdr \right\rbrace \nonumber\\
+&= \exp\left\lbrace  \int_{r_{\text{min}}}^{+\infty} \mathbb{E}_{\chi}\left[ \exp(-p \lambda_{m} \pi A \theta_{T}^{\frac{2}{\gamma}} e^{\frac{2\sigma^2}{\gamma^2}}  r^2 e^{-\frac{2}{\gamma}\chi}) \right] 2\pi\lambda_{b} rdr  \right\rbrace \nonumber \\ 
+&= \exp\left\lbrace -\pi \lambda_{b} \mathbb{E}_{\chi}\left[ \int_{r_{\text{min}}^{2}}^{+\infty}  \exp(-p \lambda_{m} \pi A \theta_{T}^{\frac{2}{\gamma}} e^{\frac{2\sigma^2}{\gamma^2}}  r^2 e^{-\frac{2}{\gamma}\chi}) dr^2 \right] \right\rbrace \nonumber\\ 
+&= \exp\left\lbrace -\frac{1}{L A \theta_{T}^{\frac{2}{\gamma}} e^{\frac{2\sigma^2}{\gamma^2}} } \mathbb{E}_{\chi}\left[ e^{\frac{2}{\gamma}\chi -p \lambda_{m} \pi A \theta_{T}^{\frac{2}{\gamma}} e^{\frac{2\sigma^2}{\gamma^2}} e^{-\frac{2}{\gamma}\chi} r_{\text{min}}^2} \right]  \right\rbrace
+\end{align} 
+
+Thus,
+\begin{multline}
+P_{f}(r_{\text{min}}) = ( 1- \mathbb{E}_{\chi}\left[ \exp(-p \lambda_{m} \pi A \theta_{T}^{\frac{2}{\gamma}} e^{\frac{2\sigma^2}{\gamma^2}}  r^2 e^{-\frac{2}{\gamma}\chi}) \right])  \\ \exp\left\lbrace -\frac{1}{L A \theta_{T}^{\frac{2}{\gamma}} e^{\frac{2\sigma^2}{\gamma^2}} } \mathbb{E}_{\chi}\left[ e^{\frac{2}{\gamma}\chi -p \lambda_{m} \pi A \theta_{T}^{\frac{2}{\gamma}} e^{\frac{2\sigma^2}{\gamma^2}} e^{-\frac{2}{\gamma}\chi} r_{\text{min}}^2} \right]  \right\rbrace
+\end{multline}
+\qsong{To be further simplified...}

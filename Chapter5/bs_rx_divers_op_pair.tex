@@ -1,0 +1,80 @@
+\section{Link-level Transmission Success Probability}
+\label{sec:trans_succ_p_pair}
+We first study the transmission success probability $p_s(r)$ for a given uplink between a BS at the origin and a device $x_0$ at distance $r$. Using Slivnyak's theorem~\cite{vaze2015random}[Theorem 2.3.3], combining $(\ref{eq:path-loss})$ and $(\ref{eq: sinr-definition})$, we have:
+\begin{align}
+p_{s} \left( r\right)
+& =\mathbb{P}\left\lbrace \frac{H \exp(\chi) r^{-\gamma}}{\sum_{x_j \in \Phi_{m}} H_{x_j} \exp(\chi_{x_j}) r_{x_j}^{-\gamma}}  \geq \theta_T \right\rbrace. \nonumber
+\end{align}
+Let $I=\sum_{x_j \in \Phi_{m}} H_{x_j} \exp(\chi_{x_j}) r_{x_j}^{-\gamma}$, which is the cumulative interference suffered by $x_0$. Conditioned on log-normal shadowing component $\exp(\chi_{x_j}) $, as shown in~\cite{haenggi2009interference}, $p_{s}\left( r \right)$ can be expressed in terms of Laplace transform of cumulative interference $\mathcal{L}_{I}(s)$ at point $\theta_{T} e^{-\chi} r^{\gamma}$:
+\begin{align}
+\label{eq:def_ps}
+p_{s}\left( r \right)  &= Pr \left\lbrace H  \geq I \theta_{T} e^{-\chi}r ^{\gamma}  \right\rbrace \nonumber\\ 
+% The follwing line can be hidden, not necessary in FINAL_VERSION
+%&=\mathbb{E}_{\chi}\left\lbrace  \mathbb{E}_{I} \left[ \exp(-\theta_{T} \exp(-g) r^{\gamma}  I ) \vert \chi = g\right]\right\rbrace   \nonumber\\
+&= \int_{-\infty}^{+\infty} \left[ \int_{0}^{+\infty} \exp(-y \theta_{T} e^{-x} r^{\gamma} ) f_{I}(y)dy\right] f_{\chi}(x) dx  \nonumber\\
+&= \mathbb{E}_{\chi} \left[ \mathcal{L}_{I}\left\lbrace \theta_{T} e^{-\chi} r^{\gamma}\right\rbrace \right],
+\end{align}
+where $f_{X} (x)$ is probability density function (PDF) of r.v. $X$, $\mathbb{E}_{X} \left[ \cdot \right] $ is the expectation operator with respect to $X$.
+\subsection{Slotted ALOHA}
+In slotted ALOHA, the cumulative interference is constant during each slot. The geometry-aware interference analysis for slotted ALOHA is well investigated. Reference~\cite{haenggi2009interference} gives a closed-form expression about the Laplace transform of cumulative interference. With independent Rayleigh fading and log-normal shadowing, we have:
+\begin{align}
+\label{eq:lp_tr_slotted}
+%\mathcal{L}_{I}\left( s \right) &=\exp\left\lbrace -p\lambda_m K_{\text{slotted}} \mathbb{E}\left[ H^{\frac{2}{\gamma}}\exp(\frac{2}{\gamma}\chi)\right]s^{\frac{2}{\gamma}}  \right\rbrace
+\mathcal{L}_{I}\left( s \right)  &=\exp \left\lbrace
+-p\lambda_m \pi A  \exp \left( 2\sigma^2/\gamma^2\right) s^{2/\gamma}  
+\right\rbrace,
+\end{align}
+where $A = \Gamma(1-\frac{2}{\gamma})\Gamma(1+\frac{2}{\gamma})$ and $\Gamma(z)=\int_{0}^{+\infty} x^{z-1} e^{-x} dx$. 
+%is called the spatial contention factor~\cite{haenggi2009outage}, $\Gamma(z)$ is the gamma function defined as $\Gamma(z)=\int_{0}^{+\infty} x^{z-1} e^{-x} dx$. 
+%Since $H$ and $\chi$ are independent, $\mathbb{E}\left[ H^{\frac{2}{\gamma}}\exp(\frac{2}{\gamma}\chi)\right] = \Gamma(1+\frac{2}{\gamma}) \exp \left( \frac{\sqrt{2}\sigma}{\gamma}\right) ^2$.
+\subsection{Pure ALOHA}
+\label{subsec: pure-aloha}
+In pure ALOHA, the cumulative interference $I(t)$ suffered by a given packet transmitted in interval $\left[ T, T+B\right]$ is variable during the packet transmission. When advanced transmission techniques (e.g., interleaving, robust channel coding, etc.) are used, $p_{s}(r)$ is a function of the average interference $I^{\text{mean}} = \frac{1}{B}\int_{T}^{T+B} I(t)dt$, which replaces $I$ in $(\ref{eq: sinr-definition})$.
+
+B{\l}aszczyszyn et al. propose a Poisson-rain model~\cite[Sec.2.4]{blaszczyszyn2015interference} that approximates well this case and allows to compute the cumulative interference. They prove that formula $(\ref{eq:lp_tr_slotted})$ can be reused by letting $A=\frac{2\gamma}{\gamma + 2} \Gamma(1-\frac{2}{\gamma})\Gamma(1+\frac{2}{\gamma})$.
+%\subsection{Pure ALOHA, maximum interference}
+
+Another case of pure ALOHA is assumed to have no error correction neither interleaving techniques for the purpose of reducing the device-side cost. In this case, the packet is delivered if and only if each bit is correctly received. Hence, the SINR should be larger than or equal to $\theta_{T}$ during $B$. Hence, $p_{s}$ is a function of maximum interference $I^{\text{max}} = \max_{t \in \left[ T, T+B\right]} I(t)$. According to~\cite[Sec.2.4]{blaszczyszyn2015interference}, there is no closed-form for $I^{\text{max}} $, and the authors use a simulation approach to study. Next, we propose a simple upper bound to estimate $I^{\text{max}}$. Section~\ref{sec:simulation} shows that the bias is at an acceptable level.
+
+Consider a packet transmitted in interval $\left[ T, T+B\right]$. Any device generating its interference at $T$ terminates packet transmission before $T+B$. The interfering packets at $T+B$ do not exist at $T$, because the packet transmission duration is $B$. 
+Hence, cumulative interference $I(T)$ and $I(T+B)$ are two independent and identically distributed random variables. Furthermore, any device generating interference on the packet is either active at $T$  or at $T+B$. The maximum interference is thus upper bounded by $I(T)+I(T+B)$. Therefore, the Laplace transform of maximum cumulative interference upper bound $\mathcal{L}_{I^{\text{upper}}}\left( s \right)$ during interval $\left[ T, T+B\right]$ is equal to $ \mathcal{L}_{I(T)+I(T+B)}\left( s\right)= \left[ \mathcal{L}_{I(T)}\left( s\right) \right]^2$. 
+
+We can reuse $(\ref{eq:lp_tr_slotted})$ to calculate $\mathcal{L}_{I(T)}\left( s\right)$. Thus, Laplace transform of $I^{\text{upper}}$ can be unified into $(\ref{eq:lp_tr_slotted})$ by letting $A=2 \Gamma(1-\frac{2}{\gamma}) \Gamma(1+\frac{2}{\gamma})$. 
+
+Combining $(\ref{eq:def_ps})$ and $(\ref{eq:lp_tr_slotted})$, we can express $p_s(r)$ with a formula common to all ALOHA cases:
+\begin{align}
+\label{eq:def_ps_2}
+p_{s}(r) & = \mathbb{E}_{\chi}\left[ \exp(-p \lambda_{m} \pi A \theta_{T}^{\frac{2}{\gamma}} e^{\frac{2\sigma^2}{\gamma^2}}  r^2 e^{-\frac{2}{\gamma}\chi}) \right],
+\end{align}
+%\begin{align}
+%\label{eq:conditional_lp_trans}
+%\mathcal{L}_{I}\left\lbrace \theta_{T} \exp(-\chi) r^{\gamma}\right\rbrace = \exp\left\lbrace -A K r^2\exp(-\frac{2}{\gamma}\chi)\right\rbrace,
+%\end{align}
+where $\sigma = \frac{\ln(10)}{10}\sigma_{dB}$ and:
+\[ \!\!\!\!A =
+\begin{cases} 
+\Gamma\!\!\left( 1-\frac{2}{\gamma}\right)\Gamma\!\!\left( 1+\frac{2}{\gamma}\right) ,  & \text{for slotted ALOHA }\\
+\frac{2\gamma}{\gamma+2}\Gamma\!\!\left( 1-\frac{2}{\gamma}\right)\Gamma\!\!\left( 1+\frac{2}{\gamma}\right),  & \parbox[t]{.41\columnwidth}{for pure ALOHA, average interference }\\
+2\Gamma\!\!\left( 1-\frac{2}{\gamma}\right)\Gamma\!\!\left( 1+\frac{2}{\gamma}\right),  & \parbox[t]{.4\columnwidth}{for pure ALOHA, maximum interference }
+\end{cases}
+\]
+%With substitution of $(\ref{eq:conditional_lp_trans})$ into $(\ref{eq:def_ps})$, 
+%Although expression $(\ref{eq:def_ps_2})$ is not in closed-form, it simplifies the analysis in Sec.~\ref{sec:op_over_infinite_plane}. 
+
+%The authors of paper: Interference and SINR coverage in spatial non-slotted ALOHA networks, state that: We have not been able to derive closed formulas when the maximal interference constraint is used; this case is studied by simulations in Section 5.
+
+%\[ \!\!\!\!K\!\!\!=\!\!\!
+%\begin{cases} 
+%\pi \Gamma\left( 1-\frac{2}{\gamma}\right),  & \text{for slotted ALOHA }\\
+%\frac{2\gamma\pi}{\gamma+2}\Gamma\!\!\left( 1-\frac{2}{\gamma}\right),  & \parbox[t]{.41\columnwidth}{for pure ALOHA, average interference }\\
+%2\pi \Gamma\left( 1-\frac{2}{\gamma}\right),  & \parbox[t]{.4\columnwidth}{for pure ALOHA, maximum interference }
+%\end{cases}
+%\]
+%
+%\[ K\!\!\!=\!\!\!
+%\begin{cases} 
+%\pi \Gamma\left( 1-\frac{2}{\gamma}\right),  & \text{for slotted ALOHA }\\
+%\!\!\frac{2\gamma\pi}{\gamma+2}\Gamma\!\!\left( 1-\frac{2}{\gamma}\right),  & \!\!\!\text{for pure ALOHA, average interference}\\
+%\!\!2\pi \Gamma\!\!\left( 1-\frac{2}{\gamma}\right),  & \!\!\!\!\!\!\!\text{for pure ALOHA, maximum interference }
+%\end{cases}
+%\]

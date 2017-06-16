@@ -1,0 +1,139 @@
+\section{Mathematical Analysis}
+\subsection{Derivation of link-level successful transmission probability}
+As the first step, we study the successful transmission probability $p_s(r)$ for any given link with distance $r$.
+Without loss of generality, the device (i.e., the transmitter) labeled by $x_0$ is assumed to be located at the origin. The other end of this link (i.e., Base Station) with label $y_i$ is with distance $r$ away from the device. By definition, $p_s(r)$ is expressed as follows:
+\begin{align}
+p_{s} \left( r\right)
+& =\mathbb{P}\left\lbrace \frac{H \exp(G) r^{-\gamma}}{\sum_{x_j \in \Phi_{m}} H_{x_j} \exp(G_{x_j}) r_{x_j}^{-\gamma}}  \geq \theta \right\rbrace \nonumber\\
+%& =\mathbb{P} \left\lbrace \frac{H_{x_i}  r_{x_i}^{-\gamma}}{\sum_{x_j \in \Phi_{m}} H_{x_j} \exp(G_{x_j}-G_{x_i}) r_{x_j}^{-\gamma}} \geq \theta \right\rbrace \nonumber
+\end{align}
+Let $I=\sum_{x_j \in \Phi_{m}} H_{x_j} \exp(G_{x_j}) r_{x_j}^{-\gamma}$, which is the cumulative interference suffered for device $x_0$. Thus, we have:
+\begin{align}
+\label{eq:def_ps}
+p_{s}\left( r \right)  &= Pr \left\lbrace H  \geq I \theta\exp(-G)r ^{\gamma}  \right\rbrace  \nonumber\\
+% The follwing line can be hidden, not necessary in FINAL_VERSION
+&=\mathbb{E}_{G}\left\lbrace  \mathbb{E}_{I} \left[ \exp(-\theta \exp(-g) r^{\gamma}  I ) \vert G = g\right]\right\rbrace   \nonumber\\
+&= \mathbb{E}_{G} \left[ \mathcal{L}_{I}\left\lbrace \theta \exp(-G) r^{\gamma}\right\rbrace \right] 
+\end{align}
+It is observed that the $p_s\left( r \right)$ is actually the expectation (with respect to $G$) of a conditional Laplace Transform of cumulative interference $I$ at point $\theta \exp(-G)  r^{\gamma}$.
+\begin{align}
+\label{eq:interferece-laplace-transform}
+&\mathcal{L}_{I}\left( s \right)  = \mathbb{E}\left[ \exp(-sI)\right] \nonumber\\
+&= \mathbb{E}\left[ \exp(-s\sum_{x_j \in \Phi_m} H_{x_j} \exp(G_{x_j})  r_{x_j}^{-\gamma})\right] \nonumber \\
+&= \mathbb{E}_{\Phi_m} \left\lbrace \prod_{x_j\in \Phi_m} \mathbb{E}\left[\exp(-sH_{x_j} \exp(G_{x_j})  r_{x_j}^{-\gamma})\right] \right\rbrace ,
+\end{align}
+which is actually the Probability Generating Functional (PGFL) of a Poisson point process.
+Applying Campell's theorem, 
+%\qsong{Here I give the wikipedia link for this theorem, in the final version, I will give a reference of one book: https://en.wikipedia.org/wiki/Campbell's_theorem_(probability)}
+\begin{align}
+\label{eq:laplace_trans_I}
+\mathcal{L}_{I}\left( s \right) &=\exp\left\lbrace -\lambda_m \pi \mathbb{E}\left[ H^{\frac{2}{\gamma}}\exp(\frac{2}{\gamma}G)\right] \Gamma(1-\frac{2}{\gamma})s^{\frac{2}{\gamma}}  \right\rbrace 
+\end{align}
+This result has been derived in~\cite[eq.3.20]{haenggi2009interference}. Since $H$ and $G$ are independent, we have: 
+% The following two formula can be removed in FINAL_VERSION
+%\begin{align}
+%\label{eq:lognormal_moment}
+%\mathbb{E}\left[ \exp(\frac{2}{\gamma}G)\right] &= \exp \left\lbrace \left( \frac{\sqrt{2}\beta\sigma}{\gamma}\right) ^2\right\rbrace 
+%\end{align}
+%\begin{align}
+%\label{eq:expo_moment}
+%\mathbb{E}\left[ H^{\frac{2}{\gamma}} \right] &= \Gamma(1+\frac{2}{\gamma}) 
+%\end{align}
+%Substituting $(\ref{eq:expo_moment})(\ref{eq:lognormal_moment})$ into $(\ref{eq:laplace_trans_I})$, we have:
+\begin{align}
+\mathcal{L}_{I}\left( s \right) &= \exp\left\lbrace -p\lambda_m \pi \Gamma(1+\frac{2}{\gamma}) \Gamma(1-\frac{2}{\gamma}) \exp \left( \frac{\sqrt{2}\sigma}{\gamma}\right) ^2 s^{\frac{2}{\gamma}}  \right\rbrace
+\end{align}
+Let $s=\theta \exp(-G) r^{\gamma}$, thus
+\begin{align}
+\label{eq:conditional_lp_trans}
+\mathcal{L}_{I}\left\lbrace \theta \exp(-G) r^{\gamma}\right\rbrace = \exp\left\lbrace -A r^2\exp(-\frac{2}{\gamma}G)\right\rbrace ,
+\end{align}
+where $A=p\lambda_m\pi \Gamma(1+\frac{2}{\gamma}) \Gamma(1-\frac{2}{\gamma}) \exp \left( \frac{\sqrt{2}\sigma}{\gamma}\right) ^2 \theta^{\frac{2}{\gamma}}$, $\sigma = 0.1\ln(10)\sigma_{dB}$.
+
+With substitution of $(\ref{eq:conditional_lp_trans})$ into $(\ref{eq:def_ps})$, it remains to calculate the expectation with respect to $G$:
+\begin{align}
+\label{eq:def_ps_2}
+p_{s}(r) &= \mathbb{E}_{G}\left[ \exp(-A r^2 \exp(-\frac{2}{\gamma}G)) \right] \nonumber\\
+&=\int_{-\infty}^{+\infty} \exp(-A r^2 e^{x})\frac{1}{\sqrt{2\pi}\frac{2}{\gamma}\sigma} \exp(-\frac{x^2}{2(\frac{2}{\gamma}\sigma)^2}) dx \nonumber\\
+&=\mathbb{E}_{X}\left[ \exp(-Ar^2X)\right], 
+\end{align}
+which is the expectation with respect to a new log-normal random variable $X \sim LN(0, \frac{2}{\gamma}\sigma)$.
+% The following should be removed in FINAL_VERSION
+%\begin{align}
+%p_{s}(r) &= \mathbb{E}\left[ \exp(-Ar^2X)\right] \nonumber\\
+%&= \mathcal{L}_{X} \left[ Ar^2\right]  
+%\end{align}
+Now we will not consider to get the closed-form expression for $p_{s}(r)$, because in the following the form will simplify the analysis. 
+%现在我们先不考虑：获取P_s的解析解，因为在下一步计算会更方便
+%A closed form expression of the Laplace transform of the lognormal distribution does not
+%exist. According to reference~\cite{asmussen2016laplace}, the Laplace transform of a log-normal random variable can be accurately approximated as follows:
+%\begin{align}
+%\label{eq:laplace-transform-lognormal-form-1}
+%\mathcal{L} \left\lbrace X \right\rbrace \left( s \right)
+%&= \frac{\exp(-\frac{W(s \sigma_{X}^2 e^{\mu_{X}} )^2 + 2W(s \sigma_{X}^2 e^{\mu_{X}})}{2\sigma_{X}^2})}{\sqrt{1 + W(s \sigma_{X}^2 e^{\mu_{X}})}},
+%\end{align}
+%where $W\left( \cdot \right)$ is the Lambert W function~\cite{corless1996lambertw}, which is defined as the solution in principal branch of the
+%equation $W\left(x\right) e^{W \left( x\right) }= x$.
+\subsection{Derivation of outage probability over infinite plane}
+\subsubsection{Nearest BS attach method}
+As a comparison reference, now we consider probability $P_{f1}$ over an infinite plane using traditional method: the device attach the nearest BS.
+The distance to the nearest base station, we denote this distance as $r$. Its PDF, obtained by void probability of PPP, is:
+\begin{align}
+\label{eq:pdf_nearest_distance}
+f\left( r\right)  = 2 \pi \lambda_b  r \exp(-\lambda_b \pi r^2), r \in \left[ 0, +\infty\right] 
+\end{align}
+In this case, it just needs to take the expectation with respect to $r$, to get the outage probability $P_{f1}$.
+\begin{align}
+P_{f1}&= \mathbb{E}\left[ 1-p_{s}\left(r\right) \right]  \nonumber\\
+&= 1-\int_{0}^{+\infty} \mathbb{E}\left[ \exp(-A r^2 X)\right]  2 \pi \lambda_b  r \exp(-\lambda_b \pi r^2) dr \nonumber\\
+&= 1 - \mathbb{E}\left[ \frac{1}{\frac{AX}{\pi\lambda_b}+1} \right] \nonumber
+\end{align}
+For the simplicity  of writing in the following, let $B= \frac{A}{\pi \lambda_b}$. And we now focus on the term $\mathbb{E}\left[ \frac{1}{BX+1} \right]$: 
+\begin{align}
+\label{eq:mean_bx+1_step1}
+&\mathbb{E}\left[ \frac{1}{BX+1} \right]  = \int_{-\infty}^{+\infty} \frac{1}{ Be^t+1} \cdot \frac{1}{\sqrt{2\pi} \sigma_X} \exp\left\lbrace -\frac{t^2}{2 \sigma_X^2}\right\rbrace dt \nonumber\\
+&= \int_{-\infty}^{+\infty} \frac{1}{ e^t+1} \cdot \frac{1}{\sqrt{2\pi} \sigma_X} \exp\left\lbrace -\frac{(t-\ln(B))^2}{2 \sigma_X^2}\right\rbrace dt
+%&= \int_{-\infty}^{+\infty} \frac{1}{1+e^{-(t-\ln(B))}} \cdot \frac{1}{\sqrt{2\pi} \sigma_X} \exp\left\lbrace -\frac{t^2}{2 \sigma_X^2}\right\rbrace dt \nonumber\\
+%&= \int_{-\infty}^{+\infty} \frac{1}{1+\exp{-\left( \frac{t-\frac{\ln(B)}{\sigma_X}}{\frac{1}{\sigma_X}}\right) }} \cdot \frac{1}{\sqrt{2\pi}} \exp\left\lbrace -\frac{t^2}{2}\right\rbrace dt \nonumber\\
+%& = \int_{-\infty}^{+\infty} \frac{\phi\left( t \right) }{1+\exp{-\left( \frac{t-\frac{\ln(B)}{\sigma_X}}{\frac{1}{\sigma_X}}\right) }} dt,
+\end{align}
+which is actually a logistic-normal integral. According to~\cite{crooks2009logistic}, this kind of integral can be accurately approximated by another reparameterized logistic function (i.e., sigmoid function). Thus,
+\begin{align}
+	\label{eq:analytical_result_approach_2}
+	P_{f1} &= 1 -\frac{1}{1 + \exp\left\lbrace \left( 1 +\frac{\pi \sigma_X^2}{8} \right)^{-\frac{1}{2}} \ln(B) \right\rbrace} \nonumber\\
+	&=1-\frac{1}{1 + B^{\left( 1 +\frac{\pi \sigma^2}{2\gamma^2} \right)^{-\frac{1}{2}}}},
+\end{align}
+where $B= \frac{p\lambda_m}{\lambda_b}\Gamma(1+\frac{2}{\gamma}) \Gamma(1-\frac{2}{\gamma}) \exp \left( \frac{\sqrt{2}\sigma}{\gamma}\right) ^2 \theta^{\frac{2}{\gamma}}$.
+\subsubsection{BS reception diversity method}
+We now study the outage probability $P_{f2}$ over an infinite plane when applying BS reception diversity. In this case, one transmission is outage if and only if none of the Base Stations in the infinite plane has received the packet. Thus, $P_{f1}$ is expressed as follows:
+\begin{align}
+\label{eq:definition_pf1}
+P_{f2} &= \mathbb{E}\left[  \prod_{r_i \in \Phi_{b}} (1-p_{s}(r_i)) \right], \text{with } r_i \in \left[ r_{\text{min}}, +\infty\right],
+\end{align} 
+where $r_i$ refers to the distance between the device and BS with label $i$. Note that $r_i$ should be not less than distance to the nearest BS denoted by $r_{\text{min}}$, whose probability density function is given in $(\ref{eq:pdf_nearest_distance})$. Expression $(\ref{eq:definition_pf1})$ is actually the Probability Generating FunctionaL(PGFL) of Point point process $\Phi_{b}$ for Base Station, which states for some function $f(x)$ that $\mathbb{E}\left[ \prod_{x \in \Phi}f(x) \right] = \exp(-\lambda(\int_{\mathbb{R}^2}(1-f(x))dx))$. Thus, $(\ref{eq:definition_pf1})$ can be expressed as follows:
+\begin{align}
+P_{f2} &= \exp\left\lbrace -\pi \lambda_{b} \mathbb{E}_{r_{\text{min}}} \left[ \int_{r_{\text{min}}}^{+\infty} p_{s}(r)rdr \right] \right\rbrace ,
+\end{align} 
+
+\begin{align}
+P_{f2} &= \exp\left\lbrace -\mathbb{E}_{r_{\text{min}}} \left[ \int_{r_{\text{min}}}^{+\infty} \mathbb{E}_{X}\left[ \exp(-AXr^2)\right] 2\pi\lambda_{b} rdr \right] \right\rbrace \nonumber\\ 
+&= \exp\left\lbrace -\pi \lambda_{b} \mathbb{E}_{r_{\text{min}}} \left[\mathbb{E}_{X}\left[ \int_{r_{\text{min}}}^{+\infty}\exp(-AXr^2)dr\right] \right] \right\rbrace \nonumber\\ 
+&= \exp\left\lbrace -\pi \lambda_{b} \mathbb{E}_{r_{\text{min}}} \left[\mathbb{E}_{X}\left[ \frac{e^{-Ar_{\text{min}}^2X} }{AX} \right] \right] \right\rbrace \nonumber\\ 
+&= \exp\left\lbrace -\pi \lambda_{b} \mathbb{E}_{X} \left[\mathbb{E}_{r_{\text{min}}}\left[ \frac{e^{-Ar_{\text{min}}^2X} }{AX} \right] \right] \right\rbrace \nonumber\\ 
+&= \exp\left\lbrace -\mathbb{E}_{X} \left[ \frac{1}{\left( \frac{AX}{\pi\lambda_b}\right)\left( \frac{AX}{\pi\lambda_b}+1\right) }\right] \right\rbrace \nonumber\\ 
+&= \exp\left\lbrace \mathbb{E}_{X} \left[ \frac{1}{BX + 1}\right] - \mathbb{E}_{X} \left[ \frac{1}{BX}\right]   \right\rbrace
+\end{align}
+
+\begin{align}
+	\mathbb{E}_{X} \left[ \frac{1}{BX + 1}\right] = \frac{1}{1 + B^{\left( 1 +\frac{\pi \sigma^2}{2\gamma^2} \right)^{-\frac{1}{2}}}}
+\end{align}
+\begin{align}
+	\mathbb{E}_{X} \left[ \frac{1}{BX}\right] =-\frac{1}{\frac{p\lambda_m}{\lambda_b}\Gamma(1+\frac{2}{\gamma}) \Gamma(1-\frac{2}{\gamma})\theta^{\frac{2}{\gamma}}} 
+\end{align}
+Hence, we have:
+\begin{align}
+	\label{eq:analytical_result_approach_1}
+	P_{f2} &= \exp(\frac{1}{1 + B^{\left( 1 +\frac{\pi \sigma^2}{2\gamma^2} \right)^{-\frac{1}{2}}}}-\frac{1}{B\exp\left\lbrace  -\left(\frac{\sqrt{2}\sigma}{\gamma}\right) ^2 \right\rbrace } )，
+\end{align}
+where $B= \frac{p\lambda_m}{\lambda_b}\Gamma(1+\frac{2}{\gamma}) \Gamma(1-\frac{2}{\gamma}) \exp \left( \frac{\sqrt{2}\sigma}{\gamma}\right) ^2 \theta^{\frac{2}{\gamma}}$.
+We surprisingly observe that with BS reception diversity, the limit case, the outage probability has the same formula with the case where just Rayleigh fading is considered. But in practical system, we still observe that shadowing has improved the outage probability, since the wireless network cannot be infinite and the population is always limited. 

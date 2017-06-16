@@ -1,0 +1,12 @@
+\section{Detailed Calculate}
+Recall that $r$ is the distance between a node at the origin and the geographically nearest BS. Let $r'$ denote the distance between the considered node and the Best BS. The Best BS refers to the one whose received signal at the device side has the highest SINR.
+
+To make sure that one device can attach to the Best BS, the device measure the received signal from BS for a long time and choose the one minimizing the term in which the term $r' \mathbb{E}\left[ \exp\left( -\frac{1}{\gamma}\chi\right) \right]$. The latter can be regarded as the minimum distance between node and BS. Namely, $r' \mathbb{E}\left[ \exp\left( -\frac{1}{\gamma}\right) \right] =  r $
+
+Given that the PDF of $r$ is defined in Eq.~$\left( \ref{eq:pdf_nearest_distance}\right)$. We obtain the PDF of $r'$ as follows:
+\begin{align}
+	r' &=  r \mathbb{E}\left[ \exp\left( \frac{1}{\gamma}\right) \right] \\
+	F_r'(y) &= \mathbb{P}\left[ r' \leq y \right]  \\
+	F_r'(y) &= \mathbb{P}\left[ r \mathbb{E}\left[ \exp\left( \frac{1}{\gamma}\right) \right]  \leq y \right]  \\
+	F_r'(y) &= \mathbb{P}\left[ \leq y r \mathbb{E}\left[ \exp\left( -\frac{1}{\gamma}\right) \right]  \right]  \\
+\end{align}

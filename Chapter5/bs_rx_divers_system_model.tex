@@ -1,0 +1,57 @@
+\section{System model}
+\label{sec:system_model}
+\subsection{Distribution of Nodes and Traffic Model}
+We consider a large wireless network over a two-dimension infinite plane. The locations of terminals form a stationary Poisson point process (PPP) $\Phi_m = \left\lbrace X_i\right\rbrace$ on the plane $\mathbb{R}^2$ with spatial density $\lambda_m$.  Similarly, the locations of base stations also form a stationary PPP $\Phi_b = \left\lbrace Y_i\right\rbrace$ with spatial density $\lambda_b$. All the packets transmitted by devices have the same duration $B$.
+
+We consider two kinds of ALOHA-based random access methods: slotted ALOHA and pure ALOHA. For slotted ALOHA, the time domain is equally divided into slots with duration $B$. In each slot, each device independently decides to transmit a packet with probability $p$. The propagation delay is assumed to be much smaller than $B$. Hence, there is a global slot synchronization over the whole network.
+
+In pure ALOHA, devices send packets without synchronization, but we still use parameter $p$. The packet generation process can be seen as an internal slotted system in each device with $p$ the probability to transmit in a slot of duration $B$.
+
+At a given time, the locations of terminals that are transmitting a packet form a PPP with spatial density $p\lambda_{m}$. For slotted and pure ALOHA, we define the normalized load (per BS) as $L = p\lambda_{m}/\lambda_{b}$. In addition, we just consider one-shot random access. This model can be easily extended with retransmission mechanisms.
+\subsection{Random Channel and Capture Effect}
+% Xavier insists that this is a communication letter which should be concise.
+% Not necessary to explain somethings well-known for readers with enough background knowledges.
+We assume that M2M devices do not support power control mechanism due to the low-cost constraint and transmit with unit power level. We assume that the considered M2M network employs narrow band (e.g. SigFox's bandwidth is $100$ kHz and the bandwidth $LoRaWAN$ varies from $125$ kHz to $500$ kHz.) and deployed in urban area. Thus, the received power $P_{r}$ of a packet at the base station side depends on path-loss attenuation $r^{-\gamma}$, Rayleigh fading $H$ and shadowing effect $\exp(\chi)$:
+\begin{align}
+\label{eq:path-loss}
+P_{r} =r^{-\gamma} H \exp(\chi),
+\end{align}
+%The path-loss attenuation $l(r)$ is defined as $l(r) = r^{-\gamma}$, 
+where $r$ refers to the distance between the transmitter and the receiver, $\gamma$ is the path-loss exponent, $H$ is an exponentially distributed random variable (r.v.) with unit mean, $\chi$ is a zero-mean Gaussian r.v. with variance $\sigma^2$. Log-normal shadowing is usually characterized in terms of its dB-spread with standard deviation $\sigma_{dB} = \frac{10}{\ln(10)}\sigma$. We assume that $H$ and $\chi$ are both constant during a packet transmission, and mutually independent for different links. 
+%Due to channel randomness, it is possible that the received power at a far device is stronger than a close device. 
+
+%Capture effect refers to the fact that signals in collision can still be demodulated if their received SINR are greater than or equal to a certain threshold value. 
+Capture effect is taken into account in the proposed model. Thus, the transmission success probability $p_{s}$ for a transmit-receiver pair is defined as follows: 
+\begin{align}
+\label{eq: sinr-definition}
+p_s = \mathbb{P}\left\lbrace  \text{SINR} = \frac{P_r}{I + N} \approx \frac{P_r}{I} \geq \theta_{T} \right\rbrace, 
+\end{align}
+where $I$ refers to the suffered cumulative interference during packet transmission, $N$ is the background noise power, usually negligible compared to cumulative interference.
+
+\subsection{Performance Metric}
+\subsubsection{Packet loss rate}
+\subsubsection{Macro Diversity Gain}
+\subsubsection{Throughput}
+\subsubsection{Energy efficiency}
+
+
+%Similarly, we also consider two different ways to estimate interference with respect to device coding schemes. If no interleaving and error correction code technique are not used, the cumulative interference is the maximal interference value during the transmission B: $I^{\text{max}} = \max I(t)$ for $t \in \left[ T, T+B\right] $. If advanced techniques to resistant transmission error are used, average interference over the packet transmission $I^{\text{mean}} = \frac{1}{B}\int_{T}^{T+B} I(t)dt$.
+
+%Empirical measurements shows that shadowing effect, when represented in dB units, follows a normal distribution (see e.g.\cite{erceg1999empirically}). In other words, the linear (as opposed to dB) channel gain may be modeled by a log-normal random variable, $e^G$, where $G$ is a zero-mean Gaussian r.v. with variance $\sigma^2$. Log-normal shadowing is usually characterized in terms of its dB-spread, $\sigma_{dB}$, which is related to $\sigma$ by $\sigma = \frac{\ln(10)}{10}  \sigma_{dB}$. Thus, The received power $P_{r}$ is expressed as follows:
+
+%As to the non-slotted ALOHA protocol, we still divide the time domain into slot of length $B$, one packet appears with probability $p$ in a given slot, but the packet arrival time is not the beginning of a slot like in slotted ALOHA. Instead, packet arrival time is uniformly distributed in a slot. 
+
+%At a given time, the locations of terminals that are transmitting a packet form a PPP with spatial density $p\lambda_{m}$. A BS can correctly receive at most one packet at a given time. 
+%For slotted and pure ALOHA, we define the normalized load (per BS) as $p\lambda_{m}/\lambda_{b}$. In non-overload conditions, $p\lambda_{m}/\lambda_{b} < 1$.
+
+
+
+
+
+
+
+
+
+
+
+

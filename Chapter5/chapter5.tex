@@ -1,0 +1,26 @@
+\chapter{Performance Evaluation of ALOHA in context of multiple Base Station}
+
+% **************************** Define Graphics Path **************************
+\ifpdf
+    \graphicspath{{Chapter3/Figs/Raster/}{Chapter3/Figures/PDF/}{Chapter3/Figures/}}
+\else
+    \graphicspath{{Chapter3/Figs/Vector/}{Chapter3/Figures/}}
+\fi
+
+\input{Chapter5/bs_rx_divers_introduction}
+\input{Chapter5/bs_rx_divers_sota}
+\input{Chapter5/bs_rx_divers_system_model}
+\input{Chapter5/bs_rx_divers_op_pair}
+\input{Chapter5/bs_rx_divers_op_plane_oneshot} % refers to outage probability over plan with one-shot random access
+\input{Chapter5/bs_rx_divers_op_plane_retransmission} % refes to outage probability over plane with retransmission
+% This name is not appropriate.
+% In this section we want to study on condition that the nearest base staiton location is known.
+% I doubt whether it is significant to study this. Thus need a good argument at the beginning of this section.
+\input{Chapter5/bs_rx_divers_function_of_R.tex}
+% Whether need to do simulation for MRC case. I think Yes. In addition, we can try to publish one paper by extracting the analyis for selective combinning and maximum ratio combining.
+\input{Chapter5/bs_rx_divers_simulation}
+\input{Chapter5/bs_rx_divers_conclusion}
+
+
+
+
