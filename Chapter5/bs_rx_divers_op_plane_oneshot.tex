@@ -1,4 +1,4 @@
-\section{Performance Without Retransmission}
+\section{Network Level Performance Without Retransmission}
 \label{sec:op_over_infinite_plane}
 The transmission success probability $p_s(r)$ paves the way to analyze the network packet loss rate $P_{f}$, which is the base to calculate:\begin{inparaenum}[1)]
 	\item the maximum normalized load $L_{\text{max}}$ under packet loss rate constraint $P_{f}^{\text{max}}$;
@@ -53,14 +53,24 @@ S_{n} &=  \frac{L}{1 + \left( A \theta_{T}^{\frac{2}{\gamma}} e^{\frac{2\sigma^2
 
 \subsection{Best BS attach method}
 In this subsection, we assume that the device attaches to the BS for which the received power averaged over all fading realizations is the strongest (i.e. the BS that maximizes $r^{-\gamma}\exp(\chi)$). Let $P_{f,b} $ be packet loss rate for this case. As shown in~\cite[lemma 1]{dhillon2014downlink},  attaching to the best BS in a PPP of intensity $\lambda_{b}$ with shadowing is equivalent to attaching the nearest one in a transformed PPP of intensity $\lambda_{b} \mathbb{E}\left[ e^{-\frac{2}{\gamma}\chi}\right] = \lambda_{b} e^{\frac{2\sigma^2}{\gamma^2}}$ without shadowing. 
-Therefore, $(\ref{eq:def_ps_2})$ 
-becomes $p_{s}(r) = \exp(-p \lambda_{m} \pi A e^{\frac{2\sigma^2}{\gamma^2}} \theta_{T}^{\frac{2}{\gamma}} r^2 )$. Similar to the analysis in Sec.~\ref{sec:nearest_BS_attach_method}, we have:
+Therefore, the link level transmission success probability $p_{s}(r)$ is as follows:
+\begin{align}
+	\label{eq:succ_proba_with_modified_r}
+	p_{s}(r) = \exp(-p \lambda_{m} \pi A e^{\frac{2\sigma^2}{\gamma^2}} \theta_{T}^{\frac{2}{\gamma}} r^2 )
+\end{align}
+The distribution of modified $r$ is thus:
+\begin{align}
+	\label{eq:pdf_modified_r}
+	f(r) = 2 \pi \lambda_b e^{\frac{2\sigma^2}{\gamma^2}}  \exp( -\lambda_b  e^{\frac{2\sigma^2}{\gamma^2}} \pi r^2 ) r 
+\end{align}
+Similar to the analysis in Sec.~\ref{sec:nearest_BS_attach_method}, we have:
 \begin{align}
 \label{eq:bs_best_att_analytical}
 &P_{f,b}= \mathbb{E}_{r}\left[ 1-p_{s}\left(r\right) \right]  \nonumber\\
 &= 1 -\int_{0}^{+\infty}  \exp(-p \lambda_{m} \pi A \theta_{T}^{\frac{2}{\gamma}} e^{\frac{2\sigma^2}{\gamma^2}}  r^2 )  2 \pi \lambda_b e^{\frac{2\sigma^2}{\gamma^2}}  \exp( -\lambda_b  e^{\frac{2\sigma^2}{\gamma^2}} \pi r^2 ) r dr \nonumber\\
 &= 1-\frac{1}{ 1 +  A \theta_{T}^{\frac{2}{\gamma}} L }.
-\end{align}By inverting $(\ref{eq:bs_best_att_analytical})$, the maximum supported normalized load $L_{\text{max}, b}$ (subscript $b$ refers to the best BS attach method) is as follows:
+\end{align}
+By inverting $(\ref{eq:bs_best_att_analytical})$, the maximum supported normalized load $L_{\text{max}, b}$ (subscript $b$ refers to the best BS attach method) is as follows:
 \begin{align}
 	L_{\text{max},b} &=\frac{1}{A \theta_{T}^{\frac{2}{\gamma}}  } 
 	\frac{P_{f}^{\text{max}}}{1 - P_{f}^{\textbf{max}}}. 
@@ -71,6 +81,7 @@ The normalized spatial throughput $S_{b}$ is as follows:
 \end{align}
 
 \subsection{Selective Combining like Macro Diversity}
+\label{sec:sc_macro_diversity}
 Since a transmitted packet is received by all surrounding BS, the transmission of this packet fails if and only if the received SINR at each BS is less than the capture ratio. In other words, if the maximum SINR is still less than the capture ratio, the packet transmission is failed. This is why such a scheme is called selective combining (SC) like macro reception diversity. In this section, we evaluate SC-like macro diversity in one-shot random access case.
 
 Strictly speaking, the cumulative interferences at two different BS are correlated: when a device is transmitting, it generates some non-negligible interference on base stations that are not very far. However, it is still rational to assume that the interferences received by different BS are mutually independent.
@@ -110,7 +121,130 @@ The macro diversity gain against the best BS attach mode $G_{\text{diversity},b}
 \end{align}
 We deduce that, whatever the ALOHA type, the macro diversity gain against best BS attach
 only depends on the packet loss rate target.
-\input{Chapter5/bs_rx_divers_mrc.tex}
+
+\subsection{Maximum Ratio Combining based Macro diversity}
+Due to the fact that a transmitted packet theoretically can be simultaneously received by all BS (ignorance of background noise), linear combining of signals at each BS can be leveraged so that the output SINR is maximized. Such a scheme is called Maximum Ratio Combining (MRC) based macro diversity
+In this section, the performance of MRC-based macro diversity in case of one-shot random access is evaluated.
+
+Consider a typical device $x_0$ at origin, it has been proved that if the weigh factors involved in MRC context is well designed (see Fig.~\ref{fig:mrc_macro_diversity_recpetion_illustration}), the output $\text{SINR}$ $\Theta$ of best combiner is expressed as \qs{We need a reference for this...}:
+\begin{align}
+\Theta &= \sum_{y_j \in \Phi_{b}}^{} \theta_{y_j} \nonumber\\
+&= \sum_{y_j \in \Phi_{b}}^{} \frac{H_{y_j} \exp(\chi_{y_j}) r_{y_j}^{-\gamma}}{I_{y_j}} \nonumber\\
+&= \sum_{y_j \in \Phi_{b}}^{} \epsilon_{y_j} r_{y_j}^{-\gamma}
+\end{align}
+where $\theta_{y_j}$ is the received SINR at BS $y_j$, $H_{y_{j}}$ and $\exp(\chi_{y_j})$ are respectively the Rayleigh fading and shadowing component for link between device $x_0$ and BS $y_j$, $I_{y_j}$ refers to cumulative interference suffered at BS $y_j$. For the sake of notation simplicity, let $\epsilon_{y_j}  = H_{y_j}\exp(\chi_{y_j})  / I_{y_j}$. Using similar justification explained in Sec.~\ref{sec:sc_macro_diversity}, $\epsilon_{y_j}$ for $j=0,1,2,...$ constitute a series of RV whose element is assumed to be identically independently distributed. 
+
+Let $P_{f, \text{MRC}}$ be the network level packet loss rate in this case. According to capture effect:
+\begin{align}
+	P_{f, \text{MRC}} &= \mathbb{P} \left\lbrace \Theta < \theta_{T} \right\rbrace \nonumber \\
+	&= F_{\Theta} (\theta_{T}),
+\end{align}
+where $\theta_{T}$ is the capture ratio, $F_{\Theta} (\theta)$ is the CDF of $\Theta$. It is can be numerically computed from Laplace Transform or Characteristic function of $\Theta$.
+
+The Laplace Transform (LT) of $\Theta$ is by definition as follows\qsong{To be more restrict, we should explain why we can remove the subscript $y_i$ in the following formula}:
+\begin{align}
+\label{eq:lt-sinr-mrc-1}
+\mathcal{L}_{\Theta}\left( s \right) &= \mathbb{E}\left[ e^{-s\Theta}\right] \nonumber\\
+&=\mathbb{E}\left[ \exp( -s \sum_{y_j \in \Phi_{b}}^{} \theta_{y_j} )\right] \nonumber\\
+&= \mathbb{E}\left[ \prod_{y_j \in \Phi_b}^{} \mathbb{E}_{\epsilon} \left[ \exp( -s \epsilon r_{y_{j}}^{-\gamma}) \right] \right] 
+\end{align}
+Actually, the mathematical operations for interference analysis used in~\cite{haenggi2009interference} can be reused for $\eqref{eq:lt-sinr-mrc-1}$. For the sake of clarity, we detail the operations as follows:
+ 
+Applying Campbell theorem to $\eqref{eq:lt-sinr-mrc-1}$ and changing the order of integration and expectation operator, we have:
+\begin{align}
+\label{eq:lt-sinr-mrc-2}
+\mathcal{L}_{\Theta}\left( s \right) &= \exp \left\lbrace -\int_{0}^{+\infty}    \mathbb{E}_{\epsilon}\left[ 1-\exp(-s\epsilon r^{-\gamma} ) \right]   2 \pi \lambda_{b} r dr \right\rbrace \nonumber\\
+&= \exp \left\lbrace -\mathbb{E}_{\epsilon}\left[ \int_{0}^{+\infty} \left(1-\exp(-s\epsilon r^{-\gamma} ) \right) 2 \pi \lambda_{b} r dr  \right]   \right\rbrace 
+\end{align}
+
+Let us focus on the integral $D = \int_{0}^{+\infty} \left(1-\exp(-s\epsilon r^{-\gamma} ) \right) 2 \pi \lambda_{b} r dr $:
+\begin{align}
+\label{itg:D}
+D &= \int_{0}^{+\infty} \left(1-\exp(-s\epsilon r^{-\gamma/2} ) \right) \pi \lambda_{b} dr \nonumber\\
+&\overset{\mathclap{\strut\text{(a)}}} = \pi \lambda_{b} \int_{0}^{+\infty} \left(1-\exp(-x ) \right) d\left( -x^{-\frac{2}{\gamma}} (s\epsilon)^{\frac{2}{\gamma}}\right)  \nonumber\\
+&\overset{\mathclap{\strut\text{(b)}}}= \pi \lambda_{b} \int_{0}^{+\infty} \exp(-x ) x^{-\frac{2}{\gamma}} (s\epsilon)^{\frac{2}{\gamma}} dx \nonumber\\
+&= \pi \lambda_{b}  (s\epsilon)^{\frac{2}{\gamma}}  \Gamma (1 - \frac{2}{\gamma}),
+\end{align}
+where step $(a)$ is obtained with a change of variable $x = s \epsilon r^{-\gamma/2}$, step $(b)$ is achieved via integration by parts, $\Gamma(\cdot)$ is gamma function.
+
+Combining $\eqref{eq:lt-sinr-mrc-2}$ and $\eqref{itg:D}$ , the Laplace Transform of $\Theta$ is finally simplified as:
+\begin{align}
+\label{eq:lt_Theta}
+\mathcal{L}_{\Theta}\left( s \right) &= \exp(-\lambda_{b} \pi \mathbb{E}\left[ \epsilon ^{\frac{2}{\gamma}} \right]  \Gamma(1-\frac{2}{\gamma}) s^{\frac{2}{\gamma}}),
+\end{align}
+where $\mathbb{E}\left[ \epsilon ^{\frac{2}{\gamma}} \right] $ is:
+\begin{align}
+\label{eq:epsilon_fractional_moment}
+\mathbb{E}\left[ \epsilon ^{\frac{2}{\gamma}} \right]  &= \mathbb{E}\left[ \left( H \exp(\chi)\right)  ^{\frac{2}{\gamma}} \right] \mathbb{E}\left[ I ^{-\frac{2}{\gamma}}\right] \nonumber\\
+&=\Gamma(1+\frac{2}{\gamma}) \exp( \frac{2\sigma^2}{\gamma^2}) \mathbb{E}\left[ I ^{-\frac{2}{\gamma}}\right] 
+\end{align}
+
+Since the Laplace transform of cumulative interference $I$ can be easily obtained and PDF of $I$ is not always exist except $\gamma=4$, to compute $\mathbb{E}\left[ I ^{-\frac{2}{\gamma}}\right]$ (i.e. negative fractional moment calculation problem), one can consider departure from LT. This is a research subject in applied mathematical domain and planned as our future work. The most straightforward way is to rely on Monte-Carlo method.
+
+With substitution $s = -i \omega$ in $\eqref{eq:lt_Theta}$ , the characteristic function (CF) of $\Theta$ is as follows:
+\begin{align}
+\phi_{\Theta}\left( \omega \right) &= \exp(-\lambda_{b} \pi \mathbb{E}\left[ \epsilon ^{\frac{2}{\gamma}} \right]  \Gamma(1-\frac{2}{\gamma}) \exp(-i\pi/\gamma) \omega^{\frac{2}{\gamma}}),  
+\end{align}
+where $\omega \geq 0$, $i$ is imaginary unit.
+
+\qsong{This paragraph should be simplified. Since in another Chapter, the same numerical technique should have been presented...}As a continuous random variable, the cumulative distribution function $F_{\Theta}\left( \theta \right)$ of total SINR $\Theta$ can be directly derived from its characteristic function $\phi_{\Theta}\left(\omega\right)$. Applying mathematical techniques used in finance domain~\cite{hirsa2012computational}, we seek to calculate the Fourier transform of $e^{-\eta \theta} F_{\Theta}\left( x \right)$ where term $e^{-\eta \theta}$ is a damping function with $\eta > 0$. 
+\begin{align}
+\label{eq:intermediate_formula_1}
+\int_{-\infty}^{+\infty} e^{i\omega \theta} e^{-\eta \theta} F_{\Theta}\left( \theta \right) dx = \frac{1}{\eta - i\omega} \phi_{\Theta}\left( \omega +i\eta \right) 
+\end{align}
+Applying Fourier inversion for $\eqref{eq:intermediate_formula_1}$, we obtain the expression for $F_{\Theta}\left( \theta \right)$ as follows:
+\begin{align}
+\label{eq:pr_c_m_case2}
+F_{\theta}\left( \theta \right)  &= \frac{e^{\eta \theta}}{2\pi} \int_{-\infty}^{+\infty} e^{-i \omega \theta} \frac{1}{\eta - i\omega} \phi_{Theta}\left( \omega +i\eta\right) d\omega  \nonumber\\
+&= \frac{e^{\eta \theta}}{\pi} \Re\left\lbrace  \int_{0}^{+\infty} e^{-i \omega \theta} \frac{1}{\eta - i\omega} \phi_{\Theta}\left( \omega +i\eta\right) d\omega\right\rbrace, 
+\end{align}
+The packet loss rate $P_{f,\text{MRC}}$ in case of capture ratio $\theta_{T}$ can be obtained by substituting $\theta = \theta_{T}$ in $\eqref{eq:pr_c_m_case2}$. The latter can be computed using a single numerical integration.
+
+
+%We need to calculate CDF of $\Theta$ which is the packet loss rate. However, unlike in Sec.XXX, in general case, no closed-form expression. We rely on numerical method to compute packet loss rate wit low complexity. blabla...
+
+\subsection{A special case, $\gamma=4$}
+In this section, we study a special case where path loss component $\gamma=4$. Proved in ~\cite[Eq. 3.17]{haenggi2009interference}, the probability density function of cumulative interference $I$, suffered by device at the origin, in a system without shadowing, is as follows:
+\begin{align}
+f_{I}(x) = \frac{p\lambda_{m}}{4} (\frac{\pi}{x})^{\frac{3}{2}} \exp(-\frac{\pi^4 p^2\lambda_{m}^2}{16x}), x \geq 0
+\end{align}
+Along side with log-normal shadowing effect, the probability density function of cumulative interference $I$ is obtained just by scaling $\lambda_{m}$ as $ \lambda_{m} \exp(\frac{\sigma^2}{8})$:
+\begin{align}
+f_{I}(x) = \frac{    p\lambda_{m}   \exp(\frac{\sigma^2}{8})  }{4} (\frac{\pi}{x})^{\frac{3}{2}} \exp(    -\frac{    \pi^4    p^2\lambda_{m}^2     \exp^2(\frac{\sigma^2}{8})    }{    16x    }    ), x \geq 0
+\end{align} 
+Hence, the negative fractional moment of $I$ can be calculated:
+\begin{align}
+\label{eq:gamma=4_fractional_I}
+\mathbb{E}\left[ I ^{-\frac{1}{2}}\right] &= \int_{0}^{+\infty} x^{-\frac{1}{2}} f_{I}(x) dx \nonumber\\
+&= \int_{0}^{+\infty}  \frac{    p\lambda_{m}   \exp(\frac{\sigma^2}{8})  }{4}   \pi^{\frac{3}{2}}  x^{-2}  \exp(    -\frac{    \pi^4    p^2\lambda_{m}^2     \exp^2(\frac{\sigma^2}{8})    }{    16x    }    )  dx \nonumber\\
+&= \frac{4}{    \pi^{\frac{5}{2}}  p\lambda_{m} \exp(\frac{\sigma^2}{8}) }
+\end{align}
+With substitution of $\eqref{eq:gamma=4_fractional_I}$ into $\eqref{eq:epsilon_fractional_moment}$,
+\begin{align}
+\label{eq:negative_fractonal_epsilon_4}
+\mathbb{E}\left[ \epsilon ^{\frac{1}{2}} \right] & = 4\Gamma(\frac{3}{2})\pi^{-\frac{5}{2}} p^{-1}\lambda_{m}^{-1}\nonumber\\
+&=2\pi^{-2} p^{-1}\lambda_{m}^{-1}
+\end{align}
+From $\eqref{eq:negative_fractonal_epsilon_4}$ and $\eqref{eq:lt_Theta}$, we have:
+\begin{align}
+\mathcal{L}_{\Theta}\left( s \right) &= \exp(-\lambda_{b} \pi 2\pi^{-2}\lambda_{m}^{-1} \Gamma(\frac{1}{2}) s^{\frac{1}{2}}) \nonumber \\
+&= \exp(-2L^{-1}\pi^{-\frac{1}{2}}  s^{\frac{1}{2}}), 
+\end{align}
+which is the Laplace Transform of probability density function of $\Theta$. According to derivative property of Laplace Transform, the cumulative distribution function $F_{\Theta} (\theta) $ of ${\Theta}$ can be obtained by directly inversing $\frac{1}{s} \mathcal{L}_{\Theta}\left( s \right)$.
+When $\gamma = 4$, instead of using numerical integration for $\eqref{eq:pr_c_m_case2}$, we have closed-form CDF of total SINR $\Theta$:
+\begin{align}
+P_{f, \text{MRC}}  = F_{\Theta} (\theta_{T}) 
+&= \mathcal{L}^{-1} \left[ \frac{1}{s} \mathcal{L}_{\Theta}\left( s \right) \right]  \nonumber\\
+&=1 -\erf \left( 
+\frac{1}{ L \sqrt{\pi \theta_{T}}}
+\right),
+\end{align}
+where $\mathcal{L} \left[ \cdot \right] $ is inverse Laplace Transform operator.
+%We verify that the packet loss rate obtained by $(?)$ and $(?)$ are the same.
+\qsong{Don't forget to talk about throughput, macro diversity gain as like what we have done in previous section.}
+
+%============================================================================================
+%\input{Chapter5/bs_rx_divers_mrc.tex}
 %Macro diversity gain against the nearest BS attach method $G_{\text{diversity}, n}$ is obtained by multiplying $\exp \left( \frac{\sqrt{2}\sigma}{\gamma}\right)^2$ to $(\ref{eq:macro-diversity-gain})$.
 % depends on path-loss exponent $\gamma $, shadowing standard deviation $\sigma$ and packet loss rate constraint $P_f^{\text{max}}$, but has nothing to do with capture ratio.
 
@@ -157,3 +291,11 @@ only depends on the packet loss rate target.
 %\Gamma(1+\frac{2}{\gamma})\theta_{T}^{\frac{2}{\gamma}} ,  & \parbox[t]{.4\columnwidth}{for Best BS attach}
 %\end{cases}
 %\]
+
+
+
+%\begin{align}
+%x & \\
+%&\overset{\mathclap{\strut\text{a}}}= foo\\
+%& = bar
+%\end{align}

@@ -1,7 +1,8 @@
 % ******************************* PhD Thesis Template **************************
 % Please have a look at the README.md file for info on how to use the template
 
-\documentclass[a4paper,12pt,times,numbered,print,index]{Classes/PhDThesisPSnPDF}
+\documentclass[a4paper,12pt,times,numbered,print,index, draft]{Classes/PhDThesisPSnPDF}
+
 
 % ******************************************************************************
 % ******************************* Class Options ********************************
@@ -112,15 +113,23 @@
 %\include{Dedication/dedication}
 %\include{Declaration/declaration}
 %\include{Acknowledgement/acknowledgement}
+
+%\begingroup
+%\def\refname{List of my Publications}
+%\def\bibname{List of my Publications}
+%
+%\endgroup
+\input{ListofPublication}
 %\include{Abstract/abstract}
+
 
 % *********************** Adding TOC and List of Figures ***********************
 
-%\tableofcontents
-%
-%\listoffigures
-%
-%\listoftables
+\tableofcontents
+
+\listoffigures
+
+\listoftables
 
 % \printnomenclature[space] space can be set as 2em between symbol and description
 %\printnomenclature[3em]
@@ -138,11 +147,7 @@
 %\include{Chapter6/chapter6}
 %\include{Chapter7/chapter7}
 
-\begingroup
-\def\refname{List of my Publications}
-\def\bibname{List of my Publications}
-\input{ListofPublication}
-\endgroup
+
 
 % ********************************** Back Matter *******************************
 % Backmatter should be commented out, if you are using appendices after References

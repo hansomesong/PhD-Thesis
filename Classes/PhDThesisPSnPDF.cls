@@ -1050,6 +1050,18 @@ wish to left align your text}
 }
 
 
+% ****************************** List of Publications ********************************
+% The publications environment puts a large, bold, centered
+% "List of Publications" label at the top of the page.
+
+\newenvironment{publications}{
+	\cleardoublepage
+	\setsinglecolumn
+	\chapter*{\centering \Large List of Publications}
+	\thispagestyle{empty}
+}
+
+
 
 % ******************************* Nomenclature *********************************
 \RequirePackage[intoc]{nomencl}

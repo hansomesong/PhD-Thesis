@@ -53,6 +53,24 @@ In addition, the maximum load with macro diversity for pure ALOHA in the worst c
 	}
 \end{table}
 
+
+The packet loss rate performance in the case of applying maximum ratio combining is illustrated in Fig.~\ref{fig:newpacketlossratemprmrc}. It is not surprisingly to observe that maximum ratio combing bring significant performance improve.
+\begin{figure}
+	\centering
+	\includegraphics[width=1.0\columnwidth]{/Users/qsong/Documents/slotted_aloha_related_project/multiple_recepteur_capacity/new_packet_loss_rate_mpr_mrc}
+	\caption{Network packet loss rate with respect to normalized load $p\lambda_{m}/\lambda_{b}$ (ANA=analytical, SIM=simulation)}
+	\label{fig:newpacketlossratemprmrc}
+\end{figure}
+
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\columnwidth]{/Users/qsong/Documents/slotted_aloha_related_project/multiple_recepteur_capacity/macro_div_gain_retrans}
+	\caption{Macro diversity gain against nearest BS attach with respect to maximum allowed packet loss rate}
+	\label{fig:macrodivgainretrans}
+\end{figure}
+
+In Fig.~\ref{fig:macrodivgainretrans}, we illustrate the macro diversity gain in three cases. We observe that with packet loss rate constraint $10^{-3}$, if maximum transmission number and packet repetition is $3$, the macro diversity gain is reduced to about $2.0$. When maximum transmission number and packet repetition is $4$, the macro diversity gain is reduced to about $1.0$ which means that both method almost support the same number of devices. However, if when maximum transmission number and packet repetition is $5$, macro diversity has no advantages in front of nearest BS attach method.
 %\begin{figure}
 %	\centering
 %	\includegraphics[height=6cm,width=\linewidth]{../slotted_aloha_related_project/multiple_recepteur_capacity/pure_slot_throughput_mpr}

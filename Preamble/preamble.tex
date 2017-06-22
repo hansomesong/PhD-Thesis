@@ -80,8 +80,7 @@
 \usepackage{multirow}
 \usepackage{paralist}
 
-\usepackage[colorinlistoftodos]{todonotes}
-\newcommand{\qsong}[1]{\textcolor{blue}{(\textbf{[Qipeng's comment] }\textit{#1}})}
+
 %\usepackage{multicol}
 %\usepackage{longtable}
 %\usepackage{tabularx}
@@ -90,7 +89,37 @@
 % ******************************* Math *********************************
 \usepackage{amsmath,amssymb,amsthm} % For including math equations, theorems, symbols, etc
 \usepackage{mathrsfs} %为了使用花体字母
+\usepackage{mathtools}
+%to support indicator function,
+%source:https://tex.stackexchange.com/questions/26637/how-do-you-get-mathbb1-to-work-characteristic-function-of-a-set
+\usepackage{dsfont} 
+\usepackage{hyperref} %to support clickable equation numeration
+\usepackage{xcolor}\hypersetup{linkcolor=red, linkbordercolor=red}
+\colorlet{linkequation}{green}
+\newcommand*{\SavedEqref}{}
+\let\SavedEqref\eqref
+\renewcommand*{\eqref}[1]{%
+	\begingroup
+	\hypersetup{
+		linkcolor=linkequation,
+		linkbordercolor=linkequation,
+	}%
+	\SavedEqref{#1}%
+	\endgroup
+}
 
+\colorlet{section}{red}
+\newcommand*{\SavedRef}{}
+\let\SavedRef\ref
+\renewcommand*{\ref}[1]{%
+	\begingroup
+	\hypersetup{
+		linkcolor=section,
+		linkbordercolor=section,
+	}%
+	\SavedRef{#1}%
+	\endgroup
+}
 %% Custom commands
 \newcommand{\erf}{\mathrm{erf}\,}
 \newcommand{\erfc}{\mathrm{erfc}\,}
@@ -195,13 +224,19 @@
 
 % ******************************** Todo Notes **********************************
 %% Uncomment the following lines to have todonotes.
-
-%\ifsetDraft
-%	\usepackage[colorinlistoftodos]{todonotes}
-%	\newcommand{\mynote}[1]{\todo[author=kks32,size=\small,inline,color=green!40]{#1}}
-%\else
-%	\newcommand{\mynote}[1]{}
-%	\newcommand{\listoftodos}{}
-%\fi
+\ifsetDraft
+	\usepackage[colorinlistoftodos]{todonotes}
+	\newcommand{\qs}[1]{\todo[author=Qipeng, size=\small,inline,color=green!40]{#1}}
+	\newcommand{\qsong}[1]{\textcolor{blue}{(\textbf{[Qipeng's comment] }\textit{#1}})}
+	\newcommand{\xl}[1]{\todo[author=Xavier, size=\small,inline,color=red!40]{#1}}
+	\newcommand{\loutfi}[1]{\todo[author=Loutfi, size=\small,inline,color=blue!40]{#1}}
+\else
+	\newcommand{\mynote}[1]{}
+	\newcommand{\qs}[1]{}
+	\newcommand{\qsong}[1]{}
+	\newcommand{\xl}[1]{}
+	\newcommand{\loutfi}[1]{}
+	\newcommand{\listoftodos}{}
+\fi
 
 % Example todo: \mynote{Hey! I have a note}
