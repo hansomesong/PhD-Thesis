@@ -1,4 +1,4 @@
-\section{Results and Analysis}
+\section{Simulation Results and Discussion}
 \label{sec:simulation}
 \begin{figure*}
 	%	\centering
@@ -24,7 +24,7 @@
 	\vspace{-2em}
 \end{figure*}
 We develop a simulator in which devices and BS are deployed according to PPP. The interference on each BS is computed without any independence assumption. The basic simulation settings are: $\gamma=4$, $\sigma = 0$ or $8$ dB, $\theta_{T} =3$ dB, $p=0.008$, $P_{f}^{\text{max}}=10\%$. The device density $\lambda_m$ varies from $0.2$ to $2$, and BS density $\lambda_{b}$ is fixed as $0.08$. To calculate the $95\%$ confidence interval, each simulation is repeated $50$ times. 
-
+\subsection{One shot case}
 Fig.~\ref{fig:subfig} shows the packet loss rate from both simulation and analytical results. For the nearest and best BS attach cases, the simulation and analytical results fit well:\begin{inparaenum}[i)]
 	\item this confirms the correctness of $(\ref{eq:bs_nst_att_analytical})$ (which is an approximation) and $(\ref{eq:bs_best_att_analytical})$;
 	\item the upper bound proposed in Sec.~\ref{subsec: pure-aloha} for maximum interference is a simple but accurate approximation (see Fig.~\ref{fig:subfig:c}).
@@ -71,63 +71,50 @@ The packet loss rate performance in the case of applying maximum ratio combining
 \end{figure}
 
 In Fig.~\ref{fig:macrodivgainretrans}, we illustrate the macro diversity gain in three cases. We observe that with packet loss rate constraint $10^{-3}$, if maximum transmission number and packet repetition is $3$, the macro diversity gain is reduced to about $2.0$. When maximum transmission number and packet repetition is $4$, the macro diversity gain is reduced to about $1.0$ which means that both method almost support the same number of devices. However, if when maximum transmission number and packet repetition is $5$, macro diversity has no advantages in front of nearest BS attach method.
-%\begin{figure}
-%	\centering
-%	\includegraphics[height=6cm,width=\linewidth]{../slotted_aloha_related_project/multiple_recepteur_capacity/pure_slot_throughput_mpr}
-%	\caption{Spatial throughput with respect to normalized load}
-%	\label{fig:pureslotthroughputmpr}
-%\end{figure}
-%
-%Fig.~\ref{fig:pureslotthroughputmpr} illustrates the spatial throughput comparison. Due to page limitation, only macro diversity and best BS attach method are compared. In interval $\left[ 0, 1.0 \right]$, macro diversity for slotted ALOHA always has the best spatial through performance. In interval $\left[ 0, 0.2\right]$, macro diversity for pure ALOHA in worst case (i.e. with shadowing and maximum interference) still outperforms the best BS attach method.  In interval $\left[ 0.6, 1\right]$ where network packet loss rate is very high, the best BS attach method for slotted ALOHA with $8$ dB shadowing is better than macro diversity in pure ALOHA. In addition, shadowing has positive impact for best BS attach method when the normalized load is greater than $0.4$. 
+\begin{figure}
+	\centering
+	\includegraphics[height=6cm,width=\linewidth]{/Users/qsong/Documents/slotted_aloha_related_project/multiple_recepteur_capacity/pure_slot_throughput_mpr}
+	\caption{Spatial throughput with respect to normalized load}
+	\label{fig:pureslotthroughputmpr}
+\end{figure}
 
-%The diversity gain in terms of spatial throughput with $10\%$ packet loss rate constraint is the same with those in last three rows in Tab.~\ref{my-label}.
-%In non-slotted ALOHA, the spatial throughput of macro reception diversity is 
+Fig.~\ref{fig:pureslotthroughputmpr} illustrates the spatial throughput comparison. Due to page limitation, only macro diversity and best BS attach method are compared. In interval $\left[ 0, 1.0 \right]$, macro diversity for slotted ALOHA always has the best spatial through performance. In interval $\left[ 0, 0.2\right]$, macro diversity for pure ALOHA in worst case (i.e. with shadowing and maximum interference) still outperforms the best BS attach method.  In interval $\left[ 0.6, 1\right]$ where network packet loss rate is very high, the best BS attach method for slotted ALOHA with $8$ dB shadowing is better than macro diversity in pure ALOHA. In addition, shadowing has positive impact for best BS attach method when the normalized load is greater than $0.4$. 
 
-%With normalized load, instead of reaching a maximal value then descending, we observe that the spatial throughput increases until a stable value. For the normalized load of interest in interval $\left[ 0, 0.3\right]$(zoomed part of Fig.~~\ref{fig:pureslotthroughputmpr}), we observe that, in slotted ALOHA, throughput of nearest BS attach method with shadowing effect $8$dB is  
-%about $65\%$ ($0.118/0.18$ at normalized load $0.2$) of that in macro reception diversity case.
-%In non-slotted ALOHA, throughput of the worst case is about $60\%$ of that in macro reception diversity. In addition, for macro reception diversity, the throughput ratio between non-slotted and slotted ALOHA is just $88\%$ at normalized load $0.2$.
+The diversity gain in terms of spatial throughput with $10\%$ packet loss rate constraint is the same with those in last three rows in Tab.~\ref{my-label}.
+In non-slotted ALOHA, the spatial throughput of macro reception diversity is 
 
-%\begin{table}[]
-%	\centering
-%	\caption{Maximum normalized load under packet loss rate $10\%$ and corresponding diversity gain}
-%	\label{my-label}
-%	\resizebox{\columnwidth}{!}{%
-%		\begin{tabular}{@{}lcccc@{}}
-%			\toprule
-%			& \multicolumn{1}{l}{Shadowing} & \multicolumn{1}{l}{Slotted ALOHA} & \multicolumn{1}{l}{\shortstack{Pure ALOHA\\Avg. Interference}} & \multicolumn{1}{l}{\shortstack{Pure ALOHA\\Max. Interference}} \\ \midrule
-%			\multirow{2}{*}{Nearest BS Attach}                                   & 0dB                           & $0.05000$                         & $0.03756$                                                      & $0.02504$                                                      \\
-%			& 8dB                           & $0.02333$                         & $0.01750$                                                      & $0.01166$                                                      \\ \midrule
-%			\multirow{2}{*}{Best BS Attach}                                      & 0dB                           & $0.0500$                          & $0.03756$                                                      & $0.02504$                                                      \\
-%			& 8dB                           & $0.03565$                         & $0.02674$                                                      & $0.01783$                                                      \\ \midrule
-%			Macro Reception Diversity                                            & 0/8dB                         & $0.1957$                          & $0.1468$                                                       & $0.09787$                                                      \\ \midrule
-%			\multirow{2}{*}{\shortstack{Diversity gain\\against Best BS attach}} & 0dB                           & \multicolumn{3}{c}{$\times3.91$}                                                                                                                                    \\
-%			& 8dB                           & \multicolumn{3}{c}{$\times5.49$}                                                                                                                                    \\ \bottomrule
-%		\end{tabular}%
-%	}
-%\end{table}
+With normalized load, instead of reaching a maximal value then descending, we observe that the spatial throughput increases until a stable value. For the normalized load of interest in interval $\left[ 0, 0.3\right]$(zoomed part of Fig.~~\ref{fig:pureslotthroughputmpr}), we observe that, in slotted ALOHA, throughput of nearest BS attach method with shadowing effect $8$dB is  
+about $65\%$ ($0.118/0.18$ at normalized load $0.2$) of that in macro reception diversity case.
+In non-slotted ALOHA, throughput of the worst case is about $60\%$ of that in macro reception diversity. In addition, for macro reception diversity, the throughput ratio between non-slotted and slotted ALOHA is just $88\%$ at normalized load $0.2$.
+
+
+\subsection{Network level Performance with Retransmission}
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth]{/Users/qsong/Documents/slotted_aloha_related_project/test/normalized_load_vs_packet_loss_rate_N=2}
+	\caption{Network packet loss rate with respect to fresh normalized load $p\lambda_{m}/\lambda_{b}$. $N$ is the maximum allowed transmission number.}
+	\label{fig:load_vs_packet_loss_rate_N=2}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth]{/Users/qsong/Documents/slotted_aloha_related_project/test/normalized_load_vs_packet_loss_rate_N=3}
+	\caption{Network packet loss rate with respect to fresh normalized load $p\lambda_{m}/\lambda_{b}$. $N$ is the maximum allowed transmission number.}
+	\label{fig:load_vs_packet_loss_rate_N=3}
+\end{figure}
+
+\subsection{Performance with quality of service?}
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth]{/Users/qsong/Documents/slotted_aloha_related_project/test/max_normalized_load_with_outage_probability.eps}
+	\caption{ Maximum normalized load with respect to outage probability threshold. The target packet loss rate is $10\%$.}
+	\label{fig:max_normalized_load_with_outage_probability}
+\end{figure}
+
+
 
 %that formula $(\ref{eq:bs_nst_att_analytical})$ is a monotonically increasing function of shadowing effect standard error $\sigma$, which means that shadowing effect has a negative impact. This is contrast with intuition that shadowing effect shall improve packet loss rate due to the power level diversity it brings. The reason of performance degradation is: shadowing effect is like to have the magic to ``change`` the distance between device and BS for each transmission. In other words, the geographical nearest BS is not always the best target to transmit packets if without accurate power  control to invert path loss.
 
-%\begin{table}[]
-%\centering
-%\caption{Maximum normalized load under packet loss rate $10\%$ and corresponding diversity gain}
-%\label{my-label}
-%\resizebox{\columnwidth}{!}{%
-%	\begin{tabular}{lcccc}
-%		\hline
-%		& \multicolumn{1}{l}{\shortstack{Shadowing}} & \multicolumn{1}{l}{\shortstack{Slotted\\ALOHA}} & \multicolumn{1}{l}{\shortstack{Pure ALOHA\\Average \\Interference}} & \multicolumn{1}{l}{\shortstack{Pure ALOHA\\Maximum \\Interference}} \\ \hline
-%		\multirow{2}{*}{Best BS Attach}                                      & 0dB                           & $0.050$                           & $0.038$                                                        & $0.025$                                                        \\
-%		& 8dB                           & $0.036$                           & $0.027$                                                        & $0.018$                                                        \\ \hline
-%		\shortstack{\shortstack{Macro Reception\\Diversity} }                                            & 8dB                         & $0.20$                            & $0.15$                                                         & $0.1$                                                        \\ \hline
-%		
-%		\shortstack{\shortstack{Diversity gain\\against Best BS attach} }                                            & 8dB                         & $0.20$                            & $0.15$                                                         & $0.1$                                                        \\ \hline
-%		
-%		
-%		\multirow{2}{*}{\shortstack{Diversity gain\\against Best BS attach}} &
-%		0dB                           & \multicolumn{3}{c}{$\times4.0$}                                                                                                                                     \\
-%		& 8dB                           & \multicolumn{3}{c}{$\times5.5$}                                                                                                                                     \\ \hline
-%	\end{tabular}%
-%}
-%\end{table}
+
 
 %Recall that for system with pure ALOHA and without error correction coding techniques, the analytical results are derived by using a simple upper bound. By simulation, we observe that the deviation with theoretical results is very slight (see Fig.~\ref{fig:subfig:c}), which confirms that the proposed simple-to-use upper bound is an good approximation.

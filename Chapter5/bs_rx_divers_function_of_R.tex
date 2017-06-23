@@ -1,11 +1,16 @@
 \section{Performance with known Best BS}
-\qsong{First we should talk the motivation of this study...} In Sec~\ref{sec:op_over_infinite_plane}, we study the network-level packet loss rate among with other metrics. However, the network-level performance metrics can only reflect the average quality of service proposed to devices. For example, it is very possible that packet loss rate of the devices at the border of BS coverage is higher than the expected value. It is necessary to use a more refined performance metric
+In Sec~\ref{sec:op_over_infinite_plane} and~\ref{sec:op_over_infinite_plane_with_retransmission}, we study the network-level performance metrics such as packet loss rate, throughput. These metrics are actually the averaged over the entire networks, which give a global view about the quality of service in LPWAN networks but still have its limitations. With a target network level packet loss rate such as $10\%$, it is very possible that devices in the neighborhood of BS never fail while devices at the border of BS coverage actually packet loss rate higher than $10\%$.
 
-In this section, we assume that the best BS station with label $y_b$ is $r_{0}$ far away from the typical device. We now study the packet loss rate $P_{f}(r_{0})$ with macro reception diversity in this case. Network packet loss rate $P_{f}(r_{0})$ is expressed as follows:
+In this section, we analyze the packet loss rate with known distance to the best BS under BS attach method and macro reception diversity, and then evaluate the maximum normalized load, in one-shot random access case, with outage probability and packet loss rate constraint. 
+
+For a typical device at the origin, we assume that the best BS station with label $y_b$ is $r_{0}$ far away from the typical device. The distribution of $r_0$ is as follows:
 \begin{align}
 \label{eq:pdf_modified_r_0}
-	f(r) = 2 \pi \lambda_b e^{\frac{2\sigma^2}{\gamma^2}}  \exp( -\lambda_b  e^{\frac{2\sigma^2}{\gamma^2}} \pi r^2 ) r 
+f(r) = 2 \pi \lambda_b e^{\frac{2\sigma^2}{\gamma^2}}  \exp( -\lambda_b  e^{\frac{2\sigma^2}{\gamma^2}} \pi r^2 ) r 
 \end{align}
+
+We now study the packet loss rate $P_{f}(r_{0})$ with macro reception diversity in this case. Network packet loss rate $P_{f}(r_{0})$ is expressed as follows:
+
 
 
 
@@ -21,23 +26,28 @@ Equivalent Radius $R_{\text{eq}}$. We consider normalized distance by $R_{\text{
 	P_{f, b}(r_{0}) = 1- \exp(-p \lambda_{m} \pi A \theta_{T}^{\frac{2}{\gamma}} e^{\frac{2\sigma^2}{\gamma^2}}  r_{0}^2 )
 %	P_{f, b}(r_{0}^{'}) = 1- \exp(-A L \theta_{T}^{\frac{2}{\gamma}} e^{\frac{2\sigma^2}{\gamma^2}}  r_{0}^{'2} )
 \end{align}
-From $(\ref{eq:pdf_modified_r_0})$ and $(\ref{eq:link-level-packet_loss_rate})$, the PDF of packet loss rate $P_{f, b}(r_{0})$ is obtained as follows:
+From $\eqref{eq:pdf_modified_r_0}$ and $\eqref{eq:link-level-packet_loss_rate}$, the probability density function of packet loss rate $P_{f, b}(r_{0})$ is obtained as follows:
 \begin{align}
-	f_{P_{f,b}}(p_{f,b}) =\frac{1}{ A \theta^{\frac{2}{\gamma}} L } (1-p_f)^{ \frac{1}{  A \theta^{\frac{2}{\gamma}} L } - 1} 
+	f_{P_{f,b}}(p_{f,b}) =\frac{1}{ A \theta^{\frac{2}{\gamma}} L } (1-p_f)^{ 1 / \left( A \theta^{\frac{2}{\gamma}} L\right) - 1} 
 \end{align}
-The CDF of $P_{f,b}$:
+The cumulative distribution function of $P_{f,b}$:
 \begin{align}
-F_{P_{f,b}}(p_{f,b}) =1 - (1-p_f)^{ \frac{1}{  A \theta^{\frac{2}{\gamma}} L } } 
+F_{P_{f,b}}(p_{f,b}) =1 - (1-p_f)^{ 1 / \left( A \theta^{\frac{2}{\gamma}} L\right) } 
+\end{align}
+According to the outage probability definition, $P_{\text{outage}, b}$ is as follows:
+\begin{align}
+	P_{\text{outage}, b} = (1-p_f)^{ 1 / \left( A \theta^{\frac{2}{\gamma}} L \right) } 
 \end{align}
 
 \subsection{Macro Reception Diversity}
+Recall that in case of macro reception diversity, 
 \begin{align}
 \label{eq:definition_pf1} 
 P_{f, m}(r_{0}) &= \mathbb{P}\left\lbrace  \theta_{y_b} < \theta_{T}, \theta_{y_b} < \theta_{T} \text{where} \right\rbrace \nonumber\\
 &= ( 1-p_s( r_{0} ) ) \mathbb{E} \left[  \prod_{r_i \in \Phi_{b}} (1-p_{s}(r_i)) \right], \text{with } r_i \in \left[ r_{0}, +\infty\right],
 \end{align} 
 
-where $r_i$ refers to the distance between the device and BS with label $i$. Note that $r_i$ should be not less than distance to the best BS denoted by $r_{0}$, whose probability density function is given in $(\ref{eq:pdf_nearest_distance})$. Expression $(\ref{eq:definition_pf1})$ is actually the Probability Generating FunctionaL (PGFL) of Point point process $\Phi_{b}$ for Base Station, which states for some function $f(x)$ that $\mathbb{E}\left[ \prod_{x \in \Phi}f(x) \right] = \exp(-\lambda(\int_{\mathbb{R}^2}(1-f(x))dx))$. Thus, term in $\mathbb{E} \left[  \prod_{r_i \in \Phi_{b}} (1-p_{s}(r_i)) \right]$ in $(\ref{eq:definition_pf1})$ can be expressed as follows:
+where $r_i$ refers to the distance between the device and BS with label $i$. Note that $r_i$ should be not less than distance to the best BS denoted by $r_{0}$, whose probability density function is given in $\eqref{eq:pdf_nearest_distance}$. Expression $\eqref{eq:definition_pf1}$ is actually the Probability Generating FunctionaL (PGFL) of Point point process $\Phi_{b}$ for Base Station, which states for some function $f(x)$ that $\mathbb{E}\left[ \prod_{x \in \Phi}f(x) \right] = \exp(-\lambda(\int_{\mathbb{R}^2}(1-f(x))dx))$. Thus, term in $\mathbb{E} \left[  \prod_{r_i \in \Phi_{b}} (1-p_{s}(r_i)) \right]$ in $\eqref{eq:definition_pf1}$ can be expressed as follows:
 \begin{align}
 \mathbb{E} \left[  \prod_{r_i \in \Phi_{b}} (1-p_{s}(r_i)) \right] &= \exp\left\lbrace -2\pi \lambda_{b} \int_{r_{0}}^{+\infty} p_{s}(r)rdr \right\rbrace \nonumber\\
 &= \exp\left\lbrace  \int_{r_{0}}^{+\infty}  \exp(-p \lambda_{m} \pi A \theta_{T}^{\frac{2}{\gamma}} e^{\frac{2\sigma^2}{\gamma^2}}  r^2) 2 \pi \lambda_b e^{\frac{2\sigma^2}{\gamma^2}}  rdr  \right\rbrace \nonumber \\ 
@@ -50,21 +60,7 @@ Thus,
 P_{f}(r_{0}) = ( 1- \exp(-p \lambda_{m} \pi A \theta_{T}^{\frac{2}{\gamma}} e^{\frac{2\sigma^2}{\gamma^2}}  r_{0}^2 ) )\exp\left\lbrace \!\!\!-\frac{1}{ A \theta_{T}^{\frac{2}{\gamma}}  L }  \!\exp(-p \lambda_{m} \pi A \theta_{T}^{\frac{2}{\gamma}} e^{  \frac{2\sigma^2}{\gamma^2}  } r_{0}^2)  \!\!\!\right\rbrace
 \end{align}
 
-Fixed point form:
-\begin{align}
-	\frac{ P_{f}(r_{0}) }{ ( 1- \exp(-p \lambda_{m} \pi A \theta_{T}^{\frac{2}{\gamma}} e^{\frac{2\sigma^2}{\gamma^2}}  r_{0}^2 ) )   }  &= \exp\left\lbrace -\frac{1}{ A \theta_{T}^{\frac{2}{\gamma}}  L }  \exp(-p \lambda_{m} \pi A \theta_{T}^{\frac{2}{\gamma}} e^{  \frac{2\sigma^2}{\gamma^2}  } r_{0}^2)  \right\rbrace \nonumber\\ 
-	\ln(\frac{ P_{f}(r_{0}) }{ ( 1- \exp(-p \lambda_{m} \pi A \theta_{T}^{\frac{2}{\gamma}} e^{\frac{2\sigma^2}{\gamma^2}}  r_{0}^2 ) )   } ) &= -\frac{1}{ A \theta_{T}^{\frac{2}{\gamma}}  L }  \exp(-p \lambda_{m} \pi A \theta_{T}^{\frac{2}{\gamma}} e^{  \frac{2\sigma^2}{\gamma^2}  } r_{0}^2) \nonumber\\ 
-	A \theta_{T}^{\frac{2}{\gamma}}  L \ln\left(   \frac{  1- \exp(-p \lambda_{m} \pi A \theta_{T}^{\frac{2}{\gamma}} e^{\frac{2\sigma^2}{\gamma^2}}  r_{0}^2 )  }{   P_{f}(r_{0})   }   \right)  &=  \exp(-p \lambda_{m} \pi A \theta_{T}^{\frac{2}{\gamma}} e^{  \frac{2\sigma^2}{\gamma^2}  } r_{0}^2)   \nonumber  
-\end{align}
-\begin{align}
-		-\frac{1}{ p \lambda_{m} \pi A \theta_{T}^{\frac{2}{\gamma}} e^{  \frac{2\sigma^2}{\gamma^2}  } }\ln\left(  A \theta_{T}^{\frac{2}{\gamma}}  L \ln\left(   \frac{  1- \exp(-p \lambda_{m} \pi A \theta_{T}^{\frac{2}{\gamma}} e^{\frac{2\sigma^2}{\gamma^2}}  r_{0}^2 )  }{   P_{f}(r_{0})   }   \right)  \right) &=   r_{0}^2    \nonumber\\
-		\left[  -\frac{1}{ p \lambda_{m} \pi A \theta_{T}^{\frac{2}{\gamma}} e^{  \frac{2\sigma^2}{\gamma^2}  } }\ln\left(  A \theta_{T}^{\frac{2}{\gamma}}  L \ln\left(   \frac{  1- \exp(-p \lambda_{m} \pi A \theta_{T}^{\frac{2}{\gamma}} e^{\frac{2\sigma^2}{\gamma^2}}  r_{0}^2 )  }{   P_{f}(r_{0})   }   \right)  \right)  \right] ^{1/2}&=   r_{0}    \nonumber
-\end{align}
 
-Fixed point expression to calculate $\lambda_m$ ($\lambda_b$ and $r_{0}$ is known)
-\begin{align}
--\frac{1}{ p  \pi A \theta_{T}^{\frac{2}{\gamma} } e^{  \frac{2\sigma^2}{\gamma^2}  } r_{0}^2}\ln\left(  A \theta_{T}^{\frac{2}{\gamma}}  L \ln\left(   \frac{  1- \exp(-p \lambda_{m} \pi A \theta_{T}^{\frac{2}{\gamma}} e^{\frac{2\sigma^2}{\gamma^2}}  r_{\text{min}}^2 )  }{   P_{f}(r_{\text{min}})   }   \right)  \right) &=   \lambda_{m}   \nonumber
-\end{align}
 Outage probability:
 \begin{align}
 	P_{\text{outage}} &= \int_{0}^{+\infty} \mathds{1}_{\left[ P_{f, m} > P_{f}^{\text{max}}\right] }f(r) dr \nonumber \\

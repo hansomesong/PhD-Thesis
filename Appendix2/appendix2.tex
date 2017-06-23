@@ -1,12 +1,19 @@
 % ******************************* Thesis Appendix B ********************************
 
 \chapter{Installing the CUED class file}
+Fixed point form:
+\begin{align}
+\frac{ P_{f}(r_{0}) }{ ( 1- \exp(-p \lambda_{m} \pi A \theta_{T}^{\frac{2}{\gamma}} e^{\frac{2\sigma^2}{\gamma^2}}  r_{0}^2 ) )   }  &= \exp\left\lbrace -\frac{1}{ A \theta_{T}^{\frac{2}{\gamma}}  L }  \exp(-p \lambda_{m} \pi A \theta_{T}^{\frac{2}{\gamma}} e^{  \frac{2\sigma^2}{\gamma^2}  } r_{0}^2)  \right\rbrace \nonumber\\ 
+\ln(\frac{ P_{f}(r_{0}) }{ ( 1- \exp(-p \lambda_{m} \pi A \theta_{T}^{\frac{2}{\gamma}} e^{\frac{2\sigma^2}{\gamma^2}}  r_{0}^2 ) )   } ) &= -\frac{1}{ A \theta_{T}^{\frac{2}{\gamma}}  L }  \exp(-p \lambda_{m} \pi A \theta_{T}^{\frac{2}{\gamma}} e^{  \frac{2\sigma^2}{\gamma^2}  } r_{0}^2) \nonumber\\ 
+A \theta_{T}^{\frac{2}{\gamma}}  L \ln\left(   \frac{  1- \exp(-p \lambda_{m} \pi A \theta_{T}^{\frac{2}{\gamma}} e^{\frac{2\sigma^2}{\gamma^2}}  r_{0}^2 )  }{   P_{f}(r_{0})   }   \right)  &=  \exp(-p \lambda_{m} \pi A \theta_{T}^{\frac{2}{\gamma}} e^{  \frac{2\sigma^2}{\gamma^2}  } r_{0}^2)   \nonumber  
+\end{align}
+\begin{align}
+-\frac{1}{ p \lambda_{m} \pi A \theta_{T}^{\frac{2}{\gamma}} e^{  \frac{2\sigma^2}{\gamma^2}  } }\ln\left(  A \theta_{T}^{\frac{2}{\gamma}}  L \ln\left(   \frac{  1- \exp(-p \lambda_{m} \pi A \theta_{T}^{\frac{2}{\gamma}} e^{\frac{2\sigma^2}{\gamma^2}}  r_{0}^2 )  }{   P_{f}(r_{0})   }   \right)  \right) &=   r_{0}^2    \nonumber\\
+\left[  -\frac{1}{ p \lambda_{m} \pi A \theta_{T}^{\frac{2}{\gamma}} e^{  \frac{2\sigma^2}{\gamma^2}  } }\ln\left(  A \theta_{T}^{\frac{2}{\gamma}}  L \ln\left(   \frac{  1- \exp(-p \lambda_{m} \pi A \theta_{T}^{\frac{2}{\gamma}} e^{\frac{2\sigma^2}{\gamma^2}}  r_{0}^2 )  }{   P_{f}(r_{0})   }   \right)  \right)  \right] ^{1/2}&=   r_{0}    \nonumber
+\end{align}
 
-\LaTeX.cls files can be accessed system-wide when they are placed in the
-<texmf>/tex/latex directory, where <texmf> is the root directory of the user’s \TeX installation. On systems that have a local texmf tree (<texmflocal>), which
-may be named ``texmf-local'' or ``localtexmf'', it may be advisable to install packages in <texmflocal>, rather than <texmf> as the contents of the former, unlike that of the latter, are preserved after the \LaTeX system is reinstalled and/or upgraded.
-
-It is recommended that the user create a subdirectory <texmf>/tex/latex/CUED for all CUED related \LaTeX class and package files. On some \LaTeX systems, the directory look-up tables will need to be refreshed after making additions or deletions to the system files. For \TeX Live systems this is accomplished via executing ``texhash'' as root. MIK\TeX users can run ``initexmf -u'' to accomplish the same thing.
-
-Users not willing or able to install the files system-wide can install them in their personal directories, but will then have to provide the path (full or relative) in addition to the filename when referring to them in \LaTeX.
+Fixed point expression to calculate $\lambda_m$ ($\lambda_b$ and $r_{0}$ is known)
+\begin{align}
+-\frac{1}{ p  \pi A \theta_{T}^{\frac{2}{\gamma} } e^{  \frac{2\sigma^2}{\gamma^2}  } r_{0}^2}\ln\left(  A \theta_{T}^{\frac{2}{\gamma}}  L \ln\left(   \frac{  1- \exp(-p \lambda_{m} \pi A \theta_{T}^{\frac{2}{\gamma}} e^{\frac{2\sigma^2}{\gamma^2}}  r_{\text{min}}^2 )  }{   P_{f}(r_{\text{min}})   }   \right)  \right) &=   \lambda_{m}   \nonumber
+\end{align}
 
