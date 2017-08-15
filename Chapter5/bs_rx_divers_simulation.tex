@@ -1,42 +1,65 @@
 \section{Simulation Results and Discussion}
 \label{sec:simulation}
-\begin{figure*}
+%\begin{figure*}
 	%	\centering
-	\subfigure[Slotted ALOHA]
-	{  \label{fig:subfig:a} %% label for second subfigure
-		\includegraphics[width=0.36\linewidth]{/Users/qsong/Documents/slotted_aloha_related_project/multiple_recepteur_capacity/new_packet_loss_rate_mpr.eps}}
-	\hspace{-2.3em}
-	\subfigure
-	[Pure ALOHA, average interference]
-	{
-		\label{fig:subfig:b} %% label for first subfigure
-		\includegraphics[width=0.36\linewidth]{/Users/qsong/Documents/slotted_aloha_related_project/multiple_recepteur_capacity/pure_slot_packet_loss_rate_mpr.eps}}
-	%		\hspace{1in}
-	\hspace{-2.1em}
-	\subfigure
-	[Pure ALOHA, maximal interference]
-	{
-		\label{fig:subfig:c} %% label for second subfigure
-		\includegraphics[width=0.35\linewidth]{/Users/qsong/Documents/slotted_aloha_related_project/multiple_recepteur_capacity/analytical_model_validation/validation_plr}
-	}
-	\caption{Network packet loss rate with respect to normalized load $p\lambda_{m}/\lambda_{b}$ (ANA=analytical, SIM=simulation)}
-	\label{fig:subfig} %% label for entire figure
-	\vspace{-2em}
-\end{figure*}
-We develop a simulator in which devices and BS are deployed according to PPP. The interference on each BS is computed without any independence assumption. The basic simulation settings are: $\gamma=4$, $\sigma = 0$ or $8$ dB, $\theta_{T} =3$ dB, $p=0.008$, $P_{f}^{\text{max}}=10\%$. The device density $\lambda_m$ varies from $0.2$ to $2$, and BS density $\lambda_{b}$ is fixed as $0.08$. To calculate the $95\%$ confidence interval, each simulation is repeated $50$ times. 
+%	\subfigure[Slotted ALOHA]
+%	{  \label{fig:subfig:a} %% label for second subfigure
+%		\includegraphics[width=0.36\linewidth]{/Users/qsong/Documents/slotted_aloha_related_project/multiple_recepteur_capacity/new_packet_loss_rate_mpr.eps}}
+%	\hspace{-2.3em}
+%	\subfigure
+%	[Pure ALOHA, average interference]
+%	{
+%		\label{fig:subfig:b} %% label for first subfigure
+%		\includegraphics[width=0.36\linewidth]{/Users/qsong/Documents/slotted_aloha_related_project/multiple_recepteur_capacity/pure_slot_packet_loss_rate_mpr.eps}}
+%	%		\hspace{1in}
+%	\hspace{-2.1em}
+%	\subfigure
+%	[Pure ALOHA, maximal interference]
+%	{
+%		\label{fig:subfig:c} %% label for second subfigure
+%		\includegraphics[width=0.35\linewidth]{/Users/qsong/Documents/slotted_aloha_related_project/multiple_recepteur_capacity/analytical_model_validation/validation_plr}
+%	}
+%	\caption{Network packet loss rate with respect to normalized load $p\lambda_{m}/\lambda_{b}$ (ANA=analytical, SIM=simulation)}
+%	\label{fig:subfig} %% label for entire figure
+%	\vspace{-2em}
+%\end{figure*}
+To confirm the correctness of the proposed analytical model, we develop a simulator in which devices and BS are deployed according to PPP: at the beginning of each simulation, the number of devices and BS are determined and these nodes are uniformly placed in an disk area with radius $40$. The interference on each BS is computed without any independence assumption. The background noise is neglected. The basic simulation settings are: $\gamma=4$, $\sigma = 0$ or $8$ dB, $\theta_{T} =3$ dB, $p=0.008$, $P_{f}^{\text{max}}=10\%$. The spatial device density $\lambda_m$ varies from $0.2$ to $2$, and spatial BS density $\lambda_{b}$ is fixed as $0.08$. To calculate the $95\%$ confidence interval, each simulation is repeated $50$ times. 
 \subsection{One shot case}
-Fig.~\ref{fig:subfig} shows the packet loss rate from both simulation and analytical results. For the nearest and best BS attach cases, the simulation and analytical results fit well:\begin{inparaenum}[i)]
+\subsubsection{Packet loss Rate}
+Fig.~\ref{fig:subfig:a}, \ref{fig:subfig:b}, \ref{fig:subfig:c} show the packet loss rate from both simulation and analytical results, respectively for slotted ALOHA networks, pure ALOHA networks where average cumulative interference is considered, pure ALOHA where maximum cumulative interference is considered. In each figure, four cases are illustrated: nearest BS attach, best BS attach, macro reception diversity and MRC-based macro reception diversity.
+
+For the nearest and best BS attach cases, the simulation and analytical results fit well:\begin{inparaenum}[i)]
 	\item this confirms the correctness of $(\ref{eq:bs_nst_att_analytical})$ (which is an approximation) and $(\ref{eq:bs_best_att_analytical})$;
 	\item the upper bound proposed in Sec.~\ref{subsec: pure-aloha} for maximum interference is a simple but accurate approximation (see Fig.~\ref{fig:subfig:c}).
 \end{inparaenum} 
-As proved by $(\ref{eq:bs_best_att_analytical})$, the nearest BS attach with $\sigma=0$ dB is identical to the best BS attach case. Our simulation confirms this, but we just plot the latter in Fig.~\ref{fig:subfig} for the sake of clarity. 
+As proved by $(\ref{eq:bs_best_att_analytical})$, the nearest BS attach with $\sigma=0$ dB is identical to the best BS attach case. Our simulation confirms this, but we just plot the latter in Fig.~\ref{fig:subfig:a}, \ref{fig:subfig:b}, \ref{fig:subfig:c} for the sake of clarity. 
+\begin{figure}[!tb]
+	\centering
+	\includegraphics[width=\linewidth]{/Users/qsong/Documents/slotted_aloha_related_project/multiple_recepteur_capacity/new_packet_loss_rate_mpr.eps}
+	\caption{Network packet loss rate with respect to normalized load $p\lambda_{m}/\lambda_{b}$ (ANA=analytical, SIM=simulation) for slotted ALOHA}
+	\label{fig:subfig:a} 
+\end{figure}
 
+For macro diversity case (without maximum ratio combining techniques), the packet loss rate in slotted ALOHA networks given by the analysis is lower than the rate obtained by simulations (see Fig.~\ref{fig:subfig:a}). The bias is larger without shadowing. The is due to the fact that the interference independence assumption does not always hold, especially at low load regime and without shadowing. When the load increases, diversity of interferes increases, and the deviation between simulation and analysis is reduced. In the presence of shadowing, the randomness of interferences increases and the same trend is observed. Thus, shadowing effect can be leveraged to reduce packet loss rate if macro reception diversity is applied. With pure ALOHA and average interference (see Fig.~\ref{fig:subfig:b}), the lack of synchronization also increases the randomness of interferences, and the deviation is smaller than that in slotted ALOHA. With pure ALOHA and maximum interference (see Fig.~\ref{fig:subfig:c}), the interference independence assumption and upper bound approximation jointly reduce the deviation.
+\begin{figure}[!tb]
+	\centering
+	\includegraphics[width=\linewidth]{/Users/qsong/Documents/slotted_aloha_related_project/multiple_recepteur_capacity/pure_slot_packet_loss_rate_mpr.eps}
+	\caption{Network packet loss rate with respect to normalized load $p\lambda_{m}/\lambda_{b}$ (ANA=analytical, SIM=simulation) for pure ALOHA.}
+	\label{fig:subfig:b} 
+\end{figure}
+\begin{figure}[!tb]
+	\centering
+	\includegraphics[width=\linewidth]{/Users/qsong/Documents/slotted_aloha_related_project/multiple_recepteur_capacity/analytical_model_validation/validation_plr}
+	\caption{Network packet loss rate with respect to normalized load $p\lambda_{m}/\lambda_{b}$ (ANA=analytical, SIM=simulation) for pure ALOHA. }
+	\label{fig:subfig:c} 
+\end{figure}
 
-For macro diversity case, the packet loss rate in slotted ALOHA given by the analysis is lower than the rate obtained by simulations (see Fig.~\ref{fig:subfig:a}). The bias is larger without shadowing. The is due to the fact that the interference independence assumption does not always hold, especially at low load regime and without shadowing. When the load increases, diversity of interferes increases, and the deviation between simulation and analysis is reduced. In the presence of shadowing, the randomness of interferences increases and the same trend is observed. Thus, shadowing effect can be leveraged to reduce packet loss rate if macro reception diversity is applied. With pure ALOHA and average interference (see Fig.~\ref{fig:subfig:b}), the lack of synchronization also increases the randomness of interferences, and the deviation is smaller than that in slotted ALOHA. With pure ALOHA and maximum interference (see Fig.~\ref{fig:subfig:c}), the interference independence assumption and upper bound approximation jointly reduce the deviation.
+For MRC-based macro reception diversity, the conclusions that we obtain are similar to that obtained for macro reception diversity without maximum ratio combining. The simulation and analytical results relatively fit well for pure ALOHA networks, but deviation is obvious for slotted networks. The reason is due to the assumption that the received SINR at each BS are mutually independent. As discussed before, such an assumption is more rational when shadowing is present and in pure ALOHA networks.
 
 Actually, in realistic deployed M2M-dedicated networks, especially in urban areas, the shadowing effect is present. In addition, LPWAN apply macro diversity and pure ALOHA~\cite{ietf-lpwan-overview-03}. The analytical model is relatively accurate around packet loss rate of $10\%$, which makes $(\ref{eq:bs_rx_divers_analytical})$ suitable to analyze this kind of networks.
 
-From $(\ref{eq:bs_nst_att_analytical})$ and $(\ref{eq:bs_rx_divers_analytical})$, the maximum normalized loads in different scenario are obtained and shown in Tab.~\ref{my-label}. We observe that macro reception diversity supports about $4.0$ times devices as much as that served by best BS attach method in case of $8$ dB shadowing. 
+\subsubsection{Maximum Normalized Load}
+From $(\ref{eq:bs_nst_att_analytical})$ and $(\ref{eq:bs_rx_divers_analytical})$, the maximum normalized loads in different scenario are obtained and shown in Tab.~\ref{my-label}. We observe that macro reception diversity and MRC-based macro reception diversity, respectively supports about $4.0$ times devices as much as that served by best BS attach method in case of $8$ dB shadowing.
 In addition, the maximum load with macro diversity for pure ALOHA in the worst case is $0.1$, which is about $2$ times the maximum load ($0.05$) for slotted ALOHA in best case. This means that for very cheap systems in which devices do not manage any downlink channel, the lack of synchronization is more than compensated by the macro diversity gain.
 \begin{table}[]
 	\centering
@@ -48,65 +71,85 @@ In addition, the maximum load with macro diversity for pure ALOHA in the worst c
 			& \multicolumn{1}{l}{Slotted ALOHA} & \multicolumn{1}{l}{\shortstack{Pure ALOHA\\Avg. Interference}} & \multicolumn{1}{l}{\shortstack{Pure ALOHA\\Max. Interference}} \\ \midrule
 			Best BS Attach                                      & $\textbf{0.05}$                            & $0.038$                                                        & $0.025$                                                        \\ \midrule
 			Macro Diversity                                     & $0.2$                             & $0.152$                                                        & $\textbf{0.1}$                                                          \\ \midrule
-			Macro Diversity Gain & \multicolumn{3}{c}{$\times 4.0$}                                                                                                                                    \\ \bottomrule
+			MRC-based Macro Diversity                                     & $0.344$                             & $0.258$                                                        & $\textbf{0.171}$                                                          \\ \midrule
+			Macro Diversity Gain & \multicolumn{3}{c}{$\times 4.0$}                                                                                                                                    \\
+			MRC-based Macro Diversity Gain & \multicolumn{3}{c}{$\times 6.8$}   \\
+			 \bottomrule
 		\end{tabular}%
 	}
 \end{table}
 
-
-The packet loss rate performance in the case of applying maximum ratio combining is illustrated in Fig.~\ref{fig:newpacketlossratemprmrc}. It is not surprisingly to observe that maximum ratio combing bring significant performance improve.
-\begin{figure}
+\subsubsection{Spatial Throughput}
+%TODO: I think it is better to delete the curve for slotted ALOHA and macro reception diversity, since the anlaytical model is not exact...
+Fig.~\ref{fig:pureslotthroughputmpr} illustrates the spatial throughput comparison. Only macro diversity and best BS attach method are compared. In interval $\left[ 0, 1.0 \right]$, macro diversity for slotted ALOHA always has the best spatial through performance. In interval $\left[ 0, 0.2\right]$, macro diversity for pure ALOHA in worst case (i.e. with shadowing and maximum interference) still outperforms the best BS attach method.  In interval $\left[ 0.6, 1\right]$ where network packet loss rate is very high, the best BS attach method for slotted ALOHA with $8$ dB shadowing is better than macro diversity in pure ALOHA. In addition, shadowing has positive impact for best BS attach method when the normalized load is greater than $0.4$. 
+%
+%The diversity gain in terms of spatial throughput with $10\%$ packet loss rate constraint is the same with those in last three rows in Tab.~\ref{my-label}.
+%In non-slotted ALOHA, the spatial throughput of macro reception diversity is 
+%
+%With normalized load, instead of reaching a maximal value then descending, we observe that the spatial throughput increases until a stable value. For the normalized load of interest in interval $\left[ 0, 0.3\right]$(zoomed part of Fig.~~\ref{fig:pureslotthroughputmpr}), we observe that, in slotted ALOHA, throughput of nearest BS attach method with shadowing effect $8$dB is  
+%about $65\%$ ($0.118/0.18$ at normalized load $0.2$) of that in macro reception diversity case.
+%In non-slotted ALOHA, throughput of the worst case is about $60\%$ of that in macro reception diversity. In addition, for macro reception diversity, the throughput ratio between non-slotted and slotted ALOHA is just $88\%$ at normalized load $0.2$.
+\begin{figure}[!tb]
 	\centering
-	\includegraphics[width=1.0\columnwidth]{/Users/qsong/Documents/slotted_aloha_related_project/multiple_recepteur_capacity/new_packet_loss_rate_mpr_mrc}
-	\caption{Network packet loss rate with respect to normalized load $p\lambda_{m}/\lambda_{b}$ (ANA=analytical, SIM=simulation)}
-	\label{fig:newpacketlossratemprmrc}
-\end{figure}
-
-
-\begin{figure}
-	\centering
-	\includegraphics[width=\columnwidth]{/Users/qsong/Documents/slotted_aloha_related_project/multiple_recepteur_capacity/macro_div_gain_retrans}
-	\caption{Macro diversity gain against nearest BS attach with respect to maximum allowed packet loss rate}
-	\label{fig:macrodivgainretrans}
-\end{figure}
-
-In Fig.~\ref{fig:macrodivgainretrans}, we illustrate the macro diversity gain in three cases. We observe that with packet loss rate constraint $10^{-3}$, if maximum transmission number and packet repetition is $3$, the macro diversity gain is reduced to about $2.0$. When maximum transmission number and packet repetition is $4$, the macro diversity gain is reduced to about $1.0$ which means that both method almost support the same number of devices. However, if when maximum transmission number and packet repetition is $5$, macro diversity has no advantages in front of nearest BS attach method.
-\begin{figure}
-	\centering
-	\includegraphics[height=6cm,width=\linewidth]{/Users/qsong/Documents/slotted_aloha_related_project/multiple_recepteur_capacity/pure_slot_throughput_mpr}
+	\includegraphics[width=\linewidth]{/Users/qsong/Documents/slotted_aloha_related_project/multiple_recepteur_capacity/pure_slot_throughput_mpr}
 	\caption{Spatial throughput with respect to normalized load}
 	\label{fig:pureslotthroughputmpr}
 \end{figure}
 
-Fig.~\ref{fig:pureslotthroughputmpr} illustrates the spatial throughput comparison. Due to page limitation, only macro diversity and best BS attach method are compared. In interval $\left[ 0, 1.0 \right]$, macro diversity for slotted ALOHA always has the best spatial through performance. In interval $\left[ 0, 0.2\right]$, macro diversity for pure ALOHA in worst case (i.e. with shadowing and maximum interference) still outperforms the best BS attach method.  In interval $\left[ 0.6, 1\right]$ where network packet loss rate is very high, the best BS attach method for slotted ALOHA with $8$ dB shadowing is better than macro diversity in pure ALOHA. In addition, shadowing has positive impact for best BS attach method when the normalized load is greater than $0.4$. 
-
-The diversity gain in terms of spatial throughput with $10\%$ packet loss rate constraint is the same with those in last three rows in Tab.~\ref{my-label}.
-In non-slotted ALOHA, the spatial throughput of macro reception diversity is 
-
-With normalized load, instead of reaching a maximal value then descending, we observe that the spatial throughput increases until a stable value. For the normalized load of interest in interval $\left[ 0, 0.3\right]$(zoomed part of Fig.~~\ref{fig:pureslotthroughputmpr}), we observe that, in slotted ALOHA, throughput of nearest BS attach method with shadowing effect $8$dB is  
-about $65\%$ ($0.118/0.18$ at normalized load $0.2$) of that in macro reception diversity case.
-In non-slotted ALOHA, throughput of the worst case is about $60\%$ of that in macro reception diversity. In addition, for macro reception diversity, the throughput ratio between non-slotted and slotted ALOHA is just $88\%$ at normalized load $0.2$.
-
-
 \subsection{Network level Performance with Retransmission}
-\begin{figure}
+In this section, we take into account the retransmission mechanism and compare the network level packet loss rate of macro reception diversity and best BS attach method. The macro reception diversity is in pure ALOHA networks and best BS attach in slotted ALOHA. The performances are respectively shown in Fig.~\ref{fig:load_vs_packet_loss_rate_slotted} and Fig.~\ref{fig:load_vs_packet_loss_rate_diversity}. 
+
+For best BS attach method, it is observed that when the maximum allowed transmission number $N$ increases (i.e., from $1$ to $4$), the network level packet loss rate is reduced, and the maximum supported normalized load (with $10\%$ packet loss rate target) are increased. 
+However, for macro reception diversity (without maximum ratio combining), packet loss rate has been reduced in low load interval such as $[0.02, 0.12]$, but get worse in load interval$[0.12, 0.5]$. In addition, the maximum supported normalized load increases when maximum allowed transmission number $N$ varies from $1$ to $3$, but starts to get reduced from $n=4$.
+
+The cause leading to such a phenomena is that the devices located in the neighborhood are more competitive than other devices during packet transmission collision. Normally, the idea of retransmission mechanism is to augment the probability that a failed packet is correctly received by one BS after several trials in time domain. This is why in low load regime, the performance get improved. However, within high level load regime, the retransmission from far devices are more likely to be failed and thus become unuseful transmission which augments interference level. This explains that why after some critical point, the packet loss rate is more severe.
+\begin{figure}[!th]
 	\centering
-	\includegraphics[width=\linewidth]{/Users/qsong/Documents/slotted_aloha_related_project/test/normalized_load_vs_packet_loss_rate_N=2}
-	\caption{Network packet loss rate with respect to fresh normalized load $p\lambda_{m}/\lambda_{b}$. $N$ is the maximum allowed transmission number.}
-	\label{fig:load_vs_packet_loss_rate_N=2}
+	\includegraphics[width=\linewidth]{/Users/qsong/Documents/slotted_aloha_related_project/test/normalized_load_vs_packet_loss_rate_N=4}
+	\caption{Network packet loss rate with respect to fresh normalized load $p\lambda_{m}/\lambda_{b}$ for slotted ALOHA. $N$ is the maximum allowed transmission number.}
+	\label{fig:load_vs_packet_loss_rate_slotted}
 \end{figure}
 
-\begin{figure}
+The design guideline obtained from Fig.~\ref{fig:load_vs_packet_loss_rate_diversity} is: to get the optimum performance, the maximum allowed transmission number should be set an upper bound, such as $N = 3$.
+
+\begin{figure}[!th]
 	\centering
-	\includegraphics[width=\linewidth]{/Users/qsong/Documents/slotted_aloha_related_project/test/normalized_load_vs_packet_loss_rate_N=3}
-	\caption{Network packet loss rate with respect to fresh normalized load $p\lambda_{m}/\lambda_{b}$. $N$ is the maximum allowed transmission number.}
-	\label{fig:load_vs_packet_loss_rate_N=3}
+	\includegraphics[width=\linewidth]{/Users/qsong/Documents/slotted_aloha_related_project/test/2normalized_load_vs_packet_loss_rate_N=4}
+	\caption{Network packet loss rate with respect to fresh normalized load $p\lambda_{m}/\lambda_{b}$ for pure ALOHA. $N$ is the maximum allowed transmission number.}
+	\label{fig:load_vs_packet_loss_rate_diversity}
 \end{figure}
 
-\subsection{Performance with quality of service?}
-\begin{figure}
+\begin{figure}[!th]
 	\centering
-	\includegraphics[width=\linewidth]{/Users/qsong/Documents/slotted_aloha_related_project/test/max_normalized_load_with_outage_probability.eps}
+	\includegraphics[width=\linewidth]{/Users/qsong/Documents/slotted_aloha_related_project/multiple_recepteur_capacity/fixed_normalized_load_vs_packet_loss_rate_N=4}
+	\caption{Network packet loss rate with respect to fresh normalized load $p\lambda_{m}/\lambda_{b}$ for pure ALOHA. $N$ is the maximum allowed transmission number.}
+	\label{fig:fixed_load_vs_packet_loss_rate_diversity}
+\end{figure}
+
+
+%\begin{figure}[!th]
+%	\centering
+%	\includegraphics[width=\linewidth]{/Users/qsong/Documents/slotted_aloha_related_project/test/normalized_load_vs_packet_loss_rate_macro_diversity}
+%	\caption{Network packet loss rate with respect to fresh normalized load $p\lambda_{m}/\lambda_{b}$. $N$ is the maximum allowed transmission number.}
+%	\label{fig:normalized_load_vs_packet_loss_rate_macro_diversity}
+%\end{figure}
+
+%\begin{figure}
+%	\centering
+%	\includegraphics[width=\columnwidth]{/Users/qsong/Documents/slotted_aloha_related_project/multiple_recepteur_capacity/macro_div_gain_retrans}
+%	\caption{Macro diversity gain against nearest BS attach with respect to maximum allowed packet loss rate}
+%	\label{fig:macrodivgainretrans}
+%\end{figure}
+
+%In Fig.~\ref{fig:macrodivgainretrans}, we illustrate the macro diversity gain in three cases. We observe that with packet loss rate constraint $10^{-3}$, if maximum transmission number and packet repetition is $3$, the macro diversity gain is reduced to about $2.0$. When maximum transmission number and packet repetition is $4$, the macro diversity gain is reduced to about $1.0$ which means that both method almost support the same number of devices. However, if when maximum transmission number and packet repetition is $5$, macro diversity has no advantages in front of nearest BS attach method.
+
+\subsection{Link Level Performance with outage probability constraint}
+The performance evaluation is shown in Fig.~\ref{fig:max_normalized_load_with_outage_probability}, in which the x-axis is outage probability and y-axis the corresponding maximum normalized load. The packet loss rate with a known best BS is $10\%$. It should be noted that this is a comparison between macro reception diversity in pure ALOHA network without error correction techniques and best BS attach scheme in slotted ALOHA.
+
+From tab.~\ref{my-label}, we observe that with network level packet loss rate $10\%$ as a target, the maximum supported normalized load with macro reception diversity is $0.1$. In Fig.~\ref{fig:max_normalized_load_with_outage_probability}, as the increase of outage probability, the maximum supported normalized load approaches to $0.1$. However, for best BS attach method, the system capacity suffers a severe degradation compared with the value $(0.05)$ in tab.~\ref{my-label}. The reason is that with BS attach method, the devices in the neighborhood of BS always transmit with success, other devices out of this region fail during packet collision. With macro reception diversity, this unfairness can be remedied.
+\begin{figure}[!t]
+	\centering
+	\includegraphics[height=8cm, width=\linewidth]{/Users/qsong/Documents/slotted_aloha_related_project/test/max_normalized_load_with_outage_probability.eps}
 	\caption{ Maximum normalized load with respect to outage probability threshold. The target packet loss rate is $10\%$.}
 	\label{fig:max_normalized_load_with_outage_probability}
 \end{figure}

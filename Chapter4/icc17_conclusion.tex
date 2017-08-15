@@ -1,0 +1,20 @@
+\section{Conclusion and Future works}
+\label{sec:icc17-conclusion}
+In this chapter, we have presented an accurate analytical model capable of estimating steady-state performances, i.e., packet loss rate, throughput, energy efficiency and average number of transmissions, of S-ALOHA based LPWAN networks. The model accounts for various performance-affecting factors, such as capture effect, diversity of transmit power levels, power control error, which have not been jointly considered in previous researches and can not be handled by widely used Bianchi's model.
+
+We employ numerical integration method to calculate cumulative distribution function (CDF) of total interference from its corresponding characteristic function and fixed point analysis to solve the problem. The computational complexity is reduced by combining the recent research effort about log-normal sum (LNS) approximation problem and mathematical skills used in finance domain. The accuracy of the proposed model is confirmed by simulation. Due to its low complexity, our model can be used as a dimensioning tool to accurately and rapidly estimate the steady-state system outage capacity and throughput of  S-ALOHA-based LPWAN networks. With our proposed models, we also obtain some design guidelines for S-ALOHA.
+%Note: Our proposed model also enables to study the case where the power increment factor is a random number.
+%Our proposed model is also easy to be extended to multichannel case.
+%
+%In this paper, we develop a systematic framework to study the 
+%
+%For transmit power diversity strategies, we consider three strategies: blablabla... We also study the power control impact.
+%The contributions of this paper are:
+%\begin{inparaenum}[1)]
+%	\item propose an iterative analytical framework taking into account capture effect, power control error and diversity of transmit power level, 
+%	%	different from \qsong{We have not used the popular Markovian technique, i.e., Bianchi model, to analyze the steady state performance. We just use a fixed point analysis to get a steady state probability vector (detailed in system model part), which allows us to get some performance metrics such as packet loss rate, throughput, expected number of a packet delivered, etc. In my opinion, one limitation of Bianchi model and its derivaties is not able (or is very complicated if be able to do this) to process the case where transmission failure probability is different for each transmission. The advantage of our method is, we just concern how to use computer to get the target probability vector. Once we got this probability vector, other performance metrics can be easily calculated. Maybe be better to be done at last step...}largely used Markovian technique to analyze the steady state packet loss rate based on Poisson's split theorem. The analytical framework can be used to dimension the LPWAN networks with low computational complexity.
+%	\item employ the recent research effort about log-normal distribution type variable approximation and mathematical skills largely used in finance domain to reduce the computational complexity;
+%\end{inparaenum} 
+
+
+In future work, we will add the performance evaluation for narrow-band systems where fading is considered. We will also take into account the impact of  interferences from multiple base stations in the proposed model.

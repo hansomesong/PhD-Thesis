@@ -1,0 +1,59 @@
+\section{System model}
+\label{sec:icc17-system-model}
+We consider a single base station. 
+Terminals served by this base station employ S-ALOHA protocol to transmit packets. 
+The behavior of different terminals is independent.
+The time axis is divided into slots of fixed length $T$ equal to the transmission time of a single packet. 
+The arrival of fresh packet is modeled as a stationary Poisson process with mean intensity $\lambda$. 
+Thus, the average arrival rate of fresh packet in unit slot is $\alpha = \lambda T$. 
+
+In terms of capture effect, Signal-to-Interference-and-Noise ratio (SINR) threshold model is applied. 
+In such a model, the other simultaneous packet transmissions are interference sources for a given transmission. 
+One packet transmission is failed if and only if its received SINR is less than a threshold $\theta_{T}$ (also named capture ratio), which depends on the modulation coding and receiver characteristics~\cite{dardari2000capacity}. 
+In case of transmission failure, the retransmission is scheduled after a random number of slots. 
+Each packet is allowed to be retransmitted at most $K$ times. 
+%Note that practically $2 \leq K \leq 4$. 
+
+Since retransmissions take place at random over long intervals following the collisions that give rise to them and according to Poisson's splitting property~\cite{meyn2012markov}, the aggregate packets arrival process can be divided into $K+1$ mutually independent Poisson arrivals processes. Each process with index $k\in \left\lbrace 0,1, ..., K\right\rbrace$ (i.e., for the $k$th retransmission) has a mean intensity $\alpha P_k$, where $P_k$ is the steady-state probability for a packet to make at least $k$ retransmissions. Note that $P_0$ is always $1$ and $P_{K+1}$ is the steady-state packet loss rate. The steady-state throughput is $\alpha\left( 1 - P_{K+1}\right)$. 
+
+Given that one objective is to study system performance gain brought by the transmit power level diversity, instead of searching the optimal transmit power distribution.
+%It is difficult for low-cost M2M terminals to support complicated transmit power level diversity strategies. 
+In our model, we employ a simple and easy to be implemented method for low-cost M2M devices to adjust the transmit power: for each retransmission, the transmit power level is multiplied by a factor $v$. A concrete example is the power ramping technique used in LTE random access stage. According to the value of $v$, we define three strategies to be evaluated: \begin{inparaenum}[a)]
+	\item identical power level $v=1$; 
+	\item power increase with factor $v > 1$;
+	\item power decrease with factor $v < 1$.
+\end{inparaenum}
+One device is assumed to have a valid transmit power interval. For the first and second strategies, the transmit level starts from the minimum valid power level. For the last strategy, the last transmission trial (i.e., for the $K$th retransmission) use the minimum valid power level.
+
+We assume that during the first transmission, all M2M terminals set their initial transmit powers so that the received power at the base station is constant. Such a power control scheme gets rid of the influence brought by path-loss attenuation and allows us to focus the impact of the aforementioned transmit power level diversity strategy. Let $p_k$ be the received power at the base station for the $k$th retransmission. Due to capture effect and the fact that the background noise is negligible compared to interfering transmissions, the failure probability $Q_{k}$ of a $k$th retransmission is:
+\begin{align}
+	Q_{k} = Pr\left\lbrace p_k/I < \theta_{T} \right\rbrace,
+\end{align}
+where $I$ is the cumulative interference caused by all other simultaneous transmissions. Thus, $Q_{k}$ is by nature a function of probability vector $\left\langle P_0, P_1, ..., P_K\right\rangle$. We thus obtain a fixed point equation array between $\left\langle P_0, P_1, ..., P_{K+1}\right\rangle$ and $\left\langle Q_0, Q_1, ..., Q_K\right\rangle$ as follows:   
+%\begin{equation}
+%\label{eq:recurrisve-array}
+%\begin{cases}
+%P_0 = 1 \\
+%P_1 = P_0 Q_0 \\
+%... \\
+%P_{K+1} = P_{K} Q_{K}
+%\end{cases}
+%\end{equation}
+\begin{align}
+\label{eq:recurrisve-array}
+P_0 = 1; \text{ }P_1 = P_0 Q_0; \text{ }...; \text{ } P_{K+1} = P_{K} Q_{K}
+\end{align}
+Starting with $\left\langle 1, 0, 0, ..., 0\right\rangle $ for $P_0, P_1, ..., P_K, P_{K+1}$, we iteratively obtain the probability vector $\left\langle P_0, P_1, ..., P_K, P_{K+1}\right\rangle$.
+
+Apart from steady-state packet loss rate and throughput, the probability vector $\left\langle P_0, P_1, ..., P_K, P_{K+1}\right\rangle$ allows to analyze average energy efficiency $\overline{\text{EE}}$. The latter is defined as the ratio between number of delivered packets and the total energy consumed (including for dropped packets). For an ergodic stochastic process, statistical average of energy efficiency can be well approximated by its temporal average. Note that what we care about is the impact of transmit power diversity and power control error on average energy efficiency. The attenuation caused by propagation distance can be ignored without affecting the performance comparison result. The normalized average energy efficiency thus can be expressed in terms of received powers:
+\begin{align}
+\overline{\text{EE}} &= \frac{1-P_{K+1}}{\sum_{k=0}^{K} P_{k}\overline{J_k}},
+\end{align}
+where $\overline{J_k} = p_k T$ is the average energy consumed by a packet on $k$th retransmission. 
+%\qsong{in ideal case, we assume at the beginning of this section that the device will transmit in all slot duration, thus the average consumed energy is $p_k T = v^k T$, where $T$ is the slot duration.} 
+
+The expected number of transmissions is denoted by $\overline{N_{Tx}}$. This metric gives an estimation of the average delay of S-ALOHA.
+\begin{align*}
+\overline{N_{Tx}} &= \sum_{k=0}^{K} P_{k} 
+\end{align*}
+In the following, we show how to numerically calculate probability vector of interest under two situations: ideal system without power control error and wide-band system with imperfect power control.

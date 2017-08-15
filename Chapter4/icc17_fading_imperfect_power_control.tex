@@ -1,0 +1,61 @@
+\section{System with imperfect power control and Fading}
+We consider in this section narrow-band LPWAN networks. The packet transmission suffers Rayleigh fading and its power control is not perfect. As discussed in Section~\ref{sec:imperfect-power-control}, imperfect power control is still characterized by a lognormal random variable (RV) and can be written as $e^{\beta\epsilon} \text{with }\beta = \frac{\ln(10)}{10}$, where $\epsilon$ is a Gaussian RV with zero mean and variance $\sigma_{\epsilon}$. The fading effect can be characterized by a multiplier $H$ of exponential RV with unit mean. For a device with index $i$ attempting $k$th retransmission, the received power $p_{ki}$ can be expressed as:
+\begin{align*}
+	p_{ki} = v^k \cdot e^{\beta\epsilon_i}\cdot H_i,
+\end{align*}
+where $v$ refers to power increment factor. 
+
+Let $I$ denote the its suffered cumulative interference, namely $I =\sum_{m=0 }^{K} \sum_{j=1}^{N_m} p_{mj}$.
+Let $\Theta$ denote the SINR (in decimal) for the considered device $i$. Recall that a transmission is regarded as successful if its SINR is not less than a predefined threshold $\theta_{T}$. The transmission failure probability $Q_{k}$ of a packet on $k$th retransmission is as follows:
+\begin{align*}
+	Q_{k} &=1 -  \mathbb{P} \left( \Theta \geq \theta_{T}\right) \\
+	&= 1 - \mathbb{P} \left( p_k \geq I \theta_{T}\right) \\
+	&= 1 - \mathbb{P} \left( H_i \geq \frac{I}{v^k e^{\beta\epsilon_i} } \theta_{T} \right) 
+\end{align*}
+With substitution $U_k=\frac{I}{v^k  e^{\beta\epsilon_i} }$, and let $f_{U_k}(u)$ denote probability density function (PDF) of $U_k$. Note that $H_i$ follows exponential distribution with unit mean.
+\begin{align*}
+	\mathbb{P} \left(\Theta \geq \theta_{T} \right) &= \int_{0}^{\infty} f_{U_k}(u) e^{ -u  \theta_{T} }du \\
+	&= \mathcal{L} \left\lbrace U_k \right\rbrace \left(  \theta_{T}  \right),
+\end{align*}
+which is the Laplace Transform value for random variable $U_k$ at point $ \theta_{T} $. Now the problem is down to calculate the Laplace Transform of $U_k$. Let regard the random variable $U_k$:
+\begin{align*}
+	U_{k} &= \frac{I}{v^k e^{\beta\epsilon_i}} \\
+	&=\frac{\sum_{m=0 }^{K}  v^m \cdot \sum_{j=1}^{N_m} e^{\beta\epsilon_j} \cdot H_j}{v^k e^{\beta\epsilon_i}} \\
+	&= \sum_{m=0 }^{K}  v^{m-k} \sum_{j=1}^{N_m} H_j e^{\beta \left( \epsilon_j - \epsilon_i \right) }\\
+	&=\sum_{m=0 }^{K}  v^{m-k} Z_m,
+\end{align*}
+where $Z_m = \sum_{j=1}^{N_m} Z_{m,j}, Z_{m,j} = H_j e^{\beta \left( \epsilon_j - \epsilon_i  \right)}$.
+
+Since the series of RV $Z_m$ for $m=0,1,...K$ are mutually independent, we have:
+\begin{align*}
+	\mathcal{L} \left\lbrace U_k \right\rbrace \left( s \right)= \prod_{m=0}^{K} \mathcal{L} \left\lbrace U_k \right\rbrace \left( v^{m-k} s \right),
+\end{align*}
+where $s$ is a complex number.
+
+The term $Z_m = \sum_{j=1}^{N_m} Z_{m,j}$ is a compound random variable, where $N_m$ follows Poisson distribution with arrival rate $\alpha P_m$. The Laplace transform of $Z_m$ can be obtained by using the formula ($\ref{eq:laplace-transform-comound-RV}$) shown in Annexe~\ref{annexe:laplace-transform-compound-RV}.
+\begin{align*}
+	\mathcal{L} \left\lbrace Z_m \right\rbrace \left( s \right)&= \exp\left\lbrace \alpha P_m \left( \mathcal{L} \left\lbrace Z_{m,j} \right\rbrace \left( s \right)  - 1\right) \right\rbrace 
+\end{align*}
+\begin{align}
+	\label{eq:lt_u_k}
+	\mathcal{L} \left\lbrace U_k \right\rbrace \left( s \right) &= \exp\left\lbrace 
+	\alpha\left( \sum_{m=0}^{K}P_m \mathcal{L} \left\lbrace Z_{m,j} \right\rbrace \left( v^{m-k} s \right) - \sum_{m=0}^{K}P_m\right) 
+	\right\rbrace
+\end{align}
+
+The random variable $Z_{m,j}$ is the product of a lognormal type RV and an exponential type RV. Its Laplace transform is as follows. More analysis details are given in Annexe~\ref{annexe:laplace-transform-exponential-lognormal}.
+\begin{align}
+	\label{eq:lt_z_mj}
+	\mathcal{L} \left\lbrace Z_{m,j} \right\rbrace \left( s \right)
+	&\approx  \frac{1}{1 + s ^{\left( 1 +\frac{\pi \sigma^2}{8} \right)^{-\frac{1}{2}}}},
+\end{align}
+where $\sigma = 2\beta^2\sigma_{\epsilon}^2$.
+
+Combining $\eqref{eq:lt_z_mj}$ and $\eqref{eq:lt_u_k}$ and letting $s = \theta_{T}$, we obtain:
+\begin{align}
+	\label{eq:failure_pb_case3}
+	Q_{k}  &=  1- \mathcal{L} \left\lbrace U_k \right\rbrace \left( e^{\beta\epsilon_i} \right) \nonumber\\
+	&= 1- \exp\left\lbrace \alpha\left( \sum_{m=0}^{K} \frac{P_m}{1 + \left( v^{m-k} \theta_{T} \right) ^{\left( 1 +\frac{\pi \sigma^2}{8} \right)^{-\frac{1}{2}}}} -\sum_{m=0}^{K}P_m \right) \right\rbrace 
+\end{align}
+
+With $\eqref{eq:failure_pb_case3}$, we form a fixed point equation to solve probability vector $\left\langle P_0, P_1, ..., P_K\right\rangle$.

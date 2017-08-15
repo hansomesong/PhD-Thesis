@@ -9,21 +9,20 @@ and variable packet length in M2M}
 \fi
 
 Based on WCNC2016
-\section{Introduction}
+Machine-to-machine (M2M) communication is expected to enable billions of devices to be connected by the cellular networks in the near future. The large number of devices involved in M2M will create a huge market potential but at the same time pose some challenges for 3GPP cellular networks. The challenges include massive access management, QoS provisioning, energy/power efficiency, etc. Nowadays, energy-related issues are deemed as the key problems in cellular M2M communications. In this paper, we extend the research framework of \cite{Dhi13} by taking into account some important issues that were not yet addressed, mainly the existence of machines with different packet lengths and the effect of imperfect power control. With the proposed system model, we evaluate the power efficiency, energy efficiency and system capacity for uncoordinated CDMA and coordinated FDMA. Through numerical results, we conclude that coordinated FDMA is more resistant to various packet lengths of M2M devices packets in terms of power efficiency and is not influenced by imperfect power control. Thus coordinated multiple strategies, especially FDMA, are more suitable for the future M2M-included cellular networks and deserve further optimization works. With respect to uncoordinated CDMA, although its performance is affected by BS load intensity and power control, it is still a considerable choice due to its simplicity and no signaling overhead, when the BS load intensity is not high and the power control policy is suitable. 
 
+The remainder of this paper is organized as follows: an introduction about our system model is given in Sec.~\ref{sec:system-model}, presenting some basic hypothesis, multiple access methods to be compared and selected performance metric.  
+Sec.~\ref{sec:uncoordinated-strategy} is devoted to analyze the performance of uncoordinated strategy, mainly for CDMA. 
+Sec.~\ref{sec:coord-strategy} discusses the performance of coordinated strategies. 
+Sec.~\ref{sec:numerical-res} shows the numerical result by using the conclusions from the previous two sections.
+Finally, Sec.~\ref{sec:conclusion} concludes the paper by summarizing the main findings of the paper.
 
-\section{State of the Art}
-
-\section{System model}
-
-
-\section{Impact of variable packet length}
-
-
-\section{Impact of imperfect power control}
-
-
-\section{Summary}
+\input{Chapter3/wcnc2016-introduction}
+\input{Chapter3/wcnc2016-system-model}
+\input{Chapter3/wcnc2016-uncoordinated}
+\input{Chapter3/wcnc2016-coordinated}
+\input{Chapter3/wcnc2016-numerical-result}
+\input{Chapter3/wcnc2016-conclusion}
 
 
 

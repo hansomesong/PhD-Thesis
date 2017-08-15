@@ -3,19 +3,20 @@
 We first study the transmission success probability $p_s(r)$ for a given uplink between a BS at the origin and a device $x_0$ at distance $r$. Using Slivnyak's theorem~\cite{vaze2015random}[Theorem 2.3.3], combining $(\ref{eq:path-loss})$ and $(\ref{eq: sinr-definition})$, we have:
 \begin{align}
 p_{s} \left( r\right)
-& =\mathbb{P}\left\lbrace \frac{H \exp(\chi) r^{-\gamma}}{\sum_{x_j \in \Phi_{m}} H_{x_j} \exp(\chi_{x_j}) r_{x_j}^{-\gamma}}  \geq \theta_T \right\rbrace. \nonumber
+& =\mathbb{P}\left\lbrace \frac{H r^{-\gamma}}{\sum_{x_j \in \Phi_{m}} H_{x_j} \exp(\chi_{x_j}) d_{x_j}^{-\gamma} + N}  \geq \theta_T \right\rbrace. \nonumber
 \end{align}
-Let $I=\sum_{x_j \in \Phi_{m}} H_{x_j} \exp(\chi_{x_j}) r_{x_j}^{-\gamma}$, which is the cumulative interference suffered by $x_0$. Conditioned on log-normal shadowing component $\exp(\chi_{x_j}) $, as shown in~\cite{haenggi2009interference}, $p_{s}\left( r \right)$ can be expressed in terms of Laplace transform of cumulative interference $\mathcal{L}_{I}(s)$ at point $\theta_{T} e^{-\chi} r^{\gamma}$:
+Let $I=\sum_{x_j \in \Phi_{m}} H_{x_j} \exp(\chi_{x_j}) d_{x_j}^{-\gamma}$, which is the cumulative interference suffered by $x_0$. As shown in~\cite{haenggi2009interference}, $p_{s}\left( r \right)$ can be expressed in terms of Laplace transform of cumulative interference $\mathcal{L}_{I}(s)$ at point $\theta_{T} r^{\gamma}$:
 \begin{align}
 \label{eq:def_ps}
-p_{s}\left( r \right)  &= Pr \left\lbrace H  \geq I \theta_{T} e^{-\chi}r ^{\gamma}  \right\rbrace \nonumber\\ 
+p_{s}\left( r \right)  &= Pr \left\lbrace H  \geq (I+N) \theta_{T} r ^{\gamma}  \right\rbrace \nonumber\\ 
 % The follwing line can be hidden, not necessary in FINAL_VERSION
 %&=\mathbb{E}_{\chi}\left\lbrace  \mathbb{E}_{I} \left[ \exp(-\theta_{T} \exp(-g) r^{\gamma}  I ) \vert \chi = g\right]\right\rbrace   \nonumber\\
-&= \int_{-\infty}^{+\infty} \left[ \int_{0}^{+\infty} \exp(-y \theta_{T} e^{-x} r^{\gamma} ) f_{I}(y)dy\right] f_{\chi}(x) dx  \nonumber\\
-&= \mathbb{E}_{\chi} \left[ \mathcal{L}_{I}\left\lbrace \theta_{T} e^{-\chi} r^{\gamma}\right\rbrace \right],
+&= \exp(-N \theta_{T} r^{\gamma} ) \left[ \int_{0}^{+\infty} \exp(-y \theta_{T} r^{\gamma} ) f_{I}(y)dy\right] \nonumber\\
+&=  \exp(-N \theta_{T} r^{\gamma} ) \mathcal{L}_{I}\left\lbrace \theta_{T} r^{\gamma}\right\rbrace ,
 \end{align}
-where $f_{X} (x)$ is probability density function (PDF) of r.v. $X$, $\mathbb{E}_{X} \left[ \cdot \right] $ is the expectation operator with respect to $X$.
+where $f_{X} (x)$ is probability density function (PDF) of r.v. $X$. Now the problem is down to calculate the Laplace Transform of cumulative interference suffered by the BS at the origin.
 \subsection{Slotted ALOHA}
+\label{subsec: slotted-aloha}
 In slotted ALOHA, the cumulative interference is constant during each slot. The geometry-aware interference analysis for slotted ALOHA is well investigated. Reference~\cite{haenggi2009interference} gives a closed-form expression about the Laplace transform of cumulative interference. With independent Rayleigh fading and log-normal shadowing, we have:
 \begin{align}
 \label{eq:lp_tr_slotted}
@@ -41,21 +42,23 @@ Hence, cumulative interference $I(T)$ and $I(T+B)$ are two independent and ident
 
 We can reuse $(\ref{eq:lp_tr_slotted})$ to calculate $\mathcal{L}_{I(T)}\left( s\right)$. Thus, Laplace transform of $I^{\text{upper}}$ can be unified into $(\ref{eq:lp_tr_slotted})$ by letting $A=2 \Gamma(1-\frac{2}{\gamma}) \Gamma(1+\frac{2}{\gamma})$. 
 
-Combining $(\ref{eq:def_ps})$ and $(\ref{eq:lp_tr_slotted})$, we can express $p_s(r)$ with a formula common to all ALOHA cases:
+
+\subsection{Generalized model}
+Based on interference analysis Sec.~\ref{subsec: slotted-aloha} and \ref{subsec: pure-aloha}, now we can generalize the link-level success transmission probability $p_s(r)$ for all ALOHA cases (slotted and pure ALOHA):
 \begin{align}
 \label{eq:def_ps_2}
-p_{s}(r) & = \mathbb{E}_{\chi}\left[ \exp(-p \lambda_{m} \pi A \theta_{T}^{\frac{2}{\gamma}} e^{\frac{2\sigma^2}{\gamma^2}}  r^2 e^{-\frac{2}{\gamma}\chi}) \right],
+p_{s}(r) & = \exp(-N \theta_{T}  r^{\gamma} ) \exp(-p \lambda_{m} \pi A \theta_{T}^{\frac{2}{\gamma}} e^{\frac{2\sigma^2}{\gamma^2}}  r^2 ),
 \end{align}
 %\begin{align}
 %\label{eq:conditional_lp_trans}
 %\mathcal{L}_{I}\left\lbrace \theta_{T} \exp(-\chi) r^{\gamma}\right\rbrace = \exp\left\lbrace -A K r^2\exp(-\frac{2}{\gamma}\chi)\right\rbrace,
 %\end{align}
 where $\sigma = \frac{\ln(10)}{10}\sigma_{dB}$ and:
-\[ \!\!\!\!A =
+\[ A =
 \begin{cases} 
-\Gamma\!\!\left( 1-\frac{2}{\gamma}\right)\Gamma\!\!\left( 1+\frac{2}{\gamma}\right) ,  & \text{for slotted ALOHA }\\
-\frac{2\gamma}{\gamma+2}\Gamma\!\!\left( 1-\frac{2}{\gamma}\right)\Gamma\!\!\left( 1+\frac{2}{\gamma}\right),  & \parbox[t]{.41\columnwidth}{for pure ALOHA, average interference }\\
-2\Gamma\!\!\left( 1-\frac{2}{\gamma}\right)\Gamma\!\!\left( 1+\frac{2}{\gamma}\right),  & \parbox[t]{.4\columnwidth}{for pure ALOHA, maximum interference }
+\Gamma\left( 1-\frac{2}{\gamma}\right)\Gamma\!\!\left( 1+\frac{2}{\gamma}\right) ,  & \text{for slotted ALOHA }\\
+\frac{2\gamma}{\gamma+2}\Gamma \left( 1-\frac{2}{\gamma}\right)\Gamma\!\!\left( 1+\frac{2}{\gamma}\right),  & \parbox[t]{.41\columnwidth}{for pure ALOHA, average interference }\\
+2\Gamma \left( 1-\frac{2}{\gamma}\right)\Gamma\!\!\left( 1+\frac{2}{\gamma}\right),  & \parbox[t]{.4\columnwidth}{for pure ALOHA, maximum interference }
 \end{cases}
 \]
 %With substitution of $(\ref{eq:conditional_lp_trans})$ into $(\ref{eq:def_ps})$, 

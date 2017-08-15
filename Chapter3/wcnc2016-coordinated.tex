@@ -1,0 +1,68 @@
+\section{Coordinated Strategies}
+\label{sec:coord-strategy}
+In the system model with coordinated strategies, the base station knows that $N_a$ arrival requests have succeeded in random access stage and wait for resource allocation for subsequent packet transmission. We assume that the system can drop a fraction of $\delta_1$ requests (which are sent by devices far from the base station) in resource allocation stage to serve more devices. Thus, actual number of devices served in each slot is $(1-\delta_1)N_a$. Since Dhillion et al.~\cite{Dhi13} prove that equal resource allocation mechanism achieves a near-optimal solution in terms of average transmit power and energy per bit if packet length is small, equal resource allocation is applied and the packet length is constant and small. we resume their obtained conclusion in Tab.~\ref{tab:coordinated-performance-resume}. In addition, coordinated TDMA supports less devices that coordinated FDMA. Thus, just coordinated FDMA is analysed in this section. The overall failure events are: \begin{inparaenum}[i)]
+	\item the required transmit power $P_t$ is superior to $P_{max}$;
+	\item the device request is dropped by base station.
+\end{inparaenum}
+\begin{table}[h]
+	\caption{Frequently used notation in coordinated strategy analysis}
+	\centering
+	\label{tab:notation}
+		\begin{tabular}{ll}
+		\hline
+		Notation & Description \\
+		\hline
+		$N_a$ & Arrival request number, $N_a \sim Pois(\lambda\tau_s)$	\\		
+		$K$ & \begin{tabular}[c]{@{}l@{}} Number of devices actually served in each slot,\\ $K \leq \left( 1-\delta\right)N_{a} $\end{tabular}   \\
+		$\delta_1$ & Fraction of dropped arrivals\\		
+		$\tau_{s}$ & Slot duration \\
+		$\delta$ & Outage probability\\
+		$l$ & Packet length \\
+		\hline		
+	\end{tabular}
+\end{table}
+\begin{table*}[!th]
+	\centering
+	\caption{Coordinated strategies performance resume}
+	\label{tab:coordinated-performance-resume}
+	\begin{tabular}{lccc}
+		\midrule
+		& SIC                                                                                         & TDMA                                                                        & FDMA                                                                                       \\ \midrule
+		Total transmit power        & $P=\frac{2^{\frac{l}{W\tau_s}}-1}{\mu}\sum_{k=1}^{K}\frac{2^{\frac{(k-1)l}{W\tau_s}}}{g_k}$ & $P=\sum_{i=1}^{K}\frac{2^{\frac{l}{W\tau_i}}-1}{\mu g_i}$                   & $P=\sum_{i=1}^{K}\frac{W_i}{W}\frac{2^{\frac{l}{W_i\tau_s}}-1}{\mu g_i}$                   \\ \midrule
+		Energy per bit              & Unknown                                                                                     & $E_b=\sum_{i=1}^{K}\frac{\tau_i}{l}\frac{2^{\frac{l}{W\tau_i}}-1}{\mu g_i}$ & $E_b=\frac{\tau_i}{l}\sum_{i=1}^{K}\frac{W_i}{W}\frac{2^{\frac{l}{W_i\tau_s}}-1}{\mu g_i}$ \\ \midrule
+		%		Feasibility condition                 & None                                                                                        & xx                                                                          & yy                                                                                         \\ \midrule
+		Maximum user number         & None                                                                                        & $K_{max} = max_{K}\sum_{i=1}^{K}\tau_i \leq \tau_s$                         &      $K_{max} = max_{K}\sum_{i=1}^{K}W_i \leq W$                                                                                      \\ \midrule
+		Overall failure probability & None                                                                                        & \multicolumn{2}{c}{$\delta \leq \epsilon+ \delta_1 (1- \epsilon_1)$}                                                                                                     \\ \midrule
+		Maximum load                & None                                                                                        & \multicolumn{2}{c}{$\lambda_{max} =max(\lambda: \mathbb{P}\left[N_a(1-\delta_1) \geq K_{max} \right] \leq \epsilon_1 )$}                                                 \\ \bottomrule
+	\end{tabular}
+\end{table*}
+
+% it is possible to combine FDMA and TDMA at the same time? Maybe this is better than FDMA or TDMA?
+According to Shannon capacity formula, in coordinated FDMA, a device occupying bandwidth $W_i$ and transmitting $l$ bits in $\tau_s$ seconds has a received SNR $\mu_r$ so that
+\begin{align}
+	\frac{l}{\tau_s} = W_i\log_2\left( 1 + \mu_r\right) \nonumber
+\end{align}
+The received SNR can be expressed in terms of reference SNR and transmit power according to (\ref{eq:actual-reference-snr}) and (\ref{eq:received-snr}):
+\begin{align}
+\frac{l}{\tau_s} = W_i\log_2\left( 1 + \frac{P_t}{P_{max}}\mu_0\frac{W}{W_i}g\right) \nonumber
+\end{align}
+Furthermore, the transmit power $P_t$ under equal bandwidth allocation is expressed as follows:
+\begin{align}
+P_t  &=  \frac{W_i}{W}\frac{2^{\frac{l}{\tau_s W_i}}-1}{\mu_0 g}P_{max}\nonumber\\
+&=  \frac{1}{K}\frac{2^{\frac{Kl}{\tau_s W}}-1}{\mu_0 g}P_{max}
+\end{align}
+where $K$ is the actual served request number and $g$ the relative channel gain. Thus, the average transmit power $\overline{P_t}$ is:
+\begin{align}
+\overline{P_t} &= \frac{2^{\frac{Kl}{W\tau_s}}-1}{\mu_0 K}\mathbb{E}\left[ \frac{1}{g}\right] P_{max} \nonumber \\
+&=\frac{2r_0^{-\gamma}(r_0^{\gamma+2}-r_i^{\gamma+2})}{\mu_0K(r_0^2-r_i^2)(\gamma+2)}\left( 2^{\frac{Kl}{W\tau_s}}-1\right) P_{max}
+\end{align}
+Similarly, the average energy per bit can be expressed as:
+\begin{align}
+\overline{E_b} &= \frac{\tau_s}{l}\frac{2^{\frac{Kl}{W\tau_s}}-1}{\mu K}\mathbb{E}\left[ \frac{1}{g}\right] P_{max} \nonumber \\
+&=\frac{\tau_s}{l}\frac{2r_0^{-\gamma}(r_0^{\gamma+2}-r_i^{\gamma+2})}{\mu_0K(r_0^2-r_i^2)(\gamma+2)}\left( 2^{\frac{Kl}{W\tau_s}}-1\right) P_{max}
+\end{align}
+With regard to maximum load $\lambda_{max}$, it is uniquely limited by this basic preliminary given in (\ref{constraint-freq}).
+\begin{align}
+	&\frac{K_{max}l}{\tau_s W} =\log_2\left( 1+ K_{max}P_{max}\mu_0 g\right) \\
+	&\lambda_{max} =max\{\lambda: \mathbb{P}\left[ N_a(1-\delta_1) \geq K_{max}\right] \leq \epsilon_1 \}
+\end{align}

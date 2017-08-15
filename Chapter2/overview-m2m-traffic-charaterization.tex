@@ -1,0 +1,17 @@
+%------------------------------------正文开始----------------------------------------------
+\section{M2M Traffic Characterization}
+\label{sec:overview-diff-traffic}
+A comprehensive comparison between MTC and HTC is resumed in Table~\ref{tab:differences between M2M and H2H}.
+The illustration of this difference helps to rethink the design of some principles and the optimization guidelines.
+Some explanations about Table \ref{tab:differences between M2M and H2H}: 
+\begin{itemize}[leftmargin=*, noitemsep]
+	\item First, the representative device in H2H communication is smartphone, which is equipped with more and more computational capacity. The complexity of M2M devices is various: in application such as remote monitoring, it could be in format of sensor with transceiver and simplified processor. In Intelligent Transport System (ITS), it could be regarded as a smartphone without screen.
+	\item Second, the experiment results in \cite{FirstLook12} reveal that compared to H2H communication, cellular M2M traffic suffers from a higher packet loss ratio, and the reason may be the adverse deployment location and the lack of UI (e.g., screen) to show the signal strength in its place. 
+	\item Third, since at present, a majority of cellular M2M applications are based on GSM/UMTS technologies, MTC mainly supports SMS or data reporting service. We could imagine more innovation M2M services when 4G networks even 5G networks are largely rolled out.
+\end{itemize}
+
+Not all MTC applications have the same characteristics and not every optimization is suitable to all applications; therefore, features are defined to provide some structure to the customer and the network is then tuned accordingly to needs.
+
+%shown in Tab.~{3GPP-MTC-feature} \cite{bartoli2011low}.
+% "90% of the M2M devices across all applications are stationary" from Chapter 1.4.1.3 of book : M2M communications: a system approach
+\input{Chapter2/Tables/MTC-traffic-features.tex}

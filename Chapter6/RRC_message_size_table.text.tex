@@ -1,0 +1,18 @@
+\begin{table}[h]
+	\centering
+	\caption{List of RRC messages exchanged between UE and the eNB}
+	\label{tab:economized-bytes}
+	\resizebox{\textwidth}{!}{%
+		\begin{tabular}{@{}lllllll@{}}
+			\toprule
+			RRC message name                  & Payload size & MAC Header & RLC Header & PDCP Header & Downlink & Uplink \\ \midrule
+			ConnectionSetupRequest            & 48           & 72         & 8          & 8           &          & 136    \\
+			ConnectionSetup                   & 320          & 72         & 8          & 8           & 408      &        \\
+			ConnnectionSetupComplete          & 56           & 16         & 8          & 8           &          & 88     \\
+			ConnectionReconfiguration         & 632          & 16         & 8          & 8           & 664      &        \\
+			ConnectionReconfigurationComplete & 16           & 16         & 8          & 8           &          & 48     \\
+			ConnectionRelease                 & 16           & 16         & 8          & 8           & 48       &        \\ \midrule
+			Economized Bytes Number           & \multicolumn{4}{l}{}                                 & 1120     & 272    \\ \bottomrule
+		\end{tabular}%
+	}
+\end{table}

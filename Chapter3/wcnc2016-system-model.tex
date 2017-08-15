@@ -1,0 +1,47 @@
+\section{System model}
+\label{sec:system-model}
+% 描述其数学模型，同时指出不足（改进方向)
+% 无比纠结中：原论文中，诸如不考虑重传，不考虑overhead signaling,etc啥的。。。要不要提呢？提了是抄袭 不提是model中的漏洞
+\subsection{Description and hypothesis}
+\qs{xxx}
+The system model is mainly extended from the one proposed by \cite{Dhi13}  and is described in the following lines: a single cell consisting of an access point is situated at the origin of a circle area. All devices are uniformly distributed around the origin in an annular region with inner and outer radii $r_{i}$ and $r_{0}$. The probability density function of distance between a device and cell origin $r$ is the following \cite{5341148}:
+\begin{align}
+	f_R\left( r\right) = \frac{2r}{r_0^2-r_i^2},  r_i \leq r \leq r_0
+\end{align}
+The non-zero inner radius $r_i$ is assumed to avoid singularity in the path loss model. The multi-cell case is currently out of the scope of our work and thus the out-of-cell interference is not taken into account. The proposed system model is assumed to be a slotted system with $\tau_s$ time slot duration. The multiplexing access is performed on a time-frequency resource slice with duration $\tau_s$ and bandwidth $W$. The arrival process of packets in the uplink is modeled as a Poisson point process with mean $\lambda$ arrivals per second. Therefore, the number of packet transmission request $N_a$ in duration $\tau_s$ respects to Poisson distribution demoted by $N_{a} \sim Pois(\lambda \tau_{s})$. The M2M devices present in the cell are managed by diverse applications and each application has a different packet length. Thus the packet length $l$ varies from $\left[L_{0}, L_{1}\right]$. We further assume that the devices perform uplink power control, but the power control is imperfect.
+\subsection{Multiple access strategies}
+Two types of multiple access strategies are considered in the system model: \begin{inparaenum}[i)]
+	\item uncoordinated: the devices transmit data and control information using slotted random access without establishing dedicated radio bearer;
+	\item coordinated: the devices transmit data in a separate scheduled radio resource after a random access contention.
+\end{inparaenum}
+The most frequent uncoordinated strategies are CDMA and FDMA. Compared with CDMA, the system capacity of uncoordinated FDMA is rather limited \cite{Dhi13}, which is by nature unsuitable for handling M2M traffic. Thus, we just consider CDMA in uncoordinated strategies. For the same reason, in coordinated case, just coordinated FDMA is considered.   
+\subsection{Performance metrics}
+% 这里可以继续 论证下 为什么我就可以选择这几个 标准呢
+In our system model, the power efficiency is defined as the average transmit power $\overline{P_t}$ for all involved M2M devices. The energy efficiency is measured by the average energy per bit $\overline{E_b}$. The average energy per bit $\overline{E_b}$ is the product of time (to transmit the packet) and average transmit power $\overline{P_t}$.  
+Given that M2M applications usually consist of large number of devices, maximum supported base station load intensity $\lambda_{max}$ is used to evaluate the system capacity.
+\subsection{Basic mathematical model for uplink}
+%完全来自Dhillion的paper
+The received power $P_r$ at the base station from a device located at distance $r$, assuming transmit power $P_t$, path loss exponent $\gamma$, small-scale fading gain $h$, large-scale shadowing gain $\chi$ and direct based antenna gain $G$ is:
+\begin{align}
+& P_r = P_t \chi h G r^{-\gamma} 
+\end{align}
+To facilitate the writing, two SNR values are defined, reference SNR $\mu_0$ and bandwidth-aware SNR $\mu$, as following:
+\begin{align}
+& \mu_0 = \frac{P_{max}Gr_0^{-\gamma}}{N_0W} \\
+& \mu =  \mu_0\frac{W}{W_N} \label{eq:actual-reference-snr}
+\end{align}
+The reference SNR refers to the received SNR at the base station for a device at the cell edge (with distance $r_0$ to the the cell origin) transmitting at maximum power $P_{max}$ over total bandwidth $W$ when fading and shadowing effects are averaged out. The bandwidth-aware SNR is similar to the reference SNR except that the former is calculated over the actually occupied bandwidth $W_N$. The bandwidth-aware SNR is useful when analysing multiplex access strategies where frequency is divided into sub-channel such as FDMA. The received SNR $\mu_r$ at the base station for a device with distance $r$ to the center can be simply expressed as:
+\begin{align}
+& \mu_r = \frac{P_t}{P_{max}} \mu \chi h \left( \frac{r}{r_0} \right) ^{-\gamma} \label{eq:SNR-measured-by-reference-SNR}
+\end{align}
+To further simplify (\ref{eq:SNR-measured-by-reference-SNR}), the term $\chi h \left( \frac{r}{r_0} \right) ^{-\gamma}$ is defined as the relative channel gain \footnote{We prefer to denote \textbf{\textit{relatively channel gain}} instead of \textbf{\textit{channel gain}} as in \cite{Dhi13}.} denoted by $g$. 
+%\footnote{The term channel gain in initial paper is misleading. It can be regarded as a normalized channel gain}. 
+Then the received $\mu_r$ is simplified as:
+\begin{align}
+\mu_r = \frac{P_t}{P_{max}} \mu g \label{eq:received-snr}
+\end{align}
+For all analysis in this paper, an information symbol of payload $l$ bits will be transmitted over bandwidth $W_N \leq W $ for time $\tau \leq \tau_s$. According to Shannon's capacity formula, there exist two basic preliminaries for uncoordinated and coordinated strategies in terms of minimum transmission slot $\tau_{min}$ and minimum bandwidth $W_{min}$:
+\begin{align}
+& \tau_{min} = \frac{l}{W_{N}\log_{2}\left( 1+\mu_{N}g\right) } \label{constraint-time}\\
+& \frac{l}{\tau W_{min}} = \log_{2} \left( 1+\mu\left( \frac{W}{W_{min}}\right) g\right)   \label{constraint-freq}
+\end{align}

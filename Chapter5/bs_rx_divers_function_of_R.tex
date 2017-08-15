@@ -1,15 +1,15 @@
-\section{Performance with known Best BS}
+\section{Link Level Performance with outage probability constraint}
 In Sec~\ref{sec:op_over_infinite_plane} and~\ref{sec:op_over_infinite_plane_with_retransmission}, we study the network-level performance metrics such as packet loss rate, throughput. These metrics are actually the averaged over the entire networks, which give a global view about the quality of service in LPWAN networks but still have its limitations. With a target network level packet loss rate such as $10\%$, it is very possible that devices in the neighborhood of BS never fail while devices at the border of BS coverage actually packet loss rate higher than $10\%$.
 
-In this section, we analyze the packet loss rate with known distance to the best BS under BS attach method and macro reception diversity, and then evaluate the maximum normalized load, in one-shot random access case, with outage probability and packet loss rate constraint. 
+In this section, we propose a new performance indicator, link-level packet loss rate under the outage probability constraint. Concretely, the distance from the typical device to its best BS is known. The outage probability heres refers to the portion of devices whose link-level packet loss rate is superior to the target value. For example, a LPWAN should guarantee that at most $10\%$ of devices has packet loss rate higher than $1\%$.  We analyze both BS attach method and macro reception diversity with this proposed performance metric, and then evaluate the maximum normalized load, in one-shot random access case.
 
-For a typical device at the origin, we assume that the best BS station with label $y_b$ is $r_{0}$ far away from the typical device. The distribution of $r_0$ is as follows:
+For a typical device at the origin, we assume that the best BS station with label $y_0$ is $r_{0}$ (in a transformed PPP when the shadowing is present) far away from the typical device. Recall that the distribution of $r_0$ is as follows:
 \begin{align}
 \label{eq:pdf_modified_r_0}
 f(r) = 2 \pi \lambda_b e^{\frac{2\sigma^2}{\gamma^2}}  \exp( -\lambda_b  e^{\frac{2\sigma^2}{\gamma^2}} \pi r^2 ) r 
 \end{align}
 
-We now study the packet loss rate $P_{f}(r_{0})$ with macro reception diversity in this case. Network packet loss rate $P_{f}(r_{0})$ is expressed as follows:
+
 
 
 
@@ -58,6 +58,70 @@ where $r_i$ refers to the distance between the device and BS with label $i$. Not
 Thus,
 \begin{align}
 P_{f}(r_{0}) = ( 1- \exp(-p \lambda_{m} \pi A \theta_{T}^{\frac{2}{\gamma}} e^{\frac{2\sigma^2}{\gamma^2}}  r_{0}^2 ) )\exp\left\lbrace \!\!\!-\frac{1}{ A \theta_{T}^{\frac{2}{\gamma}}  L }  \!\exp(-p \lambda_{m} \pi A \theta_{T}^{\frac{2}{\gamma}} e^{  \frac{2\sigma^2}{\gamma^2}  } r_{0}^2)  \!\!\!\right\rbrace
+\end{align}
+
+
+Outage probability:
+\begin{align}
+	P_{\text{outage}} &= \int_{0}^{+\infty} \mathds{1}_{\left[ P_{f, m} > P_{f}^{\text{max}}\right] }f(r) dr \nonumber \\
+	&= \int_{R}^{+\infty} f(r) dr \nonumber \\
+	&= 1 - \int_{ 0 }^{ R } f(r) dr \nonumber \\
+	&=  \exp( -\lambda_b  e^{\frac{2\sigma^2}{\gamma^2}} \pi R^2 ),
+\end{align}
+where $R$ is the minimum distance between typical device and BS $y_0$ satisfying condition $P_{f, m} > P_{f}^{\text{max}}$.
+\qsong{To be further simplified...}
+
+
+\subsection{Impact of background noise to minimum transmit power}
+We assume that a network set a target packet loss rate $P_f$, for example $10\%$. The objective is that at most $P_{outage}$ percent of devices whose packet loss rate is superior to $P_f$. Thus, $P_{outage}$ is referred as to the outage probability.
+If we set the normalized background noise $N$ be $1$, we want to the study the relationship between the device minimum transmit power $p_t$ and the outage probability $P_{outage}$.
+
+Now let $p_t$ the device transmit power. Still $p_r$ is the received power at BS side.  The SNR of a packet transmission $\theta$ is:
+\begin{align}
+	\theta &= \frac{P_{r}}{N} \\
+	&= \frac{p_t H r^{-\gamma}}{N}
+\end{align}
+The transmission success probability $P_{s}$:
+\begin{align}
+	P_{s} = \exp( -\frac{ \theta_{T} r^{\gamma}}{p_{t}}).
+\end{align}
+Actually, $P_{s}$ is a function of RV $r$. To calculate the outage probability, we need to know the cumulative distribution function (CDF) $F_{P_{s}}$ of RV $P_{s}$. 
+%\begin{align}
+%	f_{P_{s}}\left( x \right) = 2\pi\lambda_{b} \left[ \frac{1}{A} \log(\frac{1}{x})\right] ^{\frac{1}{\gamma}}\exp\left\lbrace  -\pi\lambda_{b} \left[  \frac{1}{A} \log(\frac{1}{x})\right]  ^{\frac{2}{\gamma}} \right\rbrace \frac{1}{\gamma} \left[ \frac{1}{A} \log(\frac{1}{x})\right] ^{\frac{1}{\gamma} - 1 } \frac{1}{Ax}
+%\end{align}
+
+With packet loss rate target $P_f$, the outage probability $P_{\text{outage}}$
+\begin{align}
+	\label{eq:p_outage_vs_min_tx_power}
+	P_{\text{outage}} &= F_{P_{s}}\left( 1- P_{f} \right)  \nonumber\\
+	&= \mathbb{P} \left\lbrace  \theta \leq  1- P_{f}  \right\rbrace  \nonumber\\
+	&=  1  -  \mathbb{P} \left\lbrace  r \leq  \left[ \frac{p_t}{\theta_{T}} \log(\frac{1}{ 1- P_{f} })\right] ^{\frac{1}{\gamma}} \right\rbrace \nonumber\\
+	&= 1 -F_r \left( \left[ \frac{p_t}{\theta_{T}} \log(\frac{1}{ 1- P_{f} })\right] ^{\frac{1}{\gamma}} \right) \nonumber\\
+	&= \exp\left\lbrace -\pi \lambda_{b} \exp\left( \frac{2\sigma^2}{\gamma^2}\right) \left[  \frac{p_t}{\theta_{T}} \log(\frac{1}{ 1- P_{f} })\right]  ^{\frac{2}{\gamma}} \right\rbrace 
+\end{align}
+Hence, by inversing $\eqref{eq:p_outage_vs_min_tx_power}$, the minimum transmit power $p_t$ is:
+\begin{align}
+	\label{eq:min_tx_power_vs_p_outage_plr}
+	p_t = \left[ \frac{1}{\pi \lambda_{b}} \ln\left( 1/P_{\text{outage}} \right) \right] ^{\frac{\gamma}{2}} \frac{\theta_{T}} {\ln(1/(1-P_{f}))}
+\end{align}
+
+
+\subsubsection{Macro reception diversity}
+Actually, the packet loss rate is a function of a realization of BS location.
+\begin{align}
+	\mathbb{E} \left[  \prod_{r_i \in \Phi_{b}} (1-p_{s}(r_i)) \right] &= \exp\left\lbrace -2\pi \lambda_{b} \int_{r_{0}}^{+\infty} p_{s}(r)rdr \right\rbrace \nonumber\\
+	&= \exp\left\lbrace  \int_{r_{0}}^{+\infty}  \exp( -\frac{N \theta_{T} r^{\gamma}}{P_{r}}) 2 \pi \lambda_b e^{\frac{2\sigma^2}{\gamma^2}}  rdr  \right\rbrace \nonumber \\ 
+	&= \exp\left\lbrace -\pi \lambda_{b} e^{\frac{2\sigma^2}{\gamma^2}}  \int_{r_{0}^{2}}^{+\infty}  \exp( -\frac{N \theta_{T} r^{\gamma}}{P_{r}}) dr^2  \right\rbrace 
+\end{align} 
+Only when $\gamma = 4$, the closed-form expression exists:
+\begin{align}
+	\mathbb{E} \left[  \prod_{r_i \in \Phi_{b}} (1-p_{s}(r_i)) \right] &= \exp\left\lbrace -\pi \lambda_{b} e^{\frac{2\sigma^2}{\gamma^2}}  \frac{1}{\sqrt{A}} \erfc\left( \sqrt{A} r_0^2 \right)   \right\rbrace 
+\end{align} 
+
+Thus,
+\begin{align}
+	P_{f}(r_{0}) = ( 1- \exp( -\frac{N \theta_{T} r^{\gamma}}{P_{r}}) )
+	\exp\left\lbrace -\pi \lambda_{b} e^{\frac{2\sigma^2}{\gamma^2}}  \frac{1}{\sqrt{A}} \erfc\left( \sqrt{A} r_0^2 \right)   \right\rbrace 
 \end{align}
 
 

@@ -1,0 +1,21 @@
+\section{Related work and motivation}
+\label{sec:related-work}
+Plenty of research efforts exist in the literature to remedy the random access overload and energy efficiency in M2M system. They can be categorized into orientations given in~\cite{3GPP/ranimprovements}: introduce separate access class for MTC devices allowing network separately control the access from MTC and other devices, separate RACH resource for MTC, pull based schema, etc.
+%dynamically allocate RACH resource according to MTC traffic load prediction,  design MTC specific back-off scheme, slotted access and pull based scheme (network pages MTC device to demand the latter performing a RRC connection establishment). 
+%Reference \cite{YuanHo12} proposes a joint massive access control and resource allocation schemes to minimize total energy consumption of the M2M system in both flat-fading and frequency selective fading channel. 
+As conventional random access used in LTE is not efficient for periodic MTC, some researchers consider to avoid random access by leveraging periodicity of most MTC traffic: Madueno et al.~\cite{madueno2013many} proposes an allocation method for reports with deadlines in GPRS/EDGE by avoiding random access and using a periodic structure to serve the devices such that the deadlines are met. Madueno et al.~\cite{madueno2014reengineering} reengineer the access control in GSM to support massive smart metering.
+Madueno et al.~\cite{GCMadueno14} proposes a M2M-dedicated uplink radio resource pool periodically reoccurring, but the authors have not indicated that how each device is scheduled to avoid collision in this resource pool.
+References \cite{you2014radio}\cite{Zhangy14} propose a persistent radio resource method reserving periodically radio resource for devices without random access procedure, 
+%Its limitation is: the greatest common divisor of all periods must be greater than one. 
+but none of these references gives implementation for LTE network. 
+
+In this chapter, we propose a network-integrated multiple-period polling service dedicated for periodic MTC traffic in LTE network. The motivations of this work are:\begin{inparaenum}[i)]
+	\item as an all-IP architecture, LTE does not provide integrated service. Hence conventional MTC related polling services in LTE are at application level;
+	\item signaling overhead compared to small payload in MTC traffic is too expensive;
+	\item the periodicity of MTC traffic is not well leveraged in LTE network. 
+\end{inparaenum}
+The key philosophy of proposed service is: all devices with different report periods should sequentially use the same system resource without random access procedure under scheduling of the eNB, because each device has a deterministic comportment. 
+
+%and when transmission condition of a certain device is satisfied, eNB directly allocates resource for this device and the latter sends data without random access procedure. 
+%Inspired from reference \cite{you2014radio}, system resource can be sequentially used by massive devices without collision if greatest common divisor of their periods is great than one. 
+%   that  Our proposal is based on three observations: first large of MTC traffic is periodic which allows allocating radio resource in a deterministic manner, second as all-IP architecture, LTE/EPC has not provided integrated services as previous network such as GSM. Three devices with different report period can share the same channel without collision if GCD of their periods is great than one \cite{you2014radio}.

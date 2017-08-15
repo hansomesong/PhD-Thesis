@@ -1,26 +1,46 @@
 \section{Network Level Performance Without Retransmission}
 \label{sec:op_over_infinite_plane}
-The transmission success probability $p_s(r)$ paves the way to analyze the network packet loss rate $P_{f}$, which is the base to calculate:\begin{inparaenum}[1)]
+The analysis about link-level transmission success probability $p_s(r)$ paves the way to analyze the network level packet loss rate $P_{f}$, which is the base to calculate:\begin{inparaenum}[1)]
 	\item the maximum normalized load $L_{\text{max}}$ under packet loss rate constraint $P_{f}^{\text{max}}$;
 	\item the normalized spatial throughput (per BS) $S = (1-P_{f}) p\lambda_{m}/ \lambda_{b}$
+	%TODO should we analyze energy-efficiency?
 \end{inparaenum}
 We first consider two standard ALOHA transmission approaches in unicast mode (best and nearest BS attach) and then analyze the macro diversity case. For macro diversity case, we also consider two cases: selective ratio and maximum ratio combing.
+
+Note that to keep the tractability of system model, when background noise is taken into account, we let path loss exponent $\gamma=4$. For some cases, background is neglected to obtain closed-form expression.
 \subsection{Nearest BS attach method}
 \label{sec:nearest_BS_attach_method}
 %A device can attach to the best BS which the received power of packet transmission is the strongest if the channel state info is available during the communication.
-In this subsection, we assume that the device attaches to the geographically nearest BS then transmits packets. 
+As a complementary analysis, in this subsection, we assume that the device attaches to the geographically nearest BS then transmits packets. The interest of conducting such an analysis are: give an upper bound of packet loss rate and show an accuracy approximation method when shadowing is present. The closed-form express is available only when background noise is ignored.
+
+Still, we first study the transmission success probability $p_s(d)$ for a given uplink between a BS at the origin and a device $x_0$ at distance $d$. Using Slivnyak's theorem~\cite{vaze2015random}[Theorem 2.3.3], combining $(\ref{eq:path-loss})$ and $(\ref{eq: sinr-definition})$, we have:
+\begin{align}
+p_{s} \left( d \right)
+& =\mathbb{P}\left\lbrace \frac{H \exp(\chi) d^{-\gamma}}{\sum_{x_j \in \Phi_{m}} H_{x_j} \exp(\chi_{x_j}) d_{x_j}^{-\gamma} + N}  \geq \theta_T \right\rbrace. \nonumber
+\end{align}
+Let $I=\sum_{x_j \in \Phi_{m}} H_{x_j} \exp(\chi_{x_j}) d_{x_j}^{-\gamma}$, which is the cumulative interference suffered by $x_0$. Conditioned on log-normal shadowing component $\exp(\chi_{x_j}) $, as shown in~\cite{haenggi2009interference}, $p_{s}\left( d \right)$ can be expressed in terms of Laplace transform of cumulative interference $\mathcal{L}_{I}(s)$ at point $\theta_{T} e^{-\chi} d^{\gamma}$:
+\begin{align}
+\label{eq:def_ps_nearest_bs}
+p_{s}\left( r \right)  &= Pr \left\lbrace H  \geq (I+N) \theta_{T} e^{-\chi}d ^{\gamma}  \right\rbrace \nonumber\\ 
+% The follwing line can be hidden, not necessary in FINAL_VERSION
+%&=\mathbb{E}_{\chi}\left\lbrace  \mathbb{E}_{I} \left[ \exp(-\theta_{T} \exp(-g) r^{\gamma}  I ) \vert \chi = g\right]\right\rbrace   \nonumber\\
+&= \int_{-\infty}^{+\infty}   \exp(-N \theta_{T} e^{-x} r^{\gamma} ) \left[ \int_{0}^{+\infty} \exp(-y \theta_{T} e^{-x} r^{\gamma} ) f_{I}(y)dy\right] f_{\chi}(x) dx  \nonumber\\
+&= \mathbb{E}_{\chi} \left[ \exp(-N \theta_{T} e^{-\chi} d^{\gamma} ) \mathcal{L}_{I}\left\lbrace \theta_{T} e^{-\chi} d^{\gamma}\right\rbrace \right],
+\end{align}
+where $f_{X} (x)$ is probability density function (PDF) of r.v. $X$, $\mathbb{E}_{X} \left[ \cdot \right] $ is the expectation operator with respect to $X$.
 %This method is rational when downlink is seldom used for the sake of cost. %TODO: Add this in cover letter.
-Therefore, network packet loss rate $P_{f,n}$ (index $n$ means nearest) is the expectation of $p_s(r)$ with respect to the distance to the nearest base station $r$ . The PDF of $r$ for a PPP, proved in~\cite{andrews2011tractable}, is as follows:
+
+Therefore, network packet loss rate $P_{f,n}$ (index $n$ means nearest) is the expectation of $p_s(d)$ with respect to the distance to the nearest base station $r$ . The PDF of $d$ for a PPP, proved in~\cite{andrews2011tractable}, is as follows:
 \begin{align}
 \label{eq:pdf_nearest_distance}
-f\left( r\right)  = 2 \pi \lambda_b  r \exp(-\lambda_b \pi r^2), r \in \left[ 0, +\infty\right]. 
+f\left( d \right)  = 2 \pi \lambda_b  d \exp(-\lambda_b \pi d^2), d\in \left[ 0, +\infty\right]. 
 \end{align}
 Thus:
 \begin{align}
 \label{eq:mean_bx+1_step1}
-&P_{f,n}= \mathbb{E}_{r}\left[ 1-p_{s}\left(r\right) \right]  \nonumber\\
-&= 1 -\int_{0}^{+\infty} \mathbb{E}_{\chi} \left[ \exp(-p \lambda_{m} \pi A \theta_{T}^{\frac{2}{\gamma}} e^{\frac{2\sigma^2}{\gamma^2}}  r^2 e^{-\frac{2}{\gamma}\chi}) \right] 2 \pi \lambda_b  r e^{-\lambda_b \pi r^2} dr \nonumber\\
-&= 1-\pi \lambda_b \mathbb{E}_{\chi}\left[ \int_{0}^{+\infty} \exp(-p \lambda_{m} \pi A \theta_{T}^{\frac{2}{\gamma}} e^{\frac{2\sigma^2}{\gamma^2}}  r^2 e^{-\frac{2}{\gamma}\chi}-\lambda_b \pi r^2)\right] \!\!dr^2 \nonumber\\
+&P_{f,n}= \mathbb{E}_{r}\left[ 1-p_{s}\left(d\right) \right]  \nonumber\\
+&= 1 -\int_{0}^{+\infty} \mathbb{E}_{\chi} \left[ \exp(-p \lambda_{m} \pi A \theta_{T}^{\frac{2}{\gamma}} e^{\frac{2\sigma^2}{\gamma^2}}  d^2 e^{-\frac{2}{\gamma}\chi}) \right] 2 \pi \lambda_b  d e^{-\lambda_b \pi d^2} d(d) \nonumber\\
+&= 1-\pi \lambda_b \mathbb{E}_{\chi}\left[ \int_{0}^{+\infty} \exp(-p \lambda_{m} \pi A \theta_{T}^{\frac{2}{\gamma}} e^{\frac{2\sigma^2}{\gamma^2}}  d^2 e^{-\frac{2}{\gamma}\chi}-\lambda_b \pi d^2)\right] d(d^2) \nonumber\\
 &= 1 -\mathbb{E}_{\chi}\left[\left( A \theta_{T}^{\frac{2}{\gamma}} e^{\frac{2\sigma^2}{\gamma^2}} L  e^{-\frac{2}{\gamma}\chi}+1 \right)^{-1} \right] \nonumber\\
 %&= 1- \int_{-\infty}^{+\infty} \frac{1}{ \frac{p\lambda_{m}AK}{\pi \lambda_{b}}e^t+1}\frac{\exp\left\lbrace -\frac{t^2}{2 \left( \frac{2}{\gamma}\sigma\right) ^2}\right\rbrace }{\sqrt{2\pi} \frac{2}{\gamma}\sigma} dt \nonumber\\
 &= 1 - \int_{-\infty}^{+\infty} \!\!\! \frac{\gamma}{ 2\sqrt{2\pi}\left( e^t+1\right)\sigma} \exp \left\lbrace -\frac{\gamma^2}{8 \sigma^2} \left(    t-\ln(A L \theta_{T}^{\frac{2}{\gamma}} e^{\!\! \frac{2\sigma^2}{\gamma^2}} )   \right) ^2 \right\rbrace dt.  
@@ -33,37 +53,51 @@ P_{f,n}
 &\approx 1 - \frac{1}{1 + \exp\left\lbrace \left( 1 +\pi \sigma^2 / (2\gamma^2) \right)^{-1/2} \ln( A \theta_{T}^{\frac{2}{\gamma}} e^{\frac{2\sigma^2}{\gamma^2}}  L) \right\rbrace}  \nonumber\\
 &\approx 1-\frac{ 1 }{ 1 + \left( A \theta_{T}^{\frac{2}{\gamma}} e^{\frac{2\sigma^2}{\gamma^2}}  L\right) ^{C} }
 \end{align}
-where $A$ is defined in $(\ref{eq:def_ps_2})$, $L=p\lambda_{m}/\lambda_{b}$, $C= \left( 1 +\pi \sigma^2 / (2\gamma^2) \right)^{-1/2}$. We conducted a Monte-Carlo simulation and found that the maximum difference between $(\ref{eq:mean_bx+1_step1})$ and $(\ref{eq:bs_nst_att_analytical})$ is $2.46\%$ in normalized load interval $\left[ 0.021, 0.3\right] $, which proves the accuracy of the proposed approximation formula $(\ref{eq:bs_nst_att_analytical})$\qsong{Remember to put the figure into Annexe part. Here I wan to show that, the difference between approximation formula and exact integral is smaller when normalized load increase }.
-\begin{figure}[!ht]
-	\centering
-	\includegraphics[width=\linewidth]{/Users/qsong/Documents/slotted_aloha_related_project/test/comparison_monte_carlo_approximation.eps}
-	\caption{Comparison between approximation formula $(\ref{eq:bs_nst_att_analytical})$ and Monte-Carlo simulation result.}
-	\label{fig:comparison_monte_carlo}
-\end{figure}
+where $A$ is defined in $(\ref{eq:def_ps_2})$, $L=p\lambda_{m}/\lambda_{b}$, $C= \left( 1 +\pi \sigma^2 / (2\gamma^2) \right)^{-1/2}$. We conducted a Monte-Carlo simulation and found that the maximum difference between $(\ref{eq:mean_bx+1_step1})$ and $(\ref{eq:bs_nst_att_analytical})$ is $2.46\%$ in normalized load interval $\left[ 0.021, 0.3\right] $, which proves the accuracy of the proposed approximation formula $(\ref{eq:bs_nst_att_analytical})$
+%\qsong{Remember to put the figure into Annexe part. Here I wan to show that, the difference between approximation formula and exact integral is smaller when normalized load increase }.
+
 
 From $(\ref{eq:bs_nst_att_analytical})$,  the maximum supported normalized load $L_{\text{max},n}$ and normalized spatial throughput (index $n$ refers to the nearest BS attach method) is obtained:
 \begin{align}
 \label{eq:bs_nst_att_max_load}
-L_{\text{max},n} &= \frac{1}{A \theta_{T}^{\frac{2}{\gamma}} e^{\frac{2\sigma^2}{\gamma^2}} } 
+L_{\text{max},n} & \approx \frac{1}{A \theta_{T}^{\frac{2}{\gamma}} e^{\frac{2\sigma^2}{\gamma^2}} } 
 \left(  \frac{P_{f}^{\text{max}}}{1 - P_{f}^{\textbf{max}}} \right) ^{\frac{1}{C}}, \\
 \label{eq:bs_nst_att_spatial_throughput}
-S_{n} &=  \frac{L}{1 + \left( A \theta_{T}^{\frac{2}{\gamma}} e^{\frac{2\sigma^2}{\gamma^2}}  L\right) ^{C} }.
+S_{n} & \approx  \frac{L}{1 + \left( A \theta_{T}^{\frac{2}{\gamma}} e^{\frac{2\sigma^2}{\gamma^2}}  L\right) ^{C} }.
 \end{align}
+It should be noted that according to approximation error, $\eqref{eq:bs_nst_att_spatial_throughput}$ is not valid when normalized load $L$ is very high. A concise explication is as follows: let $\hat{P_{f,n}}$ and $o(L)$ respectively be the real packet loss rate value and approximation error, thus $\hat{P_{f,n}} = P_{f,n} + o(L)$. Thus, the approximation error between real spatial throughput $\hat{S_n}$ and $\eqref{eq:bs_nst_att_spatial_throughput}$ is thus $ o(L) L$, which is not neglected as the increase of $L$.
 %We should note that $(\ref{eq:bs_nst_att_spatial_throughput})$ is obtained by $S = (1-P_{f}) p\lambda_{m}/ \lambda_{b}$, where $P_{f}$ is a ... This comment is applied to all spatial throughput in BS attach case.
 
 \subsection{Best BS attach method}
-In this subsection, we assume that the device attaches to the BS for which the received power averaged over all fading realizations is the strongest (i.e. the BS that maximizes $r^{-\gamma}\exp(\chi)$). Let $P_{f,b} $ be packet loss rate for this case. As shown in~\cite[lemma 1]{dhillon2014downlink},  attaching to the best BS in a PPP of intensity $\lambda_{b}$ with shadowing is equivalent to attaching the nearest one in a transformed PPP of intensity $\lambda_{b} \mathbb{E}\left[ e^{-\frac{2}{\gamma}\chi}\right] = \lambda_{b} e^{\frac{2\sigma^2}{\gamma^2}}$ without shadowing. 
-Therefore, the link level transmission success probability $p_{s}(r)$ is as follows:
-\begin{align}
-	\label{eq:succ_proba_with_modified_r}
-	p_{s}(r) = \exp(-p \lambda_{m} \pi A e^{\frac{2\sigma^2}{\gamma^2}} \theta_{T}^{\frac{2}{\gamma}} r^2 )
-\end{align}
-The distribution of modified $r$ is thus:
+In this subsection, we assume that the device attaches to the BS for which the received power averaged over all fading realizations is the strongest (i.e. the BS that maximizes $r^{-\gamma}\exp(\chi)$). The displacement theorem, discussed in Sec.~\ref{subsec:displacement_theorem} can be applied. Let $P_{f,b} $ be packet loss rate for this case. In a PPP formed by BS's location with intensity $\lambda_b e^{\frac{2\sigma^2}{\gamma^2}}$, the distance $r$ between a device placed at the origin and its nearest BS is as follows:
 \begin{align}
 	\label{eq:pdf_modified_r}
 	f(r) = 2 \pi \lambda_b e^{\frac{2\sigma^2}{\gamma^2}}  \exp( -\lambda_b  e^{\frac{2\sigma^2}{\gamma^2}} \pi r^2 ) r 
 \end{align}
-Similar to the analysis in Sec.~\ref{sec:nearest_BS_attach_method}, we have:
+\subsubsection{With background noise and $\gamma$=4}
+\label{subsub:with_background_noise}
+When background noise is taken into account, only and only if path loss component $\gamma=4$, we obtain the closed-form expression. 
+\begin{align}
+	\label{eq:bs_best_att_analytical_with_noise_step_1}
+	&P_{f,b}= \mathbb{E}_{r}\left[ 1-p_{s}\left(r\right) \right]  \nonumber\\
+	&= 1 -\int_{0}^{+\infty}   \exp(-N \theta_{T} r^{4} ) \exp(-p \lambda_{m} \pi A \theta_{T}^{\frac{2}{\gamma}} e^{\frac{2\sigma^2}{\gamma^2}}  r^2 ) 2 \pi \lambda_b e^{\frac{2\sigma^2}{\gamma^2}}  \exp( -\lambda_b  e^{\frac{2\sigma^2}{\gamma^2}} \pi r^2 ) r dr \nonumber\\
+	&= 1 -\pi \lambda_b e^{\frac{2\sigma^2}{\gamma^2}} \int_{0}^{+\infty}   \exp(-N \theta_{T} r^{4} -(p \lambda_{m} \pi A \theta_{T}^{\frac{2}{\gamma}} e^{\frac{2\sigma^2}{\gamma^2}}  + \lambda_b \pi  e^{\frac{2\sigma^2}{\gamma^2}} )r^2 )  dr^2
+\end{align}
+Integral $\eqref{eq:bs_best_att_analytical_with_noise_step_1}$ is finally simplified as follows. The detailed steps are in Annexe~\ref{annexe:integration-with-background-noise}:
+\begin{align}
+	\label{eq:bs_best_att_analytical_with_noise}
+	P_{f,b}
+	&= 1 - \pi \lambda_b e^{\frac{2\sigma^2}{\gamma^2}} \frac{\sqrt{\pi}}{2} \sqrt{\frac{1}{U}}\exp(\frac{V^2}{4U})\left[ 1 - \erf(\frac{V}{2\sqrt{U}})\right],
+\end{align}
+where $U=N \theta_{T}$, $V=\exp \left( \frac{2\sigma^2}{\gamma^2}  \right) \left( p \lambda_{m} \pi A \theta_{T}^{\frac{2}{\gamma}} + \pi \lambda_b \right)$
+
+\subsubsection{Without Background Noise}
+With ignorance of background noise, the link level transmission success probability $p_{s}(r)$, given in~\eqref{eq:def_ps_2}, is simplified as follows:
+\begin{align}
+	\label{eq:succ_proba_with_modified_r}
+	p_{s}(r) =\exp(-p \lambda_{m} \pi A e^{\frac{2\sigma^2}{\gamma^2}} \theta_{T}^{\frac{2}{\gamma}} r^2 ).
+\end{align}
+Similar to Sec~\ref{subsub:with_background_noise}, we have:
 \begin{align}
 \label{eq:bs_best_att_analytical}
 &P_{f,b}= \mathbb{E}_{r}\left[ 1-p_{s}\left(r\right) \right]  \nonumber\\
@@ -72,6 +106,7 @@ Similar to the analysis in Sec.~\ref{sec:nearest_BS_attach_method}, we have:
 \end{align}
 By inverting $(\ref{eq:bs_best_att_analytical})$, the maximum supported normalized load $L_{\text{max}, b}$ (subscript $b$ refers to the best BS attach method) is as follows:
 \begin{align}
+	\label{eq:best_maximum_load}
 	L_{\text{max},b} &=\frac{1}{A \theta_{T}^{\frac{2}{\gamma}}  } 
 	\frac{P_{f}^{\text{max}}}{1 - P_{f}^{\textbf{max}}}. 
 \end{align}
@@ -80,8 +115,11 @@ The normalized spatial throughput $S_{b}$ is as follows:
 	S_{b} =  \frac{L}{1 +  A  \theta_{T}^{\frac{2}{\gamma}} L }.
 \end{align}
 
+
+
 \subsection{Selective Combining like Macro Diversity}
 \label{sec:sc_macro_diversity}
+\subsubsection{With Background Noise and $\gamma=4$}
 Since a transmitted packet is received by all surrounding BS, the transmission of this packet fails if and only if the received SINR at each BS is less than the capture ratio. In other words, if the maximum SINR is still less than the capture ratio, the packet transmission is failed. This is why such a scheme is called selective combining (SC) like macro reception diversity. In this section, we evaluate SC-like macro diversity in one-shot random access case.
 
 Strictly speaking, the cumulative interferences at two different BS are correlated: when a device is transmitting, it generates some non-negligible interference on base stations that are not very far. However, it is still rational to assume that the interferences received by different BS are mutually independent.
@@ -97,36 +135,46 @@ P_{f,m} &= \mathbb{E}\left[  \prod_{r_i \in \Phi_{b}} (1-p_{s}(r_i)) \right], \t
 \end{align} 
 where $r_i$ is the distance between the device and BS with label $i$. Using Campbell theorem for  $(\ref{eq:definition_pfm})$:
 \begin{align}
-\label{eq:bs_rx_divers_analytical_before_last}
-P_{f,m} &= \exp\left\lbrace -2\pi \lambda_{b} \int_{0}^{+\infty} p_{s}(r)rdr \right\rbrace.
+	\label{eq:bs_rx_divers_analytical_with_noise_before_last}
+	P_{f,m} &= \exp\left\lbrace -2\pi \lambda_{b} e^{\frac{2\sigma^2}{\gamma^2}}  \int_{0}^{+\infty} p_{s}(r)rdr \right\rbrace \nonumber\\
+	&= \exp \left\lbrace  -2\pi \lambda_{b} e^{\frac{2\sigma^2}{\gamma^2}}   \int_{0}^{+\infty}   \exp(-N \theta_{T} r^{4} ) \exp(-p \lambda_{m} \pi A \theta_{T}^{\frac{2}{\gamma}} e^{\frac{2\sigma^2}{\gamma^2}}  r^2 )    r dr   \right\rbrace \nonumber \\
+	&= \exp \left\lbrace  -\pi \lambda_{b} e^{\frac{2\sigma^2}{\gamma^2}}  \int_{0}^{+\infty}   \exp(-N \theta_{T} r^{2} -p \lambda_{m} \pi A \theta_{T}^{\frac{2}{\gamma}} e^{\frac{2\sigma^2}{\gamma^2}}  r ) dr   \right\rbrace
 \end{align} 
-Combining with $(\ref{eq:def_ps_2})$ and changing integration order, $(\ref{eq:bs_rx_divers_analytical_before_last})$ can be further simplified:
+With mathematical operations shown in Appendix $\eqref{annexe:integration-with-background-noise}$, we finally arrive at:
 \begin{align}
-\label{eq:bs_rx_divers_analytical}
-P_{f,m} 
-%&= \exp\left\lbrace -\left[A \theta_{T}^{\frac{2}{\gamma}} L \right] ^{-1}\right\rbrace.
-&= \exp\left\lbrace -\frac{1}{A \theta_{T}^{\frac{2}{\gamma}} L }\right\rbrace.
-\end{align}
-From $(\ref{eq:bs_rx_divers_analytical})$, we can easily find the maximum load and the throughput:
+	\label{eq:bs_rx_divers_analytical_with_noise}
+	P_{f,m}  &= \exp\left\lbrace -\pi \lambda_{b} e^{\frac{2\sigma^2}{\gamma^2}} \frac{\sqrt{\pi}}{2} \sqrt{\frac{1}{U}}\exp(\frac{V^2}{4U})\left[ 1 - \erf(\frac{V}{2\sqrt{U}})\right]  \right\rbrace    ,
+\end{align} 
+where $U=N \theta_{T}, V=p \lambda_{m} \pi A \theta_{T}^{\frac{2}{\gamma}} \exp( \frac{2\sigma^2}{\gamma^2})$
+
+\subsubsection{Without Background Noise}
+In case of background noise is neglected (i.e., $N=0$), combining with $\eqref{eq:succ_proba_with_modified_r}$ and changing integration order, $\eqref{eq:bs_rx_divers_analytical_with_noise_before_last}$ can be directly simplified:
 \begin{align}
-	\label{eq:bs_rx_divers_max_load}
-	L_{\text{max}, m} &= \frac{1}{A \theta_{T}^{\frac{2}{\gamma}}} \frac{1}{\ln(1/P_{f}^{\text{max}})}, \\
-	\label{eq:bs_rx_divers_spatial_throughput}
-	S_{m} &= L \left(1 -\exp\left\lbrace -\frac{1}{A \theta_{T}^{\frac{2}{\gamma}} L } \right\rbrace \right). 
+	\label{eq:bs_rx_divers_analytical}
+	P_{f,m} 
+	%&= \exp\left\lbrace -\left[A \theta_{T}^{\frac{2}{\gamma}} L \right] ^{-1}\right\rbrace.
+	&= \exp\left\lbrace -\frac{1}{A \theta_{T}^{\frac{2}{\gamma}} L }\right\rbrace.
 \end{align}
-The macro diversity gain against the best BS attach mode $G_{\text{diversity},b}$ is obtained by inverting $(\ref{eq:bs_best_att_analytical})$ and $(\ref{eq:bs_rx_divers_analytical})$:
+From $\eqref{eq:bs_rx_divers_analytical}$, we can easily find the maximum load and throughput:
 \begin{align}
-	\label{eq:macro-diversity-gain}
-	G_{\text{diversity},b} &= \left(1-P_{f}^{\text{max}}\right)/ \left( P_{f}^{\text{max}} \ln(1/P_{f}^{\text{max}}) \right) .
+	\label{eq:diversity_maximum_load}
+	L_{\text{max}, m} = \frac{1}{A \theta_{T}^{2/\gamma}} \frac{1}{\ln(P_{f}^{\textbf{max}})}
 \end{align}
-We deduce that, whatever the ALOHA type, the macro diversity gain against best BS attach
-only depends on the packet loss rate target.
+\begin{align}
+	S_{m} = L \left( 1 - \exp\left\lbrace -\frac{1}{A \theta_{T}^{\frac{2}{\gamma}} L }\right\rbrace \right) 
+\end{align}
+The macro diversity gain against the best BS attach mode $G_{\text{diversity}, b}$ is obtained by the ratio $\eqref{eq:diversity_maximum_load}$ and $\eqref{eq:best_maximum_load}$:
+\begin{align}
+	G_{\text{diversity}, b} = (1 - P_{f}^{\text{max}}) / \left( P_{f}^{\text{max}} \ln(1/P_{f}^{\text{max}})\right). 
+\end{align}
 
 \subsection{Maximum Ratio Combining based Macro diversity}
 Due to the fact that a transmitted packet theoretically can be simultaneously received by all BS (ignorance of background noise), linear combining of signals at each BS can be leveraged so that the output SINR is maximized. Such a scheme is called Maximum Ratio Combining (MRC) based macro diversity
-In this section, the performance of MRC-based macro diversity in case of one-shot random access is evaluated.
+In this section, the performance of MRC-based macro diversity in case of one-shot random access is evaluated. The background noise is neglected for the sake of tractability.
 
-Consider a typical device $x_0$ at origin, it has been proved that if the weigh factors involved in MRC context is well designed (see Fig.~\ref{fig:mrc_macro_diversity_recpetion_illustration}), the output $\text{SINR}$ $\Theta$ of best combiner is expressed as \qs{We need a reference for this...}:
+Consider a typical device $x_0$ at origin, it has been proved that if the weigh factors involved in MRC context is well designed (see Fig.~\ref{fig:mrc_macro_diversity_recpetion_illustration}), the output $\text{SINR}$ $\Theta$ of best combiner is expressed as 
+%TODO: need a reference here...
+%\qs{We need a reference for this...}:
 \begin{align}
 \Theta &= \sum_{y_j \in \Phi_{b}}^{} \theta_{y_j} \nonumber\\
 &= \sum_{y_j \in \Phi_{b}}^{} \frac{H_{y_j} \exp(\chi_{y_j}) r_{y_j}^{-\gamma}}{I_{y_j}} \nonumber\\
@@ -141,7 +189,9 @@ Let $P_{f, \text{MRC}}$ be the network level packet loss rate in this case. Acco
 \end{align}
 where $\theta_{T}$ is the capture ratio, $F_{\Theta} (\theta)$ is the CDF of $\Theta$. It is can be numerically computed from Laplace Transform or Characteristic function of $\Theta$.
 
-The Laplace Transform (LT) of $\Theta$ is by definition as follows\qsong{To be more restrict, we should explain why we can remove the subscript $y_i$ in the following formula}:
+The Laplace Transform (LT) of $\Theta$ is by definition as follows
+%TODO:....
+%x\qsong{To be more restrict, we should explain why we can remove the subscript $y_i$ in the following formula}:
 \begin{align}
 \label{eq:lt-sinr-mrc-1}
 \mathcal{L}_{\Theta}\left( s \right) &= \mathbb{E}\left[ e^{-s\Theta}\right] \nonumber\\
@@ -160,12 +210,12 @@ Applying Campbell theorem to $\eqref{eq:lt-sinr-mrc-1}$ and changing the order o
 Let us focus on the integral $D = \int_{0}^{+\infty} \left(1-\exp(-s\epsilon r^{-\gamma} ) \right) 2 \pi \lambda_{b} r dr $:
 \begin{align}
 \label{itg:D}
-D &= \int_{0}^{+\infty} \left(1-\exp(-s\epsilon r^{-\gamma/2} ) \right) \pi \lambda_{b} dr \nonumber\\
+D
 &\overset{\mathclap{\strut\text{(a)}}} = \pi \lambda_{b} \int_{0}^{+\infty} \left(1-\exp(-x ) \right) d\left( -x^{-\frac{2}{\gamma}} (s\epsilon)^{\frac{2}{\gamma}}\right)  \nonumber\\
 &\overset{\mathclap{\strut\text{(b)}}}= \pi \lambda_{b} \int_{0}^{+\infty} \exp(-x ) x^{-\frac{2}{\gamma}} (s\epsilon)^{\frac{2}{\gamma}} dx \nonumber\\
 &= \pi \lambda_{b}  (s\epsilon)^{\frac{2}{\gamma}}  \Gamma (1 - \frac{2}{\gamma}),
 \end{align}
-where step $(a)$ is obtained with a change of variable $x = s \epsilon r^{-\gamma/2}$, step $(b)$ is achieved via integration by parts, $\Gamma(\cdot)$ is gamma function.
+where step $(a)$ is obtained with a change of variable $x = s \epsilon r^{-\gamma}$, step $(b)$ is achieved via integration by parts, $\Gamma(\cdot)$ is gamma function.
 
 Combining $\eqref{eq:lt-sinr-mrc-2}$ and $\eqref{itg:D}$ , the Laplace Transform of $\Theta$ is finally simplified as:
 \begin{align}
@@ -187,7 +237,9 @@ With substitution $s = -i \omega$ in $\eqref{eq:lt_Theta}$ , the characteristic 
 \end{align}
 where $\omega \geq 0$, $i$ is imaginary unit.
 
-\qsong{This paragraph should be simplified. Since in another Chapter, the same numerical technique should have been presented...}As a continuous random variable, the cumulative distribution function $F_{\Theta}\left( \theta \right)$ of total SINR $\Theta$ can be directly derived from its characteristic function $\phi_{\Theta}\left(\omega\right)$. Applying mathematical techniques used in finance domain~\cite{hirsa2012computational}, we seek to calculate the Fourier transform of $e^{-\eta \theta} F_{\Theta}\left( x \right)$ where term $e^{-\eta \theta}$ is a damping function with $\eta > 0$. 
+%TODO:
+%\qsong{This paragraph should be simplified. Since in another Chapter, the same numerical technique should have been presented...}
+As a continuous random variable, the cumulative distribution function $F_{\Theta}\left( \theta \right)$ of total SINR $\Theta$ can be directly derived from its characteristic function $\phi_{\Theta}\left(\omega\right)$. Applying mathematical techniques used in finance domain~\cite{hirsa2012computational}, we seek to calculate the Fourier transform of $e^{-\eta \theta} F_{\Theta}\left( x \right)$ where term $e^{-\eta \theta}$ is a damping function with $\eta > 0$. 
 \begin{align}
 \label{eq:intermediate_formula_1}
 \int_{-\infty}^{+\infty} e^{i\omega \theta} e^{-\eta \theta} F_{\Theta}\left( \theta \right) dx = \frac{1}{\eta - i\omega} \phi_{\Theta}\left( \omega +i\eta \right) 
@@ -203,7 +255,7 @@ The packet loss rate $P_{f,\text{MRC}}$ in case of capture ratio $\theta_{T}$ ca
 
 %We need to calculate CDF of $\Theta$ which is the packet loss rate. However, unlike in Sec.XXX, in general case, no closed-form expression. We rely on numerical method to compute packet loss rate wit low complexity. blabla...
 
-\subsection{A special case, $\gamma=4$}
+\subsubsection{A special case, $\gamma=4$, without background noise}
 In this section, we study a special case where path loss component $\gamma=4$. Proved in ~\cite[Eq. 3.17]{haenggi2009interference}, the probability density function of cumulative interference $I$, suffered by device at the origin, in a system without shadowing, is as follows:
 \begin{align}
 f_{I}(x) = \frac{p\lambda_{m}}{4} (\frac{\pi}{x})^{\frac{3}{2}} \exp(-\frac{\pi^4 p^2\lambda_{m}^2}{16x}), x \geq 0

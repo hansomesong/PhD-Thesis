@@ -1,0 +1,149 @@
+\section{Uncoordinated strategies}
+\label{sec:uncoordinated-strategy}
+For uncoordinated CDMA, the only information that the base station knows about the number of transmission is the estimation of mean load $\lambda\tau_s$ of Poisson distribution (estimated from the arrival history). The system with CDMA as multiple access mechanism is designed to serve $(1-\epsilon)$ percentile of the arrivals. The maximum supported users in each slot is denoted by $\overline{N}$ which satisfies $\mathbb{P}\left[N_a > \overline{N}\right] \leq \epsilon$. For this design, there exist three types of failure events which dictate the maximum load at base station:
+\begin{inparaenum}[i)]
+	\item $N_a > \overline{N}$, the actual arrival transmission request is more than the designed maximum supported users;
+	\item resource selection collision, more than one user choose the same system resource, such as random access code in CDMA or sub-channel in FDMA;
+	\item $P_t > P_{max}$, the required transmit power is greater than theoretical maximum transmit power. 
+\end{inparaenum}
+The conclusions obtained for uncoordinated CDMA in \cite{Dhi13} are resumed in Tab.~\ref{tab:uncoordinated-resume} and used as benchmark.
+%\begin{table}[h]
+%	\centering
+%	\caption{Uncoordinated strategies performance resume}
+%	\label{tab:uncoordinated-resume}
+%	\begin{tabular}{@{}lcc@{}}
+%		\toprule
+%		& CDMA                                                                            & FDMA                                                                          \\ \midrule
+%		Transmit \\ power      & $P_t=\frac{P_{max}}{\mu g \left( N_c\mu_t^{-1} - \overline{N}+1\right)}$        & $P_t=\frac{2^{\frac{LN_f}{W\tau_s}}-1}{\mu g N_f}P_{max}$                     \\ \midrule
+%		Energy \\per bit      & $E_b=\frac{\tau_sP_{max}}{L\mu g \left( N_c\mu_t^{-1} - \overline{N}+1\right)}$ & $E_b=\frac{\tau_s\left(2^{\frac{LN_f}{W\tau_s}}-1\right)P_{max}}{L\mu g N_f}$ \\ \midrule
+%		Failure \\probability & \multicolumn{2}{c}{$P_f \leq \epsilon + (1-\epsilon)\{\delta+(1-\delta)P_c\}$}                                                                                  \\ \midrule
+%		Maximum \\load        & \multicolumn{2}{c}{$\lambda_{max} = max\{\lambda: \mathbb{P}\left[P_t(\lambda) > P_{max}\right] \leq \delta, P_f \leq p\}$}                                    \\ \bottomrule
+%	\end{tabular}
+%\end{table}
+\begin{table}[h]
+	\centering
+	\caption{Uncoordinated strategies performance resume}
+	\label{tab:uncoordinated-resume}
+	\begin{tabular}{@{}lcc@{}}
+		\toprule
+		& CDMA                                                                                                                                        \\ \midrule
+		Transmit  power      & $P_t=\frac{P_{max}}{\mu g \left( N_c\mu_t^{-1} - \overline{N}+1\right)}$                         \\ \midrule
+		Energy per bit      & $E_b=\frac{\tau_sP_{max}}{l\mu g \left( N_c\mu_t^{-1} - \overline{N}+1\right)}$ \\ \midrule
+		Failure probability & \multicolumn{2}{c}{$P_f \leq \epsilon + (1-\epsilon)\{\delta+(1-\delta)P_c\}$}                                                                                  \\ \midrule
+		Maximum load        & \multicolumn{2}{c}{$\lambda_{max} = max\{\lambda: \mathbb{P}\left[P_t(\lambda) > P_{max}\right] \leq \delta, P_f \leq p\}$}                                    \\ \bottomrule
+	\end{tabular}
+\end{table}
+In CDMA random access, each device is assumed to randomly select a code of length $N_{c}$ from the set of $2^{N_{c}}-1$ possible binary sequences, where $N_c$ is a design parameter. The CDMA waveform is transmitted over the total bandwidth $W$. The effective bandwidth of the information symbols is assumed as $W/N_{c}$. Devices are assumed to perform uplink power control such that the target SINR at the base station is $\mu_{t}$. We separately evaluate the impact of various packet length and imperfection of power control. Note that when analyzing the impact of various packet length, the power control is regarded as perfect and vice versa.
+
+%the authors just give transmit power required for each device, but they do not show how to estimate the average transmit power of each strategy (CDMA, FDMA,etc.).  Here, I think the authors take the average of transmit power of all devices.
+
+%From formula (\ref{eq:CDMA-transmit-power}) and $g=\chi h \left( \frac{r}{r_0}\right)^{-\gamma} $, we regard channel gain $r$ is random variable whose PDF is $f_R\left( r\right) = \frac{2r}{r_0^2-r_i^2}$, where $r \in \left[ r_i, r_0\right] $ \cite{5341148} and transmit power $p_t$ is function of random variable $r$, namely $p_t=h(r)$. Hence $p_t$ is also a random variable and average transmit power is the expectation of $p_t$. 
+%\begin{align}
+%\mathbb{E}\left[ p_t\right]=\mathbb{E}\left[ h(r)\right] &=\int_{-\infty}^{\infty} h\left( r\right) f_R \left( r\right) dr \nonumber\\
+%&= \int_{r_i}^{r_0} \frac{P_{max}}{[\mu g (N_{c}\mu_{t}^{-1}-(\bar{N}-1))]} \cdot \frac{2r}{r_0^2-r_i^2} dr \nonumber\\
+%\intertext{Since the fading and shadowing is averaged out}
+%\mathbb{E}\left[ h(r)\right] &= \int_{r_i}^{r_0} \frac{P_{max}}{[\mu  \left( \frac{r}{r_0}\right)^{-\gamma} (N_{c}\mu_{t}^{-1}-(\bar{N}-1))]} \cdot \frac{2r}{r_0^2-r_i^2} dr \nonumber\\
+%&= \int_{r_i}^{r_0} \frac{P_{max}}{[\mu  (N_{c}\mu_{t}^{-1}-(\bar{N}-1))]} \cdot \frac{2r}{r_0^2-r_i^2} \cdot \left( \frac{r}{r_0}\right)^{\gamma} dr \nonumber\\
+%&= \int_{r_i}^{r_0} \frac{P_{max}}{[\mu  (N_{c}\mu_{t}^{-1}-(\bar{N}-1))]} \cdot \frac{2r_0^{-\gamma}}{r_0^2-r_i^2} \cdot r^{\gamma+1} dr \nonumber\\
+%&= \frac{P_{max}}{[\mu (N_{c}\mu_{t}^{-1}-(\bar{N}-1))]} \cdot \frac{2r_0^{-\gamma}}{r_0^2-r_i^2}\cdot \frac{1}{\gamma+2}\cdot r^{\gamma+2} \mid^{r_0}_{r_i} \nonumber\\
+%&= \frac{P_{max}}{[\mu (N_{c}\mu_{t}^{-1}-(\bar{N}-1))]} \cdot \frac{2r_0^{-\gamma}}{r_0^2-r_i^2}\cdot \frac{ r_0^{\gamma+2}-r_i^{\gamma+2}}{\gamma+2}
+%\end{align}
+\subsection{Impact of various packet length}
+In a practical system, it is possible that the packet length sent by each device is not the same for all devices. In this section, we study the impact on performance metric such as average transmit power caused by variable packet length $l$ with system model proposed in Sec.~\ref{sec:system-model}. The power efficiency is measured by the average transmit power for all served devices in the coverage area of the cell. In case of CDMA, the devices are assumed to perform uplink power control such that the target SINR received at the base station is $\mu_t$. Assuming that $l$ bits are transmitted in each transaction (duration $\tau_s$), the effective bandwidth of the information symbols is denoted as $W/N_c$, therefore target SINR $\mu_t$ is defined as:
+\begin{align}
+\frac{l}{\tau_s} &= \frac{W}{N_c} \cdot \log_2 \left( 1+ \mu_t\right)  \nonumber \\
+\mu_t &= 2^{\frac{lN_c}{W\tau_s}}-1 \label{eq:mut-lower-bound}
+\end{align}
+According to (\ref{eq:mut-lower-bound}) and transmit power of CDMA case given in Tab.~\ref{tab:uncoordinated-resume}, the interval of $\mu_t$ can be deduced as: 
+\begin{align}
+2^{\frac{lN_c}{W\tau_s}}-1 \leq \mu_t &< \frac{N_c}{\overline{N}-1} \label{eq:mut-upper-bound}
+\end{align}
+where CDMA code length $N_c$ is actually a function of BS load intensity $\lambda$. We now redefine target SNR as following by considering packet length as a variable $l$:
+\begin{align}
+\mu_t = 2^{\frac{l N_c}{W\tau_s}}-1
+\end{align} 
+With the inequality (\ref{eq:mut-upper-bound}), we determine the lower bound and upper bound of packet length $l$:
+\begin{align}
+L_{0} \leq l <L_{1} = \frac{W\tau_s}{N_c} {\log_2}^{\left( \frac{N_c +\overline{N} -1}{\overline{N}-1}\right) } \label{ieq:packet-length-interval}
+\end{align} 
+where $L_{1}$ refers to the maximal packet length given a BS load intensity and is the function of the latter. From maximum load given in Tab.~\ref{tab:uncoordinated-resume}, we infer that under the variable packet length, the maximum load is the following:
+\begin{align}
+	\lambda_{max} &= \nonumber\\ max\{ 
+	&\lambda: \mathbb{P}\left[P_t(\lambda) > P_{max}\right] \leq \delta, P_f \leq p, L_{0} < l\left(\lambda \right) < L_{1} \}
+\end{align} 
+The average transmit power $\overline{P_t}$ can be regarded as the expectation of transmit power $P_t$. The transmit power $P_t$ is a function of two independent random variables: distance to the origin $r$ and packet length $l$.
+%With values in Tab.\ref{tab:general-value}, the value of $\mu_t$ is generally very small which causes probably high bit error rate for Base station. Assuming BS can correctly decode the messages from devices and take $2^{\frac{LN_c}{W\tau_s}}-1$ as the lower bound of $\mu_t$, we then need to determine the upper bound of $\mu_t$, since bounds is necessary to determine the range of packet length $L$. 
+\begin{align}
+P_t &= h(l, r) = \frac{P_{max}}{\mu_0 g \left( N_c\mu_t^{-1} - \overline{N}+1\right)} \nonumber \\
+\overline{P_t} &=\mathbb{E}\left[ h(l, r)\right] =\int_{r_i}^{r_0} \int_{L_{0}}^{L_{1}}  h\left(l,  r\right) f_{R, L} \left( r, l \right) dldr \nonumber
+\end{align}
+Obviously, packet length $L$ and distance $r$ are independent.
+% 不知道关于 r的概率密度函数要不要写在这里呢。。。
+\begin{align}
+\overline{P_t} & = \frac{P_{max}}{\mu_0}\int_{r_i}^{r_0} \left( \frac{r}{r_0}\right)^{\gamma} f_R(r)dr\int_{L_{0}}^{L_{1}} \frac{f_L(l)}{[(N_{c}\mu_{t}^{-1}-(\bar{N}-1))]}dl \nonumber\\
+%\overline{P_t} &= \frac{P_{max}}{\mu_0}\int_{r_i}^{r_0} \frac{2r}{r_0^2-r_i^2}\left( \frac{r}{r_0}\right)^{\gamma} dr \int_{L_{0}}^{L_{1}} \frac{f_L(l)}{N_{c}\mu_{t}^{-1}-(\bar{N}-1)}dl \nonumber\\
+\overline{P_t} & = \frac{2r_0^{-\gamma}(r_0^{\gamma+2}-r_i^{\gamma+2})}{\mu_0(r_0^2-r_i^2)(\gamma+2)} C P_{max}
+\end{align}
+Thus, the average energy efficiency $\overline{E_{t}}$ is as follows:
+\begin{align}
+	\overline{E_t} & = \frac{\tau_s}{l}\frac{2r_0^{-\gamma}(r_0^{\gamma+2}-r_i^{\gamma+2})}{\mu_0(r_0^2-r_i^2)(\gamma+2)} C P_{max}
+\end{align}
+where $C=\int_{L_{0}}^{L_{1}} \frac{f_L(l)}{[ N_c{2^{\frac{lN_c}{W\tau_s}}-1}^{-1}-(\bar{N}-1)]}dl$ is a constant when the probability density function of packet length $f_L(l)$ is known. 
+%The average transmit power in case of variable packet length has a constant relationship to case with fix packet length. It reduces the maximum supported BS load.  
+\subsection{Imperfection of power control}
+In a practical system, the power control is not perfect mainly due to the power measurement error and measurement delay in the power control process. The power control error can be modeled as a multiplier respecting to log-normal distribution \cite{TamWM97}. The received power of device $i$ under imperfect power control $P^{p}_{r,i}$ can be rewritten as:
+\begin{align}
+P^{p}_{r,i} &= P_{t,i}\chi h G r^{-\gamma}10^{\frac{\eta}{10}} = P_{r,i} 10^{\frac{\eta}{10}}
+\end{align}
+where $P_{r,i}$ denotes the received power without power control error for device $i$, the power control error factor $\eta$ is a zero-mean Gaussian random variable with a standard deviation of $\sigma$, namely $\eta \sim N\left( 0, \sigma^2\right)$. When $\sigma=0$ dB, the case corresponds to perfect power control. If power control is not perfect, $\sigma$ is assumed to be $1-4$ dB. 
+% 好像不太需要 对数正太分布的性质哎。。。
+%The term $10^{\frac{\eta}{10}}=e^{\frac{ln^{10}}{10}\eta}$ is by definition a log-normal random variable denoted as $LN\left( 0, \left( \frac{\ln^{10}}{10}\sigma \right)^2 \right) $.
+ 
+According to Shannon's capacity equation, for device $i$, to transmit $l$ bits in $\tau_s$ second with effective bandwidth $\frac{W}{N_c}$ and achieve target SINR $\mu_t$, the following relationship has to be satisfied:
+\begin{align}
+& \frac{l}{\tau_s} = \frac{W}{N_c}\log_2(1+\mu_t)
+\end{align}
+Let $I$ represent the total intra-cell interference from all other devices and $N$ represent the noisy power. The target SINR $\mu_t$ can be expressed as:
+\begin{align}
+\mu_t 	& = \frac{N_cP^{p}_{r,i}}{I+N} \nonumber\\
+& = \frac{N_cP_{r,i} 10^{\frac{\eta_i}{10}}}{\sum_{ k \neq i}^{\overline{N}}P_{r,k}10^{\frac{\eta_k}{10}}+N_0W} \nonumber
+\end{align}
+Note that $P_{r,i}$ represents the received power without power control error for device $i$. Thus $P_{r,i}$ is approximately identical for all devices, and we have:
+\begin{align}
+\mu_t & = \frac{N_c10^{\frac{\eta_i}{10}}}{\sum_{ k \neq i}^{\overline{N}}{10^{\frac{\eta_k}{10}}}+\frac{N_cW}{P_{r,i} }} \nonumber
+\end{align}
+ where the term $\frac{N_0W}{P_{r,i} }$ is the received SNR (without interference) $\mu_r$ at the base station. According to (\ref{eq:received-snr}), the transmit power for device $i$ under imperfect CDMA power control ${P_{t,i}}$ is:
+\begin{align}
+P_{t,i} & = \frac{P_{max}}{\mu_0 g( N_{c}\mu_{t}^{-1}10^{\frac{\eta_i}{10}} -\sum_{k \neq i}^{\overline{N}}10^{\frac{\eta_k}{10}})}  \nonumber
+\end{align}
+which is a function of random variables distance $r$ and power control error $\eta$. Let $\overline{P_{t,i}}$ denote the average transmit power, we have
+\begin{align}
+\overline{P_{t,i}} & = \mathbb{E}\left[ \frac{P_{max}}{\mu_0 g (N_{c}\mu_{t}^{-1}10^{\frac{\eta_i}{10}} - \sum_{k \neq i}^{\overline{N}}10^{\frac{\eta_k}{10}})}\right] \nonumber\\
+& = \frac{P_{max}}{\mu_0}\mathbb{E}\left[ \frac{1}{(N_{c}\mu_{t}^{-1}10^{\frac{\eta_i}{10}} -\sum_{k \neq i}^{\overline{N}}10^{\frac{\eta_k}{10}})}\right] \nonumber
+\end{align}
+Since $g = \left(\frac{r}{r_0} \right) ^{\gamma}$ is independent from the power control error factor $\eta$, the average transmit power can be written:
+\begin{align}
+\overline{P_{t,i}} & = \frac{P_{max}}{\mu_0}\mathbb{E}\left[ \frac{1}{g}\right] \mathbb{E}\left[ \frac{1}{ N_{c}\mu_{t}^{-1}10^{\frac{\eta}{10}}-\sum_{k \neq i}^{\overline{N}}10^{\frac{\eta_k}{10}}}\right] \nonumber\\
+& = \frac{2r_0^{-\gamma}(r_0^{\gamma+2}-r_i^{\gamma+2})}{\mu_0(r_0^2-r_i^2)(\gamma+2)}CP_{max}  \label{eq:imperfect-CDMA-transmit-power}
+\end{align}
+Similarly, the average energy per bit can be expressed as:
+\begin{align}
+\overline{E_{t,i}}
+& = \frac{\tau_s}{l}\frac{2r_0^{-\gamma}(r_0^{\gamma+2}-r_i^{\gamma+2})}{\mu_0(r_0^2-r_i^2)(\gamma+2)}CP_{max}  \label{eq:imperfect-CDMA-avg-energy-efficiency}
+\end{align}
+where $C = \mathbb{E}\left[ \frac{1}{N_{c}\mu_{t}^{-1}10^{\frac{\eta_i}{10}} -\sum_{k \neq i}^{\overline{N}}10^{\frac{\eta_k}{10}}}\right]$.
+Even though it is complicated to get an analytical expression for formula (\ref{eq:imperfect-CDMA-transmit-power},\ref{eq:imperfect-CDMA-avg-energy-efficiency}), it is feasible to estimate the average transmit power for each given base station load, via the statistical mean of a large number of sample.
+
+
+%FDMA random access design follows on the same lines as that of CDMA random access, with the only difference that the devices now choose one of the Nf orthogonal channels and when the two devices choose different channels, there is no interference.
+%\subsubsection{Transmit power}
+%\begin{align}
+%& P_{t} = \frac{2^{\frac{LN_{f}}{W\tau_{s}}-1}}{\mu g N_{f}} \\
+%& N_{f}  = \frac{1}{1-\left( 1-P_{c}^{\frac{1}{N-1}}\right) }
+%\end{align}
+%\subsubsection{Maximum load}
+%\begin{align}
+%& \lambda_{max} = \max \{\lambda: \mathbb{P}(P_{t}(\lambda) > P_{max}) \leq \delta, P_{f} \le p)\} \\
+%& P_{f} \leq \epsilon + (1-\epsilon)\{\delta+P_{c}(1-\delta)\} 
+%\end{align}
+%For the same system parameters shown in Tab.\ref{tab:general-value}, the maximum load that a Base Station can handle under FDMA random access is $\lambda \approx 160$ arrivals per second, which is order of magnitude lower than that of CDMA case (maximum $\lambda$ can be $1350 $). Thus, the authors haven't compared the performance of uncoordinated FDMA with other strategies (uncoordinated CDMA, coordinated FDMA ).

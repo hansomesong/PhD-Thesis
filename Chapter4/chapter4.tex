@@ -1,28 +1,24 @@
-\chapter{An Analytical Model for S-ALOHA Performance Evaluation of M2M Networks}
-
+\chapter{Performance Evaluation of S-ALOHA in context of single Base Station}
+\label{chapter:icc17}
 % **************************** Define Graphics Path **************************
 \ifpdf
-    \graphicspath{{Chapter3/Figs/Raster/}{Chapter3/Figs/PDF/}{Chapter3/Figs/}}
+    \graphicspath{{Chapter4/Figs/Raster/}{Chapter4/Figs/PDF/}{Chapter4/Figs/}}
 \else
-    \graphicspath{{Chapter3/Figs/Vector/}{Chapter3/Figs/}}
+    \graphicspath{{Chapter4/Figs/Vector/}{Chapter4/Figs/}}
 \fi
-Based on ICC2017
-\section{Introduction}
+\qs{Based on ICC2017}
+The S-ALOHA (i.e. slotted-ALOHA) protocol is recently regaining interest in Low Power Wide Area Networks (LPWAN) handling M2M traffic. Despite intensive studies since the birth of S-ALOHA, the special features of M2M traffic and requirements highlight the importance of analytical models taking into account performance-affecting factors and giving a thorough performance evaluation. In this chapter, we propose a low-complexity but still accurate analytical model capable of evaluating S-ALOHA in terms of packet loss rate, throughput, energy-efficiency and average number of transmissions. The proposed model is able to facilitate dimensioning and design of S-ALOHA based LPWAN. 
 
-\section{State of the Art}
+This chapter is organized as follows: Sec.~\ref{sec:icc17-introduction} is the introduction part. Sec.~\ref{sec:icc17-system-model} presents the system model. Sec.~\ref{sec:ideal_power_control} is the performance analysis about S-ALOHA in ideal systems, i.e., without power control and fading. Sec.~\ref{sec:imperfect-power-control} takes into account imperfect power control under wide-band system. Sec.~\ref{sec:simulation_result} proves the accuracy of proposed model by simulation and gives some deduced design guidelines. Sec.~\ref{sec:icc17-conclusion}concludes this chapter.
 
-\section{System model}
-
-
-\section{Ideal system with perfect power control}
-
-
-\section{Wide-Band Imperfect power control}
-
-
-\section{System with imperfect power control and Fading}
-
-\section{Summary}
+\input{Chapter4/icc17_introduction}
+\input{Chapter4/icc17_sota}
+\input{Chapter4/icc17_system_model}
+\input{Chapter4/icc17_ideal_power_control}
+\input{Chapter4/icc17_imperfect_power_control} 
+\input{Chapter4/icc17_fading_imperfect_power_control}
+\input{Chapter4/icc17_simulation}
+\input{Chapter4/icc17_conclusion}
 
 
 

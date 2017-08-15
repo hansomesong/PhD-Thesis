@@ -1,0 +1,14 @@
+\section{Related work}
+Lots of researches related to ALOHA-like protocol have been done by taking into account some of the aforementioned factors. Lamaire et al.~\cite{lamaire1998randomization} derive the optimal transmit power distribution under three models: perfect capture model, signal-to-interference threshold with and without Rayleigh fading model. Altman et al.~\cite{altman2005slotted} propose to differentiate transmission priority by using different transmit power and convert it as a game problem. Both~\cite{lamaire1998randomization}\cite{altman2005slotted} ignore the impact of power control error for the transmit power distribution. 
+Yang et al.~\cite{yang2012performance} analyze backoff algorithms for LTE Random Access Channel (RACH), which employ ALOHA-like protocol. Nielsen et al.~\cite{nielsen2015tractable} analyze the outage probability for LTE four-steps random access mechanism. Both~\cite{yang2012performance}\cite{nielsen2015tractable} use an analytical model adapted from Bianchi model~\cite{bianchi2000performance}. 
+Zozor et al.~\cite{zozor2016time} study collision probability for the pure time-frequency ALOHA access via stochastic geometry approach and calculate the load capacity according to a maximal packet loss rate. 
+Goursaud et al.~\cite{goursaud2016random} consider the carrier frequency uncertainty issue and study ALOHA protocol behavior. However \cite{yang2012performance}\cite{nielsen2015tractable}\cite{bianchi2000performance}\cite{zozor2016time}\cite{goursaud2016random} have not taken into account the capture effect and diversity of transmit power.
+Bayrakdar et al.~\cite{bayrakdar2016slotted} evaluate the throughput performance of S-ALOHA based cognitive radio network under Rayleigh fading channels with capture effect, but with identical transmit power in each transmission. 
+
+
+%The slotted ALOHA protocol~\cite{abramson1970aloha} has been studied at length since its born.
+As far as we know, few works about S-ALOHA protocol jointly consider the impact of capture effect, power control error, diversity of transmit power levels, and give a multi-criteria performance analysis for M2M environment. In this paper, we propose an analytical model to study the steady-state performance of S-ALOHA including packet loss rate, throughput, energy-efficiency and average number of transmission under two situations: \begin{inparaenum}[1)]
+	\item ideal system with perfect power control;
+	\item wide-band system with imperfect power control.
+\end{inparaenum} 
+In the proposed model, the basic idea is to numerically obtain cumulative distribution function (CDF) of the total interference from its characteristic function (CF). This allows calculating the capture probability and thus the transmission failure probability for a single trial. We then use a fixed point analysis to calculate the steady state packet loss rate, throughput, energy-efficiency and average number of transmissions.

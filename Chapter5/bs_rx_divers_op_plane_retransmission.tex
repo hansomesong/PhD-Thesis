@@ -1,6 +1,6 @@
 \section{Network Level Performance with Retransmission mechanism}
 \label{sec:op_over_infinite_plane_with_retransmission}
-In this section, we extend the network level performance analysis by taking into account retransmission mechanism. Let $N_{\text{max}}$ be the maximum allowed number of transmissions. We consider a conventional retransmission mechanism: in case of no reception of acknowledge from BS, a packet is retransmitted after a random interval until its delivery to BS or the reach of maximum allowed trials. For macro diversity, the retransmission mechanism may be different depends whether the BS is designed to acknowledge the received packet. For LPWAN such as LoRaWAN, the employed retransmission mechanism is completely the same as that use in slotted ALOHA cellular systems. For Sigfox, devices always transmit one packet $N_{\text{max}}$ times no matter whether previous packet transmission is successful.
+In this section, we ignore the background noise and extend the network level performance analysis by taking into account retransmission mechanism. Let $N_{\text{max}}$ be the maximum allowed number of transmissions. We consider a conventional retransmission mechanism: in case of no reception of acknowledge from BS, a packet is retransmitted after a random interval until its delivery to BS or the reach of maximum allowed trials. For macro diversity, the retransmission mechanism may be different depends whether the BS is designed to acknowledge the received packet. For LPWAN such as LoRaWAN, the employed retransmission mechanism is completely the same as that use in slotted ALOHA cellular systems. For Sigfox, devices always transmit one packet $N_{\text{max}}$ times no matter whether previous packet transmission is successful.
 
 In case of retransmission, $p\lambda_{m}$ is the fresh space-time arrival packet intensity and $L = p\lambda_{m}/\lambda_{b}$ is referred to as the fresh normalized load. We assume that each retransmission takes place at random over long intervals following the collisions that give rise to them, therefore, the aggregate uplink packets stream still follows a Poisson Point Process with aggregate time-space intensity $\lambda_{\text{agg}}$. Let $G = p\lambda_{\text{agg}}/\lambda_{b}$ be the aggregated normalized load. 
 
@@ -14,20 +14,20 @@ According to Poisson's splitting property~\cite{meyn2012markov}, the aggregate p
 	\end{cases}
 \end{equation}
 \subsection{Best BS attach}
-Consider a typical device, at the origin, whose modified distance to the best BS is denoted by $r'$. The distribution of $r'$ is given by $(\ref{eq:pdf_modified_r})$. From $\eqref{eq:succ_proba_with_modified_r}$, its packet loss rate $p_{f, b}(r')$ with respect to $r'$ and $\lambda_{\text{agg}}$ is:
+Consider a typical device, at the origin, whose modified distance to the best BS is denoted by $r$. The distribution of $r$ is given by $(\ref{eq:pdf_modified_r})$. From $\eqref{eq:succ_proba_with_modified_r}$, its packet loss rate $p_{f, b}(r)$ with respect to $r$ and $\lambda_{\text{agg}}$ is:
 \begin{align}
 	\label{eq: fail_proba_with_modified_r_retrans}
-	p_{f, b}(r') &= \left[ 1 - exp(-p \lambda_{\text{agg}} \pi A \theta_{T}^{\frac{2}{\gamma}} e^{\frac{2\sigma^2}{\gamma^2}}  {r'} ^ 2)\right] ^{N_{\text{max}}}, \nonumber \\
-	&= \left[ 1 - exp(-B {r'} ^ 2)\right] ^{N_{\text{max}}},
+	p_{f, b}(r) &= \left[ 1 - exp(-p \lambda_{\text{agg}} \pi A \theta_{T}^{\frac{2}{\gamma}} e^{\frac{2\sigma^2}{\gamma^2}}  {r} ^ 2)\right] ^{N_{\text{max}}}, \nonumber \\
+	&= \left[ 1 - exp(-B {r} ^ 2)\right] ^{N_{\text{max}}},
 \end{align} 
 where $B = p \lambda_{\text{agg}} \pi A \theta_{T}^{\frac{2}{\gamma}} e^{\frac{2\sigma^2}{\gamma^2}} $.
 
 The network-level packet loss rate $P_{f,b}$ is obtained by averaging over the infinite plane:
 \begin{align}
 	\label{eq:bs_best_att_analytical_retransmission}
-	P_{f,b} &= \mathbb{E}_{r}\left[ p_{f, b}(r') \right]  \nonumber\\
-	&= \int_{0}^{+\infty}  \left[ 1- \exp(-B {r'}^2 ) \right] ^{N} 2 \pi \lambda_b e^{\frac{2\sigma^2}{\gamma^2}}  \exp( -\lambda_b  e^{\frac{2\sigma^2}{\gamma^2}} \pi {r'}^2 ) r' dr' \nonumber\\
-	&\overset{\mathclap{\strut\text{(a)}}} =   \sum_{i=0}^{N}\left[ \binom{N}{i} (-1)^i \int_{0}^{+\infty}  \exp(-i B {r'}^2) 2 \pi \lambda_b e^{\frac{2\sigma^2}{\gamma^2}}  \exp( -\lambda_b  e^{\frac{2\sigma^2}{\gamma^2}} \pi {r'}^2 ) r' dr' \right]  \nonumber\\
+	P_{f,b} &= \mathbb{E}_{r}\left[ p_{f, b}(r) \right]  \nonumber\\
+	&= \int_{0}^{+\infty}  \left[ 1- \exp(-B {r}^2 ) \right] ^{N} 2 \pi \lambda_b e^{\frac{2\sigma^2}{\gamma^2}}  \exp( -\lambda_b  e^{\frac{2\sigma^2}{\gamma^2}} \pi {r}^2 ) r dr \nonumber\\
+	&\overset{\mathclap{\strut\text{(a)}}} =   \sum_{i=0}^{N}\left[ \binom{N}{i} (-1)^i \int_{0}^{+\infty}  \exp(-i B {r}^2) 2 \pi \lambda_b e^{\frac{2\sigma^2}{\gamma^2}}  \exp( -\lambda_b  e^{\frac{2\sigma^2}{\gamma^2}} \pi {r}^2 ) r dr \right]  \nonumber\\
 	&=   \sum_{i=0}^{N}\left[ \binom{N}{i} (-1)^i \frac{1}{iB + \lambda_b  e^{\frac{2\sigma^2}{\gamma^2}} \pi }  \pi \lambda_b e^{\frac{2\sigma^2}{\gamma^2}} \right]  \nonumber\\	
 	&=   \sum_{i=0}^{N}\left[ \binom{N}{i} (-1)^i \frac{1}{i A \theta_{T}^{\frac{2}{\gamma}} G + 1 } \right], 
 \end{align}
@@ -38,8 +38,8 @@ With a given $L$, network level packet loss level along side with other performa
 Let $P_{f, m}$ and $p_{f, m}$ respectively be the network packet loss rate and one transmission failure probability. Similar to $\eqref{eq: fail_proba_with_modified_r_retrans}$,  $p_{f, m}$ is allows:
 \begin{align}
 \label{eq: fail_proba_with_modified_r_retrans_macro_diversity}
-p_{f, m}(r')
-&= \left[ 1 - exp(-B {r'} ^ 2)\right] ^{N_{\text{max}}},
+p_{f, m}(r)
+&= \left[ 1 - exp(-B {r} ^ 2)\right] ^{N_{\text{max}}},
 \end{align} 
 where $B = p \lambda_{\text{agg}} \pi A \theta_{T}^{\frac{2}{\gamma}} e^{\frac{2\sigma^2}{\gamma^2}} $.
 With macro reception diversity, one packet is failed if and only if none of BS has decoded it after $N_{\text{max}}$ trials. Using similar justification in Sec~$\ref{sec:sc_macro_diversity}$, we have:
@@ -58,6 +58,9 @@ Applying binomial theorem to $\eqref{eq:bs_rx_divers_retransmission_analytical_b
 	\label{eq:plr_bs_div_retransmission}
 	P_{f,m} &= \exp\left\lbrace -2\pi \lambda_{b} e^{\frac{2\sigma^2}{\gamma^2}}\int_{0}^{+\infty} \left[ -\sum_{i=1}^{N_{\text{max}}} \binom{N}{i} (-1)^i \exp(-iBr^2) \right] rdr \right\rbrace \nonumber\\
 	&= \exp\left\lbrace 2\pi \lambda_{b} e^{\frac{2\sigma^2}{\gamma^2}} \sum_{i=1}^{N_{\text{max}}} \int_{0}^{+\infty} \binom{N}{i} (-1)^i \exp(-iBr^2) rdr \right\rbrace \nonumber\\
-	&= \exp(\sum_{i=1}^{N_{\text{max}}} \binom{N}{i} (-1)^{i} \frac{1 }{i A \theta^{2\sigma^2/\gamma^2} G })
+	&= \exp(\sum_{i=1}^{N_{\text{max}}} \binom{N}{i} (-1)^{i} \frac{1 }{i A \theta_T^{2/\gamma} G })
 \end{align}
 Similarly, the combination of $\eqref{eq:relationship_intensity_fresh_agg}$ and $\eqref{eq:plr_bs_div_retransmission}$ allows to using fixed point iteration method to calculate the network level packet loss level with a given $L$.
+
+\subsection{Maximum Ratio Combining}
+to be finished...

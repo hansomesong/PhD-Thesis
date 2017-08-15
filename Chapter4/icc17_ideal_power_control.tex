@@ -1,0 +1,44 @@
+\section{Ideal systems with perfect power control}
+\label{sec:ideal_power_control}
+In this section we assume the power control is perfect. Fading and shadowing effects are ignored. Recall that at the first transmission, all terminals transmit at a power such that the received power at the base station is constant. Let $c_{\mbox{ref}}$ be that power. At each retransmission, the power is multiplied by a factor $v$. Hence, at the $k$th re-transmission the received power $p_{k}$ is $v^k c_{\text{ref}}$. 
+
+In order to keep received power levels as integer, we assume that $v$ can be expressed $v=l/m$ where $l$ and $m$ are integers, and compute power levels normalized by $c_{\mbox{ref}}/m^K$. Hence, at the $k$th transmission, the normalized received power is $p_k=l^k m^{K-k}$. Its corresponding normalized cumulative interference $Y$:
+\begin{align}
+	Y= \sum_{k=0}^{K} Z_k = \sum_{k=0}^{K} \sum_{j=1}^{N_k} l^k m^{K-k},
+\end{align}
+where $Z_k=\sum_{j=1}^{N_k} l^k m^{K-k}$ refers to the normalized cumulative interference from $k$th retransmission Poisson process and $N_k$ denotes the number of packets on $k$th retransmission following Poisson distribution with average arrival rate $\alpha P_k$. 
+
+The cumulative interference component $Z_k$ is a compound random variable~\cite{ross2014introduction}, whose Laplace transform is detailed in Appendix~\ref{annexe:laplace-transform-compound-RV}. Applying ($\ref{eq:laplace-transform-comound-RV}$), we have:
+\begin{align*}
+\mathcal{L} \left\lbrace Z_k \right\rbrace \left( s \right)
+%&= \exp\left\lbrace{ \alpha P_k\left( \mathcal{L} \left\lbrace l^k m^{K-k} \right\rbrace \left( s \right) - 1\right) } \right\rbrace  \\
+&= \exp\left\lbrace \alpha P_k\left( \exp(-sl^k m^{K-k})-1\right)\right\rbrace, 
+\end{align*}
+where $\mathcal{L} \left\lbrace f(\cdot) \right\rbrace \left( s \right)$ is the Laplace transform operator with complex variable $s$ for function $f(\cdot)$ .
+
+Since the series of random variables $Z_k, k=0,..., K$ are independent, the Laplace transform of $Y$ is:
+\begin{align*}
+\mathcal{L} \left\lbrace Y \right\rbrace \left( s \right) 
+&= \prod_{m=0}^{K}  \mathcal{L} \left\lbrace Z_k \right\rbrace \left( s \right) \\
+&= \exp\left\lbrace \alpha \left( \sum_{k=0}^{K} P_k \exp(-sl^k m^{K-k})-\sum_{k=0}^{K}P_k\right)\right\rbrace
+\end{align*}
+With a substitution $s= -i\omega$, we obtain the characteristic function $\phi_{Y}\left( \omega \right)$ of $Y$:
+\begin{align*}
+\phi_{Y}\left( \omega \right) &= \exp\left\lbrace \alpha \left( \sum_{k=0}^{K} P_k \exp(i \omega l^k m^{K-k})-\sum_{m=0}^{K}P_k\right)\right\rbrace
+\end{align*}
+Note that $Y$ is a discrete random variable. Via a numerical integral method detailed in~\cite{nuttall1969numerical}, the cumulative distribution function $F_{Y}\left( x \right)$ of $Y$ can be derived from its characteristic function $\phi_{Y}\left( \omega \right)$.
+\begin{align}
+\label{eq:pr_c_m}
+F_{Y}\left( x \right)  &= 	\frac{1}{\pi}\int_{0}^{\pi} \frac{\sin\left[ (x+1) \omega/2 \right] }{\sin\left[ \omega/2\right] } \Re\left\lbrace \phi_{Y}\left( \omega \right) e^{-ix\omega/2} \right\rbrace d\omega,
+\end{align}
+where $\Re\left\lbrace \cdot \right\rbrace$ is operator taking real part of complex number.
+
+Cumulative distribution function $F_{Y}$ can be numerically and rapidly obtained by trapezoidal rule. Due to capture effect, the transmission failure probability $Q_k$ of a packet on $k$th retransmission is thus:
+\begin{align}
+\label{eq:failure_pb}
+	Q_{k} &= Pr\left\lbrace \frac{l^k m^{K-k}}{Y} < \theta_{T}\right\rbrace \nonumber\\
+	&= 1 - F_Y\left( \lfloor\frac{l^k m^{K-k}}{\theta_{T}}\rfloor \right),
+\end{align}
+where operator $\lfloor x \rfloor$ returns back the maximal integer not greater than $x$. 
+
+Substituting ($\ref{eq:pr_c_m}$)($\ref{eq:failure_pb}$) into ($\ref{eq:recurrisve-array}$), we get a fixed point equation for probability vector $\left\langle P_1, ..., P_{K+1}\right\rangle$.  

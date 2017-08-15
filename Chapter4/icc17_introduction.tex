@@ -1,0 +1,17 @@
+\section{Introduction}
+\label{sec:icc17-introduction}
+Machine-Type Communication (MTC) is expected to gain more popularity in the next decade. The research efforts to well accommodate the traffic from MTC can be classified into the following two categories: \begin{inparaenum}[1)]
+	\item dedicated networks designed from scratch , also called Low Power Wide Area Network (LPWAN);
+	\item evolution from existing wireless networks, such LTE-M/NB-IoT networks~\cite{song2016survey}.
+\end{inparaenum}
+However, the MTC traffic exhibits lots of features different from traditional human-to-human communication: large number of connected terminals, small payload but frequent requests. These features pose big challenges for wireless networks based on resource reservation multiple access protocol and make the LPWAN networks more attractive for MTC~\cite{goursaud2015dedicated}. 
+
+Due to its simplicity and low requirement for terminals, the performance study of ALOHA-like protocol is regaining interest in the context of LPWAN in recent years. 
+The objectives of studies are usually analyzing throughput, packet loss rate, etc. In a radio communication system, factors such as capture effect, diversity of transmit power levels, power control precision, among with others, have a significant impact on ALOHA-like multiple access protocol. Despite intensive studies since the birth of S-ALOHA, the special features of M2M traffic and requirements highlight the importance of analytical models taking into account performance-affecting factors and giving a thorough performance evaluation. 
+
+Fulfilling this necessity is the main focus of this chapter: we jointly consider the impact of capture effect, diversity of transmit power levels with imperfect power control. We propose a low-complexity but still accurate analytical model capable of evaluating S-ALOHA in terms of packet loss rate, throughput, energy-efficiency and average number of transmissions. The proposed model is able to facilitate dimensioning and design of S-ALOHA based LPWAN. The comparison between simulation and analytical results confirms the accuracy of our proposed model. The design guides about S-ALOHA based LPWAN deduced from our model are: the imperfect power control can be positive with capture effect and appropriate transmit power diversity strategy. The transmit power diversity strategy should be determined by jointly considering network charges level, power control precision and SINR threshold to achieve optimal performance of S-ALOHA.
+ %~\cite{krishna1994comparison}.  
+
+
+
+

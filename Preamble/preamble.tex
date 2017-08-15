@@ -79,6 +79,11 @@
 \usepackage{booktabs} % For professional looking tables
 \usepackage{multirow}
 \usepackage{paralist}
+\usepackage{longtable} % to support long table over 2 pages.
+
+
+\let\labelindent\relax
+\usepackage{enumitem}% http://ctan.org/pkg/enumitem
 
 
 %\usepackage{multicol}
@@ -90,6 +95,7 @@
 \usepackage{amsmath,amssymb,amsthm} % For including math equations, theorems, symbols, etc
 \usepackage{mathrsfs} %为了使用花体字母
 \usepackage{mathtools}
+\usepackage{breqn}
 %to support indicator function,
 %source:https://tex.stackexchange.com/questions/26637/how-do-you-get-mathbb1-to-work-characteristic-function-of-a-set
 \usepackage{dsfont} 
@@ -124,6 +130,20 @@
 \newcommand{\erf}{\mathrm{erf}\,}
 \newcommand{\erfc}{\mathrm{erfc}\,}
 \newcommand{\abs}[1]{\left| #1 \right|}
+%% Custom commands, to define the mathmatical operator argmin
+\newcommand{\argmax}[1]{\underset{#1}{\operatorname{arg}\,\operatorname{max}}\;}
+\newcommand{\argmin}[1]{\underset{#1}{\operatorname{arg}\,\operatorname{min}}\;}
+
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+% To support writing algorithm
+% Excellent typsetting algorithm in chinese:
+% http://www.zhixing123.cn/ubuntu/typeset-algorithm-in-latex.html
+\usepackage{algorithm}
+%\usepackage[noend]{algpseudocode}
+\usepackage{algpseudocode}
+\usepackage{algorithmicx}
 
 % *********************************** SI Units *********************************
 \usepackage{siunitx} % use this package module for SI units
@@ -184,8 +204,8 @@
 
 % ********************** TOC depth and numbering depth *************************
 
-\setcounter{secnumdepth}{2}
-\setcounter{tocdepth}{2}
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
 
 
 % ******************************* Nomenclature *********************************

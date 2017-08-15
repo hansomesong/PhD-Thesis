@@ -1,9 +1,23 @@
 \section{System model}
 \label{sec:system_model}
+% Xavier's suggestion:
+%	Plus précisément, ce qui me semble intéressant c'est de comprendre l'évolution des performances pour 3 configurations
+%- Slotted Aloha avec transmission à la meilleure BS et avec une voie de retour (type réseau cellulaire)
+%- Pure Aloha avec macro-diversité et une voie de retour (type LORA)
+%- Pure Aloha avec macro-diversité sans voie de retour (type LORA)
 \subsection{Distribution of Nodes and Traffic Model}
-We consider a large wireless network over a two-dimension infinite plane. The locations of terminals form a stationary Poisson point process (PPP) $\Phi_m = \left\lbrace X_i\right\rbrace$ on the plane $\mathbb{R}^2$ with spatial density $\lambda_m$.  Similarly, the locations of base stations also form a stationary PPP $\Phi_b = \left\lbrace Y_i\right\rbrace$ with spatial density $\lambda_b$. All the packets transmitted by devices have the same duration $B$.
+We consider a large wireless network over a two-dimension infinite plane. The locations of terminals form a stationary Poisson point process (PPP) $\Phi_m = \left\lbrace X_i\right\rbrace$ on the plane $\mathbb{R}^2$ with spatial density $\lambda_m$.  Similarly, the locations of base stations also form a stationary PPP $\Phi_b = \left\lbrace Y_i\right\rbrace$ with spatial density $\lambda_b$. One devices and BSs spatial distribution realization is shown in Fig.~\ref{fig:device_BS_spatial_distribution}. All the packets transmitted by devices have the same duration $B$.
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=\linewidth]{/Users/qsong/Documents/slotted_aloha_related_project/multiple_recepteur_capacity/nodes_spatial_dist.eps}
+	\caption{Maximum Ratio Combining Macro Reception Diversity Scheme Illustration. The coefficients $w1, w2, ..., w5$ are well designed so that output SINR is maximized.}
+	\label{fig:device_BS_spatial_distribution}
+\end{figure} 
 
-We consider two kinds of ALOHA-based random access methods: slotted ALOHA and pure ALOHA. For slotted ALOHA, the time domain is equally divided into slots with duration $B$. In each slot, each device independently decides to transmit a packet with probability $p$. The propagation delay is assumed to be much smaller than $B$. Hence, there is a global slot synchronization over the whole network.
+\subsection{Slotted ALOHA and Pure ALOHA}
+For a comparison between macro reception diversity and traditional BS attach method, we consider three types of ALOHA-based network. As a comparison reference, we consider a traditional cellular network which employs slotted ALOHA. The devices in such a network attach to its best BS for which the received power averaged over all fading realizations is the strongest. For macro reception diversity, it is assumed to run in pure slotted ALOHA. Furthermore, this networks with macro reception diversity can be divided into two categories: with downlink for acknowledgment (e.g. LoRaWAN) and without downlink for acknowledgment (note that SigFox has downlink support but does not use it for acknowledgment). Note that whether acknowledgment is supported has an impact on retransmission mechanism. 
+
+For slotted ALOHA, the time domain is equally divided into slots with duration $B$. In each slot, each device independently decides to transmit a packet with probability $p$. The propagation delay is assumed to be much smaller than $B$. Hence, there is a global slot synchronization over the whole network.
 
 In pure ALOHA, devices send packets without synchronization, but we still use parameter $p$. The packet generation process can be seen as an internal slotted system in each device with $p$ the probability to transmit in a slot of duration $B$.
 
@@ -11,30 +25,64 @@ At a given time, the locations of terminals that are transmitting a packet form 
 \subsection{Random Channel and Capture Effect}
 % Xavier insists that this is a communication letter which should be concise.
 % Not necessary to explain somethings well-known for readers with enough background knowledges.
-We assume that M2M devices do not support power control mechanism due to the low-cost constraint and transmit with unit power level. We assume that the considered M2M network employs narrow band (e.g. SigFox's bandwidth is $100$ kHz and the bandwidth $LoRaWAN$ varies from $125$ kHz to $500$ kHz.) and deployed in urban area. Thus, the received power $P_{r}$ of a packet at the base station side depends on path-loss attenuation $r^{-\gamma}$, Rayleigh fading $H$ and shadowing effect $\exp(\chi)$:
+We assume that M2M devices do not support power control mechanism due to the low-cost constraint and transmit with unit power level. M2M-dedicated networks are usually narrow band and thus can be assumed to suffer Rayleigh fading. For example, NB-IoT use $180$ kHz bandwidth~\cite{wang2017primer} and SigFox's bandwidth is $100$ Hz~\cite{raza2017low}. The bandwidth of $LoRaWAN$ varies from $125$ kHz to $500$ kHz according to different spread-spectrum sequence. Although LoRaWAN applies spectrum spreading technology, it can still be assumed to suffer Rayleigh fading~\cite{georgiou2017low} in literature.
+Thus, the received power $P_{r}$ of a packet at the base station side depends on path-loss attenuation $r^{-\gamma}$, Rayleigh fading $H$ and shadowing effect $\exp(\chi)$:
 \begin{align}
 \label{eq:path-loss}
-P_{r} =r^{-\gamma} H \exp(\chi),
+P_{r} =d^{-\gamma} H \exp(\chi),
 \end{align}
 %The path-loss attenuation $l(r)$ is defined as $l(r) = r^{-\gamma}$, 
-where $r$ refers to the distance between the transmitter and the receiver, $\gamma$ is the path-loss exponent, $H$ is an exponentially distributed random variable (r.v.) with unit mean, $\chi$ is a zero-mean Gaussian r.v. with variance $\sigma^2$. Log-normal shadowing is usually characterized in terms of its dB-spread with standard deviation $\sigma_{dB} = \frac{10}{\ln(10)}\sigma$. We assume that $H$ and $\chi$ are both constant during a packet transmission, and mutually independent for different links. 
+where $d$ refers to the distance between the transmitter and the receiver, $\gamma$ is the path-loss exponent, $H$ is an exponentially distributed random variable (r.v.) with unit mean, $\chi$ is a zero-mean Gaussian r.v. with variance $\sigma^2$. Log-normal shadowing is usually characterized in terms of its dB-spread with standard deviation $\sigma_{dB} = \frac{10}{\ln(10)}\sigma$. We assume that $H$ and $\chi$ are both constant during a packet transmission, and mutually independent for different links. 
 %Due to channel randomness, it is possible that the received power at a far device is stronger than a close device. 
+
+\subsection{Displacement theorem and transformed PPP}
+\label{subsec:displacement_theorem}
+As mentioned in Sec.~\ref{sec:system_model}, each device is assumed to connect to the BS that provides the highest long-term biased received power. The inclusion of shadowing allows to rewrite $\eqref{eq:path-loss}$ as follows:
+\begin{align}
+P_{r} 
+&= H \left[  \exp^{-1/\gamma}(\chi) d \right]  ^ {-\gamma},
+\end{align}
+where shadowing can be interpreted as a random displacement of the location of BS. This fact can be leveraged by using displacement theorem~\cite{franccois2009stochastic}. That is to say, attaching to the best BS in a PPP of intensity $\lambda_{b}$ with shadowing is equivalent to attaching the geographically nearest one in a transformed PPP of intensity $\lambda_{b} \mathbb{E}\left[ e^{-\frac{2}{\gamma}\chi}\right] = \lambda_{b} e^{\frac{2\sigma^2}{\gamma^2}}$ without shadowing. This lemma is given in~\cite[lemma 1]{dhillon2014downlink} and detailed proof is given in~\cite[Corollary 3]{madhusudhanan2014downlink}. We use $r$ to denote the distance between device and BS in the transformed PPP.
 
 %Capture effect refers to the fact that signals in collision can still be demodulated if their received SINR are greater than or equal to a certain threshold value. 
 Capture effect is taken into account in the proposed model. Thus, the transmission success probability $p_{s}$ for a transmit-receiver pair is defined as follows: 
 \begin{align}
 \label{eq: sinr-definition}
-p_s = \mathbb{P}\left\lbrace  \text{SINR} = \frac{P_r}{I + N} \approx \frac{P_r}{I} \geq \theta_{T} \right\rbrace, 
+p_s = \mathbb{P}\left\lbrace  \text{SINR} = \frac{P_r}{I + N} \geq \theta_{T} \right\rbrace, 
 \end{align}
-where $I$ refers to the suffered cumulative interference during packet transmission, $N$ is the background noise power, usually negligible compared to cumulative interference.
+where $I$ refers to the suffered cumulative interference during packet transmission, $N$ is the normalized background noise power. It is worthwhile to mention that in some cases the background noise is rationally negligible for the sake of tractability.
 
-\subsection{Performance Metric}
-\subsubsection{Packet loss rate}
-\subsubsection{Macro Diversity Gain}
-\subsubsection{Throughput}
-\subsubsection{Energy efficiency}
+\subsection{Impact of background noise}
+Actually, the background noise is usually neglected in the study of LPWAN system. One institutive exposition about this is that the occupied transmission bandwidth is small and the noise power is at a low level. Here, we give an estimation about the normalized noise power value $N$ if transmit power is assumed to be $1$. To this end, we have to know, in a realistic LPWAN network, the ratio between the received power and the real background noise level.
+
+For one LPWAN device running on ISM band (e.g. with 868 MHz), from a regulatory point of view, the effective radiated power (ERP) may not exceed $14$ dBm (or $25$mW) in any direction, we thus assume that the transmit power is set as $14$ dBm.
+
+About noise power level, we use the same formula given in~\cite{georgiou2017low}:
+\begin{align}
+	N_{\textbf{real}} = -174 + NF + 10\log(W) ,
+\end{align}
+where $NF$ is noise figure, usually set as $6$dB, $W$ is the bandwidth occupied by the transmitted packet. The occupied transmission band is assumed to be between $100$ Hz and $200$ KHz. Thus, the possible value of $N_{\text{real}}$ is between $-148$ dBm and $-115$ dBm.
+
+In terms of propagation path-loss model, Okumura-Hata model is applied. In urban area, the path-loss between one device and a BS with height $50$ meters is~\cite{lagrange2000reseaux}:  
+\begin{align}
+	\text{Path_Loss}= 123.6+33.8\log(d),
+\end{align}
+where $\log(\cdot)$ is $10$-based logarithm operator.
+
+Therefore, if we assume that transmit power is $1$, the normalized noise power $N$ should take values in range $\left[ -38.4, -5.4\right] $. 
+%According to the simulation that we have conducted, 
 
 
+
+%\subsection{Performance Metric}
+%\subsubsection{Packet loss rate}
+%xxx
+%\subsubsection{Macro Diversity Gain}
+%xxx
+%\subsubsection{Throughput}
+%xxx
+%\subsubsection{Energy efficiency}
+%xxx
 %Similarly, we also consider two different ways to estimate interference with respect to device coding schemes. If no interleaving and error correction code technique are not used, the cumulative interference is the maximal interference value during the transmission B: $I^{\text{max}} = \max I(t)$ for $t \in \left[ T, T+B\right] $. If advanced techniques to resistant transmission error are used, average interference over the packet transmission $I^{\text{mean}} = \frac{1}{B}\int_{T}^{T+B} I(t)dt$.
 
 %Empirical measurements shows that shadowing effect, when represented in dB units, follows a normal distribution (see e.g.\cite{erceg1999empirically}). In other words, the linear (as opposed to dB) channel gain may be modeled by a log-normal random variable, $e^G$, where $G$ is a zero-mean Gaussian r.v. with variance $\sigma^2$. Log-normal shadowing is usually characterized in terms of its dB-spread, $\sigma_{dB}$, which is related to $\sigma$ by $\sigma = \frac{\ln(10)}{10}  \sigma_{dB}$. Thus, The received power $P_{r}$ is expressed as follows:

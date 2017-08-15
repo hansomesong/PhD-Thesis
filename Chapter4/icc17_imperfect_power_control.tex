@@ -1,0 +1,87 @@
+\section{Wide-band systems with Imperfect power control}
+\label{sec:imperfect-power-control}
+ We consider that data packets are transmitted with a wide-band signal (e.g. by use of a spread spectrum technique). Hence, there is no Rayleigh fading. The received power level of packet transmission is affected by imperfect power control. The effect of imperfect power control in the literature can be assumed to be a multiplier $\epsilon$ following log-normal distribution~\cite{Lee:1992:MCD:530392}. Still let $c_{ref}$ be the received power at the base station without power control error. Normalized by $c_{ref}$, the received power $p_k$ for the $k$th retransmission, for a given device with index $i$, can be written as follows:
+\begin{align*}
+p_{ki} = v^k e^{\beta \epsilon_i}, \text{with } \beta = \frac{\ln(10)}{10}
+\end{align*}
+The power control error factor $\epsilon_i$ is a zero-mean Gaussian random variable with a standard deviation of $\sigma$, namely $\epsilon_i \sim N\left( 0, \sigma^2\right)$. 
+%When $\sigma=0$ dB, the case corresponds to perfect power control. If power control is not perfect, $\sigma$ is assumed to be $1-4$ dB.
+
+The cumulative interference $I$, caused by those terminals simultaneously transmitting packet,  during the $k$th retransmission is thus:
+\begin{align*}
+I = \sum_{m=0}^{K} v^{m}\sum_{j=1}^{N_m} e^{\beta \epsilon_j},
+\end{align*}
+where $N_m$ refers to the number of packets on $k$th retransmission and follows Poisson distribution with arrival rate $\alpha P_m$. 
+
+Due to capture effect, a $k$th retransmission trial is failed under the condition that the ratio between received power $p_k$ and cumulative interference $I$ is less than a threshold $\theta_{T}$, namely:
+\begin{align*}
+%\frac{p_{ki}}{I} &< \theta_{T} \\
+\sum_{m=0}^{K} v^{m-k}\sum_{j=1}^{N_m} e^{\beta \left( \epsilon_j - \epsilon_i \right) } &> \frac{1}{\theta_{T}}
+\end{align*}
+
+Let focus the normalized cumulative interference $Y_k$ corresponding to a packet on $k$th retransmission:
+\begin{align*}
+Y_k &=\sum_{m=0}^{K} v^{m-k}\sum_{j=1}^{N_m} e^{\beta \left( \epsilon_j - \epsilon_i \right) } \\
+&=\sum_{m=0}^{K}\sum_{j=1}^{N_m} e^{\left(m-k\right) \ln(v)+\beta \left( \epsilon_j - \epsilon_i \right) } 
+\end{align*}
+With substitution $\chi = \left(m-k\right) \ln(v)+\beta \left( \epsilon_j - \epsilon_i \right)$, 
+\begin{align}
+	Y_k=\sum_{m=0}^{K} Z_m  = \sum_{m=0}^{K}\sum_{j=1}^{N_m} e^{\chi}
+\end{align} 
+Since $Z_m$ for $m=0,...,K$ are mutually independent, thus, the Laplace transform of $Y_k$ is:
+\begin{align}
+	\label{eq:laplace-transform-y-form-1}
+	\mathcal{L} \left\lbrace Y_k \right\rbrace \left( s \right) &= \prod_{m=0}^{K} \mathcal{L} \left\lbrace Z_m \right\rbrace \left( s \right) \nonumber\\
+	&=\prod_{m=0}^{K} \exp{\alpha P_m \left(  \mathcal{L} \left\lbrace e^{\chi} \right\rbrace \left( s \right)  - 1\right) }
+\end{align}
+We verify that $\chi$ follows a normal distribution with mean $\left(m-k\right) \ln(v)$ and variance $2\beta^2\sigma^2$. Namely $\chi \sim \mathcal{N}\left( \left(m-k\right) \ln(v), 2\beta^2\sigma^2\right)$.
+
+A closed form expression of the Laplace transform of the lognormal distribution does not
+exist. Yet, according to reference~\cite{asmussen2016laplace}, the Laplace transform of a log-normal random variable can be approximated as follows:
+\begin{align}
+\label{eq:laplace-transform-lognormal-form-1}
+\mathcal{L} \left\lbrace e^{\chi} \right\rbrace \left( s \right)
+&= \frac{\exp(-\frac{W(s \sigma_{\chi}^2 e^{\mu_{\chi}} )^2 + 2W(s \sigma_{\chi}^2 e^{\mu_{\chi}})}{2\sigma_{\chi}^2})}{\sqrt{1 + W(s \sigma_{\chi}^2 e^{\mu_{\chi}})}},
+\end{align}
+where $W\left( \cdot \right)$ is the Lambert W function~\cite{corless1996lambertw}, which is defined as the solution in principal branch of the
+equation $W\left(x\right) e^{W \left( x\right) }= x$.
+
+Combining ($\ref{eq:laplace-transform-y-form-1}$)($\ref{eq:laplace-transform-lognormal-form-1}$), with substitution $s = -i\omega$,  we obtain the characteristic function of cumulative function $\phi_Y\left(w\right)$:
+%\begin{dmath}
+%\mathcal{L}\left[ Y_k\right] = \exp\left\lbrace \alpha\left( \sum_{m=0}^{K} \frac{P_m}{\sqrt{1 + W(s \sigma_{\chi}^2 e^{\mu_{\chi}})}} \cdot \exp( -\frac{W\left( s\sigma_{\chi}^2 e^{\mu_{\chi}}\right)^2  + 2W\left( s \sigma_{\chi}^2e^{\mu_{\chi}}\right)}{2\sigma_{\chi}^2})
+% - \sum_{m=0}^{K} P_m \right) \right\rbrace \nonumber
+%\end{dmath}
+\begin{align}
+	\mathcal{L}\left[ Y_k\right] \!= \! \exp \!\! \left\lbrace \!\!\! \alpha \!\! \left( \!\!\!\sum_{m=0}^{K} \!\frac{P_m}{\sqrt{1 + W\!(i \omega \sigma_{\chi}^2 e^{\mu_{\chi}})}} \exp( \!-\frac{W\!\!\left( i \omega\sigma_{\chi}^2 e^{\mu_{\chi}}\right)^2  + 2W\!\!\left( i \omega \sigma_{\chi}^2e^{\mu_{\chi}}\right)}{2\sigma_{\chi}^2} \!)
+	\!- \!\!\!\sum_{m=0}^{K} \!\!P_m \!\! \right) \!\!\!\right\rbrace \nonumber,
+\end{align}
+where $i$ is imaginary unit, $e^{\mu_{\chi}} = v^{\left(m-k\right)}, \sigma^2_{\chi} = 2\beta^2\sigma^2$.
+%It is easy to obtain the characteristic function of cumulative function $\phi_Y\left(w\right)$, with substitution $s = -jw, \mu_{\chi} = \left(m-k\right) \ln(v), \sigma_{\chi} = 2\beta^2\sigma^2$:
+%\begin{dmath}
+%\phi_{Y_k}\left(w\right) = \exp\left\lbrace \alpha\left( \sum_{m=0}^{K} \frac{P_m}{\sqrt{1 + W(-j2w v^{m-k}\beta^2\sigma^2)}} \cdot \exp( -\frac{W\left( -j2w v^{m-k}\beta^2\sigma^2\right)^2  + 2W\left(-j2w v^{m-k}\beta^2\sigma^2\right)}{4\beta^2\sigma^2}) 
+%-\sum_{m=0}^{K} P_m \right) \right\rbrace 
+%\end{dmath}
+
+As a continuous random variable, the cumulative distribution function $F_{Y_k}\left( x \right)$ of $Y_k$ can be directly derived from its characteristic function $\phi_{Y_k}\left(w\right)$, for example by use of Gil-Pelaez Theorem~\cite{gil1951note}. However, directly using Gil-Pelaez Theorem needs long time. Applying mathematical techniques used in finance domain~\cite{hirsa2012computational}, we seek to calculate the Fourier transform of $e^{-\eta x} F_{Y_k}\left( x \right)$ where term $e^{-\eta x}$ is a damping function with $\eta > 0$. 
+\begin{align}
+	\label{eq:intermediate_formula_1}
+	\int_{-\infty}^{+\infty} e^{iwx} e^{-\eta x} F_{Y_k}\left( x \right) dx = \frac{1}{\eta - iw} \phi_{Y_{k}}\left( \omega +i\eta \right) 
+\end{align}
+Applying Fourier inversion for ($\ref{eq:intermediate_formula_1}$), we obtain the expression for $F_{Y_k}\left( x \right)$ as follows:
+\begin{align}
+\label{eq:pr_c_m_case2}
+F_{Y_k}\left( x \right)  &= \frac{e^{\eta x}}{2\pi} \int_{-\infty}^{+\infty} e^{-i \omega x} \frac{1}{\eta - i\omega} \phi_{Y_k}\left( \omega +i\eta\right) d\omega  \nonumber\\
+&= \frac{e^{\eta x}}{\pi} \Re\left\lbrace  \int_{0}^{+\infty} e^{-i \omega x} \frac{1}{\eta - i\omega} \phi_{Y_k}\left( \omega +i\eta\right) d\omega\right\rbrace, 
+\end{align}
+The cumulative distribution function $F_{Y_k}\left( x \right)$ now can be derived directly from ($\ref{eq:pr_c_m_case2}$) using a single numerical integration.
+
+The transmission failure probability for the $k$th retransmission $Q_{k}$ is:
+\begin{align}
+\label{eq:failure_pb_case2}
+Q_{k} &= 1- F_{Y}\left( \frac{1}{\theta_{T}} \right) 
+\end{align}
+Similar with what we analyze in Sec.~\ref{sec:ideal_power_control}, combining ($\ref{eq:recurrisve-array}$)($\ref{eq:pr_c_m_case2}$)($\ref{eq:failure_pb_case2}$), we can use fixed point method to get the solution for probability vector $\left\langle P_0, P_1, ..., P_K\right\rangle$.
+
+
+
+
