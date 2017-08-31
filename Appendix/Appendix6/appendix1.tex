@@ -1,0 +1,40 @@
+% ******************************* Thesis Appendix B ********************************
+\chapter{Chapter6}
+\section*{Intensity of Total occupied RNTI Number within RRC inactivity timer}
+\begin{align}
+	\ln (T) = \frac{\phi(\mu, \sigma, t)}{\Phi(\mu, \sigma, b) - \Phi(\mu, \sigma, a)} \mathds{1}\left[ T_{\text{min}}, T_{\text{max}},\right] 
+\end{align}
+
+\begin{align}
+	f_Y(y) = \int_{a}^{b} \frac{1}{y^2} f_X(\frac{1}{y}) dy
+\end{align}
+
+\begin{align}
+	\mathbb{E} \left[ 1/T \right] =   \int_{}^{} \frac{1}{t} f_T(t) dt
+\end{align}
+%Lemma: Let $C_{\text{RNTI}}$ be the total occupied RNTI number within $T_{\text{timer}}$. Given that each MTC device reporting period is $T$ whose distribution can be of any type, the number of deployed devices in a cell is $N_d$, $C_{\text{RNTI}}$ follows distribution and its intensity can be approximated by 
+%\begin{align}
+%	\lambda_{C_{\text{RNTI}}}  &= N_{d} T_{\text{timer}}/\mathbb{E} \left[ \frac{1}{T} \right],
+%\end{align}
+%
+%Proof: Recall that $N_{d}$ is the amount of M2M devices deployed in the coverage area of this eNB. Hence, the location of M2M devices form a Binomial Point Process (BPP). Given that $N_d$ is large enough, the BPP can be well approximated by a Poisson Point Process $\Phi_m$ with spatial intensity $\lambda_m = N_d / \pi R^2$.
+%
+%Consider a given M2M device with index $i$. Its reporting period is $T_i$. The probability $p$ that one RNTI is occupied by this device is $T_{\text{timer}}/T_i$. The probability that the total occupied RNTI is zero can be expressed as follows:
+%\begin{align}
+%	\label{eq:void_proba_step_1}
+%	\mathbf{P} \left\lbrace  C_{\text{RNTI}} = 0 \right\rbrace  = \mathbb{E} \left[ \prod_{r_i \in \Phi_m}^{} 1 -  \frac{T_{\text{timer}}}{T_i} \right] ,
+%\end{align}
+%where $r_i$ refers to distance between the considered device and eNB located at the origin, $T_i$ is a random variable whose distribution is unknown. The subscript $i$ can be omitted for the sake of readability. According to Campbell theory, \eqref{eq:void_proba_step_1} can be further simplified: 
+%\begin{align}
+%	\label{eq:rnti_nb_void_proba}
+%	\mathbf{P} \left\lbrace  C_{\text{RNTI}} = 0  \right\rbrace  &= \mathbb{E}_{\Phi_m} \left[ \prod_{r \in \Phi_m}^{} \mathbb{E}_{T} \left[ 1 - \frac{T_{\text{timer}}}{T} \right] \right] \nonumber\\
+%	&= \exp\left\lbrace -\mathbb{E}_{T} \left[ \int_{0}^{R} \frac{T_{\text{timer}}}{T} 2\pi r \lambda_m dr  \right] \right\rbrace \nonumber\\
+%	&= \exp\left\lbrace -\lambda_m \pi R^2  T_{\text{timer}} \mathbb{E}_{T} \left[ \frac{1}{T}  \right] \right\rbrace \nonumber \\
+%	&= \exp\left\lbrace -N_{d} T_{\text{timer}}/\mathbb{E}_T \left[ \frac{1}{T} \right]\right\rbrace. 
+%\end{align}
+%
+%From \eqref{eq:rnti_nb_void_proba}, we deduce that the average of $C_{\text{RNTI}}$, i.e., the intensity of corresponding Poisson distribution, is:
+%\begin{align}
+%	\lambda &= N_{d} T_{\text{timer}}/\mathbb{E} \left[ \frac{1}{T} \right],
+%\end{align}
+

@@ -1,0 +1,173 @@
+% ******************************* Thesis Appendix A ****************************
+\chapter{Chapter 4} 
+\section*{Sum of a random number of random variables}
+\label{annexe:laplace-transform-compound-RV}
+Theorem: Consider a compound random number $S=\sum_{i=1}^{N} X_i$, where $X_i$ are independent identically distributed, $N$ follows Poisson distribution and is independent from $X_i$. Let $S$ be $0$ if $N=0$. The Laplace transform of compound random variable $S$ is $\mathcal{L} \left\lbrace S \right\rbrace \left( \theta \right) = \exp{\lambda\left(  \mathcal{L} \left\lbrace X \right\rbrace \left( \theta \right) - 1\right) }$.
+
+
+Proof: The Laplace transform of $S$ is:
+\begin{align*}
+\mathcal{L} \left\lbrace S \right\rbrace \left( \theta \right)  = \mathbb{E}\left[ e^{-\theta S}  \right] = \sum_{n \geq 0}  \mathbb{E}\left[ e^ {-\theta S }| N = n\right ] \mathbb{P}\left( N = n\right) 
+\end{align*}
+We have $\mathbb{E}\left[ e^{-\theta S} | N = 0 \right] = 1$, moreover, for $n \geq 1$,
+\begin{align*}
+\mathbb{E}\left[ e^ {-\theta S }| N = n\right ] 
+%&= \mathbb{E}\left[ e^ {-\theta\left( X_1 + X_2 + ... +...X_N\right)  }| N = n\right ] \\
+%&= \mathbb{E}\left[ e^ {-\theta\left( X_1 + X_2 + ... +...X_n\right)  }\right ] \\
+= \prod_{i=1}^{n} \mathbb{E}\left[ e^ {-\theta X_i}\right] 
+%\mathbb{E}\left[ e^ {-\theta X_1  }\right ] \mathbb{E}\left[ e^ {-\theta X_2  }\right ] ...\mathbb{E}\left[ e^ {-\theta X_n  }\right ]
+= \left( \mathcal{L} \left\lbrace X \right\rbrace \left( \theta \right)   \right) ^ n
+\end{align*}
+The probability generating function  $G_N\left( z \right)$ of $N$ is:
+\begin{align*}
+G_N\left( z \right)  = \sum_{n \geq 0} z^n \mathbb{P}\left( N = n \right) 
+\end{align*}
+With substitution $z=\mathcal{L} \left\lbrace X \right\rbrace \left( \theta \right)$, we have:
+\begin{align*}
+\mathcal{L} \left\lbrace S \right\rbrace \left( \theta \right)   &= \sum_{n \geq 0} \left( \mathcal{L}_X\left[ \theta \right] \right) ^ n \mathbb{P}\left( N = n \right) 
+= G_N\left(  \mathcal{L} \left\lbrace X \right\rbrace \left( \theta \right)  \right) 
+\end{align*}
+If $N$ follows Poisson distribution with mean $\lambda$, its probability generating function $G_N\left( z \right) =  e^{\lambda\left( z - 1\right) }$. Thus the corresponding Laplace transform is as follows:
+\begin{align}
+\label{eq:laplace-transform-comound-RV}
+\mathcal{L} \left\lbrace S \right\rbrace \left( \theta \right) = \exp{\lambda\left(  \mathcal{L} \left\lbrace X \right\rbrace \left( \theta \right) - 1\right) } 
+\end{align}
+
+%\subsection{Numerical Evaluation of CDF from Characteristic Function}
+%\label{sec:cf-to-cdf-case1}
+%With Dirac function, the probability density function the cumulative power received by the eNB can be expressed as follows:
+%\begin{align}
+%f_c(x) &= \sum_{n=0}^{+\infty} Pr\left\lbrace c=n\right\rbrace  \delta (x-n) \nonumber\\
+%F_c(t) &= \sum_{n=0}^{+\infty} Pr\left\lbrace c=n\right\rbrace e^{itn} \nonumber
+%\end{align}
+%Since $F_c(t)$ is a periodic with period $2\pi$. the coefficient $Pr\left\lbrace c=n\right\rbrace$ can be determined from the Characteristic function $F_c(t) $ by:
+%\begin{align}
+%Pr\left\lbrace c=n\right\rbrace = \int_{-\pi}^{\pi} F_c(t) e^{-itn} dt \nonumber
+%\end{align}
+%
+%
+%\begin{align}
+%Pr\left\lbrace c\leq M\right\rbrace = \int_{-\pi}^{\pi} F_c(t) \sum_{n=0}^{M}e^{-i \cdot t \cdot n} dt \nonumber
+%\end{align}
+%
+%\begin{align}
+%\sum_{n=0}^{M}e^{-i \cdot t \cdot n} &= \frac{1-e^{-i\cdot (M+1)t}}{1-e^{-i\cdot t}} \nonumber\\
+%&= \frac{1-\cos\left[ (M+1)t\right] +i\sin\left[ (M+1)t\right] }{1-\cos\left[ t\right] +i\sin\left[ t\right]} \nonumber\\
+%&= e^{\frac{-iMt}{2}} \frac{\sin\left[ (M+1) t/2 \right] }{\sin\left[ \frac{t}{2}\right] } \nonumber
+%\end{align}
+%
+%\begin{align}
+%Pr\left\lbrace c\leq M\right\rbrace &= \frac{1}{2\pi}\int_{-\pi}^{\pi} F_c(t)e^{-iMt/2} \frac{\sin\left[ (M+1) t/2 \right] }{\sin\left[ t/2\right] }dt \nonumber\\
+%&= 	\frac{1}{\pi}\int_{0}^{\pi} \frac{\sin\left[ (M+1) t/2 \right] }{\sin\left[  \frac{t}{2} \right] } \Re\left\lbrace F_c(t)e^{\frac{-iMt}{2}}  \right\rbrace \nonumber dt 
+%\end{align}
+\section*{ Laplace transform of the product of two random variable}
+\label{annexe:laplace-transform-exponential-lognormal}
+Theorem: Let $X$ be a random variable of log-normal distribution, $\log(X) \sim N\left( 0, \sigma^2\right)$, $Y$ be an exponential distribution random variable with mean $\mu$, the Laplace transform of random variable $Z=XY$ is:
+\begin{align}
+	\label{eq:theorem_C}
+	\mathcal{L}\left\lbrace f_Z\left( z\right) \right\rbrace \left(  s\right) &= \frac{1}{1 + (\mu s)^{1/\sqrt{1 +\pi \sigma^2/8}}}, s > 0
+\end{align}
+
+Proof: The density function $f_X\left( x \right)$ is as follows:
+\begin{align*}
+f_X\left( x \right) &= \frac{1}{\sqrt{2\pi}\sigma x} \exp\left\lbrace -\frac{\ln^2(x)}{2 \sigma^2}\right\rbrace, x > 0
+\end{align*} 
+The probability density function$f_Y\left( y \right)$ is:
+\begin{align*}
+f_Y\left( y \right) &= \frac{1}{\mu_{Y}}\exp{-\frac{y}{\mu_{Y}}}, y \geq 0
+\end{align*}
+For random variable $Z=XY$. Its probability density function $f_Z\left( z\right)$ is as follows:
+\begin{align*}
+f_Z\left( z\right) &= \int_{0}^{\infty} f_X \left( x \right) f_Y \left( \frac{z}{x} \right) \frac{1}{x} dx , z > 0
+\end{align*}
+The Laplace transform of $Z$ is as follows:
+\begin{align*}
+	\mathcal{L}\left\lbrace f_Z\left( z\right) \right\rbrace \left(  s\right)  &= \int_{0}^{+\infty} e^{-sz} f_Z\left( z\right) dz \\
+%	&= \int_{0}^{+\infty} e^{-sz} \left[ \int_{0}^{\infty} f_X \left( x \right) f_Y \left( \frac{z}{x} \right) \frac{1}{x} dx \right] dz \\
+	&= \int_{0}^{+\infty} \frac{f_X \left( x \right)}{x}\left[ \int_{0}^{\infty} e^{-sz}  f_Y \left( \frac{z}{x} \right)  dz \right] dx \\
+	&= \int_{0}^{+\infty} \frac{f_X \left( x \right)}{\mu x}\left[ \int_{0}^{\infty} e^{\left\lbrace -z(s+\frac{1}{\mu x}) \right\rbrace }dz \right] dx
+\end{align*}
+It just need to consider the case where $s \geq 0$, thus
+\begin{align*}
+\mathcal{L}\left\lbrace f_Z\left( z\right) \right\rbrace \left(  s\right)   
+%&= \int_{0}^{+\infty} \frac{f_X \left( x \right)}{\mu x} \cdot \frac{1}{ s+\frac{1}{\mu x}} dx \\
+&= \int_{0}^{+\infty} \frac{1}{ \mu x s+1} \cdot \frac{1}{\sqrt{2\pi} \sigma x} \exp\left\lbrace -\frac{\ln^2(x)}{2 \sigma^2}\right\rbrace dx
+\end{align*}
+With substitution $\ln(x) = t, x = e^t, t \in \mathbb{R}$, thus
+\begin{align}
+\label{eq:laplace-transform-still-complicated}
+\mathcal{L}\left\lbrace f_Z\left( z\right) \right\rbrace \left(  s\right) 
+&= \int_{-\infty}^{+\infty} \frac{1}{ \mu s e^t +1} \cdot \frac{1}{\sqrt{2\pi} \sigma} \exp\left\lbrace -\frac{t^2}{2 \sigma^2}\right\rbrace dt \nonumber\\
+& = \int_{-\infty}^{+\infty} \frac{\phi\left( t \right) }{1+\exp{-\left( \frac{t-\frac{\ln(\mu s)}{\sigma}}{\frac{1}{\sigma}}\right) }} dt,
+\end{align}
+where $\phi\left( t \right)$ is the standard normal distribution probability density function.
+
+The term $\left\lbrace 1+\exp{-\left( \frac{t-\frac{\ln(\mu s)}{\sigma}}{\frac{1}{\sigma}}\right) }\right\rbrace ^{-1}$ is a logistic function. The logistic function can be closely approximated by the error function via the following formula~\cite{crooks2009logistic}.
+\begin{align}
+\label{eq:logistics-error-function-relationship}
+\frac{1}{1 + \exp(-\frac{x}{\alpha})}
+&\approx \frac{1}{2} + \frac{1}{2}\erf(\frac{\sqrt{\pi}}{4\alpha}x) 
+= \Phi\left( \sqrt{\frac{\pi}{8}} \frac{x}{\alpha} \right),
+\end{align}
+where $\Phi\left( t \right)$ is the cumulative distribution function of standard normal distribution. 
+
+With approximation formula ($\ref{eq:logistics-error-function-relationship}$), formula ($\ref{eq:laplace-transform-still-complicated}$) can be further simplified:
+\begin{align*}
+\mathcal{L}\left\lbrace f_Z\left( z\right) \right\rbrace \left(  s\right)
+&= \int_{-\infty}^{+\infty} \Phi\left( \sqrt{\frac{\pi}{8}}\sigma\left( t-\frac{\ln(\mu s)}{\sigma}\right) \right) \phi\left( t \right) dt \\ 
+&= Pr \left\lbrace X_1 \leq \sqrt{\frac{\pi}{8}}\sigma\left( X_2-\frac{\ln(\mu s)}{\sigma}\right) \right\rbrace \\
+&= Pr \left\lbrace X_1 - \sqrt{\frac{\pi}{8}}\sigma X_2 \leq -\frac{\ln(\mu s)}{2} \sqrt{\frac{\pi}{2}} \right\rbrace 
+\end{align*}
+where $X_1, X_2$ are independent standard normal random variable. Obviously, $X_1 - \sqrt{\frac{\pi}{8}}\sigma X_2 \sim \mathcal{N}\left( 0,  1+ \frac{\pi}{8}\sigma^2\right) $. Hence,
+\begin{align}
+\label{eq:laplace-transform-exponential-lognormal}
+\mathcal{L}\left\lbrace f_Z\left( z\right) \right\rbrace \left(  s\right)   &= Pr \left\lbrace \frac{X_1 - \sqrt{\frac{\pi}{8}}\sigma X_2}{\sqrt{1+ \frac{\pi}{8}\sigma^2}} \leq -\frac{\ln(\mu s)}{\sqrt{\frac{8}{\pi}+ \sigma^2}} \right\rbrace  \nonumber\\
+%&= \Phi\left( -\frac{\ln(\mu s)}{\sqrt{\frac{8}{\pi}+ \sigma^2}}  \right) \nonumber\\
+&= \frac{1}{2} + \frac{1}{2} \erf \left\lbrace -\frac{\ln(\mu s)}{\sqrt{\frac{16}{\pi}+ 2\sigma^2}} \right\rbrace 
+\end{align}
+Applying ($\ref{eq:logistics-error-function-relationship}$) for ($\ref{eq:laplace-transform-exponential-lognormal}$), we have:
+\begin{align*}
+\mathcal{L}\left\lbrace f_Z\left( z\right) \right\rbrace \left(  s\right)   &\approx \frac{1}{1 + \exp\left\lbrace \left( 1 +\frac{\pi \sigma^2}{8} \right)^{-\frac{1}{2}} \ln(\mu s) \right\rbrace} \\
+%&= \frac{1}{1 + (\mu s)^{\left( 1 +\frac{\pi \sigma^2}{8} \right)^{-\frac{1}{2}}}}, s > 0
+&= \frac{1}{1 + (\mu s)^{1/\sqrt{1 +\pi \sigma^2/8}}}, s > 0
+\end{align*}
+
+\section*{Integration with background noise}
+\label{annexe:integration-with-background-noise}
+%Let $U=N \theta_{T}, V=p \lambda_{m} \pi A \theta_{T}^{\frac{2}{\gamma}} \exp( \frac{2\sigma^2}{\gamma^2} ) +\pi\lambda_b , M=\int_{0}^{+\infty} \exp(-Pr^{2}-Vr)  dr $, 
+Consider an integral $M=\int_{0}^{+\infty} \exp(-Ur^{2}-Vr)  dr$ where $U \geq 0, V \geq 0$, we finally arrive at:
+\begin{align}
+M &= \frac{\sqrt{\pi}}{2} \sqrt{\frac{1}{U}}\exp(\frac{V^2}{4U})\left[ 1 - \erf(\frac{V}{2\sqrt{U}})\right]
+\end{align}
+The mathematical operations are detailed as follows:
+\begin{align}
+M &= \int_{0}^{+\infty} \exp(-Ur^{2}-Vr)  dr \nonumber\\
+&= \exp(\frac{V^2}{4U})\int_{0}^{+\infty} \exp(-U(r^{2}+\frac{V}{U}r+\frac{V^2}{4U^2})) dr \nonumber\\
+&=\exp(\frac{V^2}{4U})\int_{0}^{+\infty} \exp(-U(r+\frac{V}{2U})^2) dr\nonumber\\ 
+&=\exp(\frac{V^2}{4U})\int_{\frac{V}{2U}}^{+\infty} \exp(-Uz^2) dz\nonumber\\ 
+&=\frac{1}{\sqrt{U}}\exp(\frac{V^2}{4U})\int_{\frac{V}{2\sqrt{U}}}^{+\infty} \exp(-z^2) dz\nonumber\\
+&=\frac{1}{\sqrt{U}}\exp(\frac{V^2}{4U})\left[\int_{0}^{+\infty} \exp(-z^2) dz - \int_{0}^{\frac{V}{2\sqrt{U}}} \exp(-z^2) dz\right] \nonumber\\  
+&=\frac{1}{\sqrt{U}}\exp(\frac{V^2}{4U})\left[\frac{\sqrt{\pi}}{2}- \int_{0}^{\frac{V}{2\sqrt{U}}} \exp(-z^2) dz\right] 
+\end{align}
+Recall the error function is defined as follows:
+\begin{align}
+\erf(x) =\frac{2}{\sqrt{\pi}} \int_{0}^{x} \exp(-t^2) dt
+\end{align}
+Thus,
+\begin{align}
+M
+&= \frac{1}{\sqrt{U}}\exp(\frac{V^2}{4U})\left[\frac{\sqrt{\pi}}{2} -\frac{\sqrt{\pi}}{2}\erf(\frac{V}{2\sqrt{U}}) \right] \nonumber\\
+&= \frac{\sqrt{\pi}}{2} \sqrt{\frac{1}{U}}\exp(\frac{V^2}{4U})\left[ 1 - \erf(\frac{V}{2\sqrt{U}})\right]
+\end{align}
+
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=\linewidth]{/Users/qsong/Documents/slotted_aloha_related_project/test/comparison_monte_carlo_approximation.eps}
+	\caption{Comparison between approximation formula $(\ref{eq:bs_nst_att_analytical})$ and Monte-Carlo simulation result.}
+	\label{fig:comparison_monte_carlo}
+\end{figure}
+
+
+\section*{analysis of noise}
+\label{annexe:analysis-background-noise}

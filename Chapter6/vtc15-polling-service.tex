@@ -10,7 +10,7 @@ Afterwards, both the eNB and devices monitor LTE frames to determine their respe
 %For radio resource allocation when transmitting data, there exist two possibilities: one is semi-persistent allocation 
 Therefore, our proposed service consists of periodic polling mechanism and RNTI allocation algorithm. 
 In this section, we first introduce some important concepts for our proposal. Second, we detail the periodic polling mechanism. Third, we present the RNTI allocation algorithm. 
-\subsection{Definition}
+\subsection{Terminology Related to the Proposed Service }
 % il faut aborder le fait qu'il y une correspondance entre PRD-RNTI et IMSI en fonction du temps... 
 % Ce que nous allouons a mobile est une periode(polling period) et PRD-RNTI..
 % 那拉格朗日的意思应该是 我们把polling period paging和给他分配的PRD-RNTI告诉手机啊。。。“Tu(un mobile) as telle period et telle PRD-RNTI quand le extened SFN modulo une variable. Il faut aussi preciser cette valeur...  Cela est indique par le reseau...”
@@ -56,17 +56,14 @@ where $\floor{x}$ means the maximum integer not greater than $x$, $N_{n}$ is the
 
 % sur une period ou bien une interval du temps, il y a une correspondance entre mobile et RNTI
 
-\subsubsection{{Polling period}}
-\label{polling-period}
-% 关于Polling period的notation是使用T_n还是T_p,n 让人伤脑筋啊
-The polling period denoted by $T_n$ is the time interval between two consecutive eNB-triggered polling procedures for the same MTC device. It can be represented by the combination of three primes $2,3,5$. Namely, $T_n =  2^{a} \cdot 3^{b} \cdot 5^{c}$, where $a, b, c$ are the occurrence number of the corresponding prime. For a given $T$, we choose the closet $T_n$ to use polling service.
-\begin{align}
-T_{n} = 2^{a} \cdot 3^{b} \cdot 5^{c}\cdot W \cdot T_f\label{eq:period-conversion}
-\end{align}
-where $\floor{x}$ means the maximum integer not greater than $x$, $N_{n}$ is the number of polling window contained in period $T_{n}$, $W$ is the number of LTE frame, $T_{f}$ refers to LTE frame duration. As a network integrated service, the eNB uniquely supports polling periods satisfying (\ref{eq:period-conversion}). 
-%Each user defined report period should be converted to an approximate polling period to use this network-integrated service. For example, a report period $300 s$ is converted to $204.8s$ as polling period.
-
-% sur une period ou bien une interval du temps, il y a une correspondance entre mobile et RNTI
+%\subsubsection{{Polling period}}
+%\label{polling-period}
+%% 关于Polling period的notation是使用T_n还是T_p,n 让人伤脑筋啊
+%The polling period denoted by $T_n$ is the time interval between two consecutive eNB-triggered polling procedures for the same MTC device. It can be represented by the combination of three primes $2,3,5$. Namely, $T_n =  2^{a} \cdot 3^{b} \cdot 5^{c}$, where $a, b, c$ are the occurrence number of the corresponding prime. For a given $T$, we choose the closet $T_n$ to use polling service.
+%\begin{align}
+%T_{n} = 2^{a} \cdot 3^{b} \cdot 5^{c}\cdot W \cdot T_f\label{eq:period-conversion}
+%\end{align}
+%where $\floor{x}$ means the maximum integer not greater than $x$, $N_{n}$ is the number of polling window contained in period $T_{n}$, $W$ is the number of LTE frame, $T_{f}$ refers to LTE frame duration. As a network integrated service, the eNB uniquely supports polling periods satisfying (\ref{eq:period-conversion}). 
 
 \subsubsection{Polling window}
 \label{polling-window}
@@ -120,12 +117,12 @@ Finally, Fig.\ref{fig:Comparison} illustrates the comparison between MTC device 
 %: In RACH mechanism, MTC device has to pass three transmission for reporting collected data while in our proposal it needs just one transmission.
 %Unlike traditional random access method, for a already registered MTC device, it manipulates the $LSFN$ received in System Information. When the condition for its turn of transmission, it directly sends collected data with received PRD-RNTI in PDCCH channel without demanding resource allocation.
 
-\begin{figure*}[!t]
+\begin{figure}[!t]
 	\centering
 	\includegraphics[width=\linewidth]{Chapter6/Figures/proposed-polling-service}
 	\caption{Proposed polling service work flow}
 	\label{fig:Comparison}
-\end{figure*}
+\end{figure}
 \subsection{RNTI allocation algorithm}
 \label{prposed_algorithm}
 %As introduced in previous section, time domain resource is divided into a series of polling windows and eNB supports a group of polling periods. A resource allocation algorithm \ref{alg:resource-allocation-algo} is thus proposed to allocate polling windows for each registered MTC device. A detailed explanation about this algorithm is given in this section.

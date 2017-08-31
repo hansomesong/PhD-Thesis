@@ -6,13 +6,13 @@ In order to keep received power levels as integer, we assume that $v$ can be exp
 \begin{align}
 	Y= \sum_{k=0}^{K} Z_k = \sum_{k=0}^{K} \sum_{j=1}^{N_k} l^k m^{K-k},
 \end{align}
-where $Z_k=\sum_{j=1}^{N_k} l^k m^{K-k}$ refers to the normalized cumulative interference from $k$th retransmission Poisson process and $N_k$ denotes the number of packets on $k$th retransmission following Poisson distribution with average arrival rate $\alpha P_k$. 
+where $Z_k=\sum_{j=1}^{N_k} l^k m^{K-k}$ refers to the normalized cumulative interference from $k$th retransmission Poisson process and $N_k$ denotes the number of packets on $k$th retransmission following Poisson distribution with average arrival rate $\lambda T P_k$. 
 
 The cumulative interference component $Z_k$ is a compound random variable~\cite{ross2014introduction}, whose Laplace transform is detailed in Appendix~\ref{annexe:laplace-transform-compound-RV}. Applying ($\ref{eq:laplace-transform-comound-RV}$), we have:
 \begin{align*}
 \mathcal{L} \left\lbrace Z_k \right\rbrace \left( s \right)
-%&= \exp\left\lbrace{ \alpha P_k\left( \mathcal{L} \left\lbrace l^k m^{K-k} \right\rbrace \left( s \right) - 1\right) } \right\rbrace  \\
-&= \exp\left\lbrace \alpha P_k\left( \exp(-sl^k m^{K-k})-1\right)\right\rbrace, 
+%&= \exp\left\lbrace{ \lambda T P_k\left( \mathcal{L} \left\lbrace l^k m^{K-k} \right\rbrace \left( s \right) - 1\right) } \right\rbrace  \\
+&= \exp\left\lbrace \lambda T P_k\left( \exp(-sl^k m^{K-k})-1\right)\right\rbrace, 
 \end{align*}
 where $\mathcal{L} \left\lbrace f(\cdot) \right\rbrace \left( s \right)$ is the Laplace transform operator with complex variable $s$ for function $f(\cdot)$ .
 
@@ -20,11 +20,11 @@ Since the series of random variables $Z_k, k=0,..., K$ are independent, the Lapl
 \begin{align*}
 \mathcal{L} \left\lbrace Y \right\rbrace \left( s \right) 
 &= \prod_{m=0}^{K}  \mathcal{L} \left\lbrace Z_k \right\rbrace \left( s \right) \\
-&= \exp\left\lbrace \alpha \left( \sum_{k=0}^{K} P_k \exp(-sl^k m^{K-k})-\sum_{k=0}^{K}P_k\right)\right\rbrace
+&= \exp\left\lbrace \lambda T \left( \sum_{k=0}^{K} P_k \exp(-sl^k m^{K-k})-\sum_{k=0}^{K}P_k\right)\right\rbrace
 \end{align*}
 With a substitution $s= -i\omega$, we obtain the characteristic function $\phi_{Y}\left( \omega \right)$ of $Y$:
 \begin{align*}
-\phi_{Y}\left( \omega \right) &= \exp\left\lbrace \alpha \left( \sum_{k=0}^{K} P_k \exp(i \omega l^k m^{K-k})-\sum_{m=0}^{K}P_k\right)\right\rbrace
+\phi_{Y}\left( \omega \right) &= \exp\left\lbrace \lambda T \left( \sum_{k=0}^{K} P_k \exp(i \omega l^k m^{K-k})-\sum_{m=0}^{K}P_k\right)\right\rbrace
 \end{align*}
 Note that $Y$ is a discrete random variable. Via a numerical integral method detailed in~\cite{nuttall1969numerical}, the cumulative distribution function $F_{Y}\left( x \right)$ of $Y$ can be derived from its characteristic function $\phi_{Y}\left( \omega \right)$.
 \begin{align}

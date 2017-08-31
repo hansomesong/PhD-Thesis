@@ -1,5 +1,20 @@
 % ************************** Thesis Abstract *****************************
 % Use `abstract' as an option in the document class to print only the titlepage and the abstract.
 \begin{abstract}
-This is where you write your abstract ...
+As a key step toward a smart society, apart from the Human-to-Human (H2H) communication (e.g. voice service, web service, etc.), the future wireless cellular networks, are expected to accommodate Machine-to-Machine Communication (also known as Machine Type Communication (MTC) in 3GPP's terminology). The latter is a new communication paradigm in which the devices can talk with each without or with little human intervention.
+With the rapid proliferation of M2M applications, a huge number of devices will be deployed in use cases such as smart metering, industry atomization, etc.  
+
+However, the current wireless cellular networks are not still ready to hold traffic from MTC. The reason is that the evolution of the wireless cellular network seeks for the higher throughput and lower latency, while these are not requirements for mosts of M2M applications.  Usually, the M2M exhibits the features such as huge number of deployed devices, small payload, frequent transmission, long battery life, etc. To make sure that MTC is accepted as a promising technology, energy efficiency is deemed to be as a key performance indicator.
+
+From the state of the art work, we find that two possible research orientations are available for M2M studies: Low Power Wide Area Network (LPWAN), adaption of the existing cellular networks, such as LTE-M, NB-IoT. For both of them, the performance of Radio Access Network (RAN) is an important factor to guarantee the energy efficiency in M2M networks. 
+%For example, the high packet collision rate leads to more retransmission, and thus consume more energy to delivery a certain amount of bits, and reduces the system energy efficiency. 
+From this view, RAN is the main focus of our studies. In this thesis, we study the ALOHA based RAN performance for networks of LPWAN type, we also propose some adaptations to RAN of LTE networks.
+
+The contributions of this thesis are organized on the following axis:
+\begin{itemize}[leftmargin=*, noitemsep]
+	\item We make a survey about the energy efficiency related studies in the literatures. The main work in this survey, is to review, classify the existing research works into different categories, and compare the pros and cons between categories. We also review the advances of the LPWAN related study.
+	\item We consider a network formed by a single base station and a large number of devices served by this base station. We want to study the RAN performance by differentiating the transmit power levels between retransmissions. By manipulating the established analytical model, we obtain some system design guide lines.
+	\item We consider a network of LPWAN type with multiple base stations. By stochastic geometry, we get simple closed-form formulas for the  packet loss rate, which were not known before. These formulas are very useful to analyze LPWAN networks and to quantify the system capacity gain. By gathering several available results about the analysis of non slotted ALOHA, we finally get a synthesis framework to study the RAN of LPWAN.
+	\item In terms of adaptations to RAN of LTE networks, we first analyze the conventional random access mechanism in LTE and identify the existing inefficiencies. We then propose a multiple period polling service for periodic M2M use cases. The proposed service is compared with conventional random access mechanism in LTE in a fluid model. The numerical results show that the proposed service dramatically reduces the consumption of system resources such as Radio Network Temporary Identifier (RNTI), Resource Block (RB) and has a higher energy efficiency due to the avoid of random access convention and related signaling messages.
+\end{itemize}
 \end{abstract}

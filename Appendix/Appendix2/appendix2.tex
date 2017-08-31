@@ -1,0 +1,31 @@
+% ******************************* Thesis Appendix B ********************************
+\chapter{Chapter6}
+Fixed point form:
+\begin{align}
+\frac{ P_{f}(r_{0}) }{ ( 1- \exp(-p \lambda_{m} \pi A \theta_{T}^{\frac{2}{\gamma}} e^{\frac{2\sigma^2}{\gamma^2}}  r_{0}^2 ) )   }  &= \exp\left\lbrace -\frac{1}{ A \theta_{T}^{\frac{2}{\gamma}}  L }  \exp(-p \lambda_{m} \pi A \theta_{T}^{\frac{2}{\gamma}} e^{  \frac{2\sigma^2}{\gamma^2}  } r_{0}^2)  \right\rbrace \nonumber\\ 
+\ln(\frac{ P_{f}(r_{0}) }{ ( 1- \exp(-p \lambda_{m} \pi A \theta_{T}^{\frac{2}{\gamma}} e^{\frac{2\sigma^2}{\gamma^2}}  r_{0}^2 ) )   } ) &= -\frac{1}{ A \theta_{T}^{\frac{2}{\gamma}}  L }  \exp(-p \lambda_{m} \pi A \theta_{T}^{\frac{2}{\gamma}} e^{  \frac{2\sigma^2}{\gamma^2}  } r_{0}^2) \nonumber\\ 
+A \theta_{T}^{\frac{2}{\gamma}}  L \ln\left(   \frac{  1- \exp(-p \lambda_{m} \pi A \theta_{T}^{\frac{2}{\gamma}} e^{\frac{2\sigma^2}{\gamma^2}}  r_{0}^2 )  }{   P_{f}(r_{0})   }   \right)  &=  \exp(-p \lambda_{m} \pi A \theta_{T}^{\frac{2}{\gamma}} e^{  \frac{2\sigma^2}{\gamma^2}  } r_{0}^2)   \nonumber  
+\end{align}
+\begin{align}
+-\frac{1}{ p \lambda_{m} \pi A \theta_{T}^{\frac{2}{\gamma}} e^{  \frac{2\sigma^2}{\gamma^2}  } }\ln\left(  A \theta_{T}^{\frac{2}{\gamma}}  L \ln\left(   \frac{  1- \exp(-p \lambda_{m} \pi A \theta_{T}^{\frac{2}{\gamma}} e^{\frac{2\sigma^2}{\gamma^2}}  r_{0}^2 )  }{   P_{f}(r_{0})   }   \right)  \right) &=   r_{0}^2    \nonumber\\
+\left[  -\frac{1}{ p \lambda_{m} \pi A \theta_{T}^{\frac{2}{\gamma}} e^{  \frac{2\sigma^2}{\gamma^2}  } }\ln\left(  A \theta_{T}^{\frac{2}{\gamma}}  L \ln\left(   \frac{  1- \exp(-p \lambda_{m} \pi A \theta_{T}^{\frac{2}{\gamma}} e^{\frac{2\sigma^2}{\gamma^2}}  r_{0}^2 )  }{   P_{f}(r_{0})   }   \right)  \right)  \right] ^{1/2}&=   r_{0}    \nonumber
+\end{align}
+
+Fixed point expression to calculate $\lambda_m$ ($\lambda_b$ and $r_{0}$ is known)
+\begin{align}
+-\frac{1}{ p  \pi A \theta_{T}^{\frac{2}{\gamma} } e^{  \frac{2\sigma^2}{\gamma^2}  } r_{0}^2}\ln\left(  A \theta_{T}^{\frac{2}{\gamma}}  L \ln\left(   \frac{  1- \exp(-p \lambda_{m} \pi A \theta_{T}^{\frac{2}{\gamma}} e^{\frac{2\sigma^2}{\gamma^2}}  r_{\text{min}}^2 )  }{   P_{f}(r_{\text{min}})   }   \right)  \right) &=   \lambda_{m}   \nonumber
+\end{align}
+
+\begin{align}
+	& P_{f}(r_{0}) = ( 1- \exp( -Ar^{\gamma}) )
+	\exp\left\lbrace -\pi \lambda_{b} e^{\frac{2\sigma^2}{\gamma^2}}  \frac{1}{\sqrt{A}} \erfc\left( \sqrt{A} r_0^2 \right)   \right\rbrace \\
+	& P_{f}(r_{0}) \exp\left\lbrace \pi \lambda_{b} e^{\frac{2\sigma^2}{\gamma^2}}  \frac{1}{\sqrt{A}} \erfc\left( \sqrt{A} r_0^2 \right)   \right\rbrace = ( 1- \exp( -Ar_0^{\gamma}) ) \\
+	& \pi \lambda_{b} e^{\frac{2\sigma^2}{\gamma^2}}  \frac{1}{\sqrt{A}} \erfc\left( \sqrt{A} r_0^2 \right) = \ln\left\lbrace  ( 1- \exp( -Ar^{\gamma}) ) / P_{f}(r_{0}) \right\rbrace \\
+	& \frac{P_{t}}{\theta_{T} r^{\gamma}}  = \left[ \ln\left\lbrace  ( 1- \exp( -Ar^{\gamma}) ) / P_{f}(r_{0}) \right\rbrace /  \left( \pi \lambda_{b} e^{\frac{2\sigma^2}{\gamma^2}}   \erfc\left( \sqrt{A} r_0^2 \right) \right) \right]  ^ 2 \\
+	& P_t =  \theta_{T} r_0^{\gamma} \left[ \ln\left\lbrace  ( 1- \exp( -Ar_0^{\gamma}) ) / P_{f}(r_{0}) \right\rbrace /  \left( \pi \lambda_{b} e^{\frac{2\sigma^2}{\gamma^2}}   \erfc\left( \sqrt{A} r_0^2 \right) \right) \right]  ^ 2
+\end{align}
+
+
+\begin{align}
+	A  = \frac{\theta_{T} r_0^{\gamma}}{P_t}
+\end{align}

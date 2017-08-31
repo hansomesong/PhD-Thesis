@@ -1,3 +1,14 @@
 \section{Conclusion}
 \label{sec:conclusion}
-In this chapter, we analyze the problems posed by MTC traffic handled in current LTE network and propose a network-integrated multiple-period polling service which can be used as enhancement for LTE network to accommodate periodic MTC traffic. The numeric result shows that with our proposal one eNB can support up to $15000$ devices with ease and consume much less system resource than that with random access procedure. In this work, we just consider the radio interface, the effort for reducing signaling overhead in the core network, especially on the S1 interface, can be expected in future work. 
+In this chapter, we first analyze the problems posed by MTC traffic handled in current LTE network, then propose a multiple-period polling service. The latter can avoid random access procedure once the registration stage is done. 
+Our proposed service can be integrated into LTE radio access network and used as enhancement for LTE network to accommodate periodic MTC traffic. 
+
+With our proposal, the RNTI consumption is largely reduced. The reason is that the proposed polling service leverages the periodicity feature exhibited by MTC traffic and make a large number of devices use a same RNTI in a sequential manner. For conventional LTE random access mechanism, a RNTI is occupied until the expiration of RRC inactivity timer. The RNTI economization depends on RRC inactivity timer setting and device reporting period distribution. Due to the lack of statistics about device uplink reporting period, we assume that the latter is in range between $1$ minutes and $1$ day, and evaluate the RNTI consumption by assuming that the reporting period follows:\begin{inparaenum}[1)]
+	\item truncated lognormal distribution;
+	\item uniform distribution. 
+\end{inparaenum} From numerical result, we observe that to serve $50000$ devices, our proposal at most consumes $10$ RNTI while the conventional LTE random access mechanism occupies up to $750$ RNTI. 
+
+The proposed polling serve reduces the RB consumption for downlink and uplink. The reason is that RRC signaling messages are not needed within our proposal. By comparing Fig.~\ref{fig:lte-ra} and Fig.~\ref{fig:Comparison}, we observe that the conventional LTE random access mechanism needs to send \emph{RRC ConnectionRequest}, \emph{RRC ConnectionSetupComplete} and \emph{RRC ConnectionReconfigurationComplete} in the uplink, and \emph{RRC ConnectionSetup}, \emph{RRC ConnectionReconfiguration} and \emph{RRC Connection release} in the downlink. The aforementioned signaling size (at MAC layer) are obtained by a realistic measurement and resumed in Table.~\ref{tab:economized-bytes}. RB consumption per uplink reporting for downlink and uplink, are respectively $5.9$ and $3$. 
+By varying the data packet size (at MAC layer) from $50$ bytes to $200$ bytes, we observe that the signaling overhead is $300\%$ for a reporting packet of size $50$ bytes.  
+
+In this work, we just consider the radio interface, the effort for reducing signaling overhead in the core network, especially on the S1 interface, can be expected in future work. 

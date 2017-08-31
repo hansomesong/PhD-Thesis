@@ -5,7 +5,7 @@ Terminals served by this base station employ S-ALOHA protocol to transmit packet
 The behavior of different terminals is independent.
 The time axis is divided into slots of fixed length $T$ equal to the transmission time of a single packet. 
 The arrival of fresh packet is modeled as a stationary Poisson process with mean intensity $\lambda$. 
-Thus, the average arrival rate of fresh packet in unit slot is $\alpha = \lambda T$. 
+Thus, the average arrival rate of fresh packet in unit slot is $\lambda T$. 
 
 In terms of capture effect, Signal-to-Interference-and-Noise ratio (SINR) threshold model is applied. 
 In such a model, the other simultaneous packet transmissions are interference sources for a given transmission. 
@@ -14,7 +14,7 @@ In case of transmission failure, the retransmission is scheduled after a random 
 Each packet is allowed to be retransmitted at most $K$ times. 
 %Note that practically $2 \leq K \leq 4$. 
 
-Since retransmissions take place at random over long intervals following the collisions that give rise to them and according to Poisson's splitting property~\cite{meyn2012markov}, the aggregate packets arrival process can be divided into $K+1$ mutually independent Poisson arrivals processes. Each process with index $k\in \left\lbrace 0,1, ..., K\right\rbrace$ (i.e., for the $k$th retransmission) has a mean intensity $\alpha P_k$, where $P_k$ is the steady-state probability for a packet to make at least $k$ retransmissions. Note that $P_0$ is always $1$ and $P_{K+1}$ is the steady-state packet loss rate. The steady-state throughput is $\alpha\left( 1 - P_{K+1}\right)$. 
+Since retransmissions take place at random over long intervals following the collisions that give rise to them and according to Poisson's splitting property~\cite{meyn2012markov}, the aggregate packets arrival process can be divided into $K+1$ mutually independent Poisson arrivals processes. Each process with index $k\in \left\lbrace 0,1, ..., K\right\rbrace$ (i.e., for the $k$th retransmission) has a mean intensity $\lambda T P_k$, where $P_k$ is the steady-state probability for a packet to make at least $k$ retransmissions. Note that $P_0$ is always $1$ and $P_{K+1}$ is the steady-state packet loss rate. The steady-state throughput is $\lambda T\left( 1 - P_{K+1}\right)$. 
 
 Given that one objective is to study system performance gain brought by the transmit power level diversity, instead of searching the optimal transmit power distribution.
 %It is difficult for low-cost M2M terminals to support complicated transmit power level diversity strategies. 
@@ -50,7 +50,7 @@ Apart from steady-state packet loss rate and throughput, the probability vector 
 \overline{\text{EE}} &= \frac{1-P_{K+1}}{\sum_{k=0}^{K} P_{k}\overline{J_k}},
 \end{align}
 where $\overline{J_k} = p_k T$ is the average energy consumed by a packet on $k$th retransmission. 
-%\qsong{in ideal case, we assume at the beginning of this section that the device will transmit in all slot duration, thus the average consumed energy is $p_k T = v^k T$, where $T$ is the slot duration.} 
+%\qs{in ideal case, we assume at the beginning of this section that the device will transmit in all slot duration, thus the average consumed energy is $p_k T = v^k T$, where $T$ is the slot duration.} 
 
 The expected number of transmissions is denoted by $\overline{N_{Tx}}$. This metric gives an estimation of the average delay of S-ALOHA.
 \begin{align*}

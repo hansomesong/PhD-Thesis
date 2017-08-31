@@ -80,12 +80,37 @@
 \usepackage{multirow}
 \usepackage{paralist}
 \usepackage{longtable} % to support long table over 2 pages.
-
+ %https://tex.stackexchange.com/questions/2441/how-to-add-a-forced-line-break-inside-a-table-cell
+ \usepackage{makecell}
 
 \let\labelindent\relax
 \usepackage{enumitem}% http://ctan.org/pkg/enumitem
 
+%\usepackage[
+%nonumberlist, %do not show page numbers
+%acronym,      %generate acronym listing   -> Not used in this example (see line with %%% )
+%toc,          %show listings as entries in table of contents
+%section]      %use section level for toc entries
+%{glossaries}
+\usepackage[nonumberlist,toc]{glossaries}
+\makeglossaries %Activate glossary commands
 
+%Term definitions
+\newglossaryentry{mtc}{name=MTC, description={Machine Type Communication}}
+\newglossaryentry{m2m}{name=M2M, description={Machine Type Communication}}
+\newglossaryentry{htc}{name=HTC, description={Human Type Communication}}
+%\newglossaryentry{3gpp}{name=3GPP, description={3rd Generation Partner Project}}
+\newglossaryentry{lpwan}{name=LPWAN, description={Low Power Wide Area Network}}
+\newglossaryentry{rnti}{name=RNTI, description={Radio Network Temporary Identifier}}
+\newglossaryentry{prd-rnti}{name=PRD-RNTI, description={Periodic Radio Network Temporary Identifier}}
+\newglossaryentry{tti}{name=TTI, description={Transmission Time Interval}}
+\newglossaryentry{pdcp}{name=PDCP, description={Packet Data Convergence Protocol}}
+\newglossaryentry{rrc}{name=RRC, description={Radio Resource Control}}
+\newglossaryentry{rb}{name=RB, description={Resource Block}}
+\newglossaryentry{pdf}{name=PDF, description={Probability Density Function}}
+\newglossaryentry{cdf}{name=CDF, description={Cumulative Distribution Function}}
+\newglossaryentry{lt}{name=LT, description={Laplace Transformation}}
+\newglossaryentry{gsm}{name=GSM, description={Global System for Mobile communication, originally Group Special }}
 %\usepackage{multicol}
 %\usepackage{longtable}
 %\usepackage{tabularx}
@@ -99,6 +124,7 @@
 %to support indicator function,
 %source:https://tex.stackexchange.com/questions/26637/how-do-you-get-mathbb1-to-work-characteristic-function-of-a-set
 \usepackage{dsfont} 
+
 \usepackage{hyperref} %to support clickable equation numeration
 \usepackage{xcolor}\hypersetup{linkcolor=red, linkbordercolor=red}
 \colorlet{linkequation}{green}
@@ -145,6 +171,11 @@
 \usepackage{algpseudocode}
 \usepackage{algorithmicx}
 
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{lemma}[theorem]{Lemma}
+%\newtheorem{proof}[theorem]{Proof}
 % *********************************** SI Units *********************************
 \usepackage{siunitx} % use this package module for SI units
 
@@ -213,8 +244,9 @@
 % To change the name of the Nomenclature section, uncomment the following line
 
 %\renewcommand{\nomname}{Symbols}
+\renewcommand{\nomname}{List of Abbreviations}
 
-
+%\nomenclature[g-pi]{$\pi$}{ $\simeq 3.14\ldots$}
 % ********************************* Appendix ***********************************
 
 % The default value of both \appendixtocname and \appendixpagename is `Appendices'. These names can all be changed via:

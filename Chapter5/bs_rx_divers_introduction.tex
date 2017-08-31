@@ -14,14 +14,14 @@ In cellular networks, the packet is sent in unicast mode: the destination Base S
 	\includegraphics[width=\linewidth]{Chapter5/Figures/Macro_Diversity_Recpetion_Illustration}
 	\caption{Macro Reception Diversity Scheme Illustration. Each BS is equipped with a packet decode function. The decoded packet is sent to the core network and the latter is in charge of duplicated packets.
 %		TODO
-%	\qsong{Since we call Maximum Ratio Combining Macro Reception Diversity in anther figure, I'm not sure we should modify the caption of this figure as Selective Combining-like Macro Diversity Reception. Because it is equivalent to judge whether the maximum SINR is greater than captio ratio...Xavier said that the device ico is ugly... Better to change.}
+%	\qs{Since we call Maximum Ratio Combining Macro Reception Diversity in anther figure, I'm not sure we should modify the caption of this figure as Selective Combining-like Macro Diversity Reception. Because it is equivalent to judge whether the maximum SINR is greater than captio ratio...Xavier said that the device ico is ugly... Better to change.}
 }
 	\label{fig:macro_diversity_recpetion_illustration}
 \end{figure} 
 
 The second possibility is that signals received at each BS are linearly combined in the core network so that the output SINR is maximized (see Fig.~\ref{fig:mrc_macro_diversity_recpetion_illustration}). In this scheme, the packet decode function is placed at the core network and the backhaul link always transmit. This scheme is like the well-known maximum ratio combining (MRC) technique in Multiple-Input Multiple-Output (MIMO) systems
 %TODOL:find a reference for this!!!
-%\qsong{Christophe Fourtet said that they were working on combining scheme. I think it's important to give a reference here}. The processing in the core network in both case is out of the scope of this thesis. 
+%\qsChristophe Fourtet said that they were working on combining scheme. I think it's important to give a reference here}. The processing in the core network in both case is out of the scope of this thesis. 
 %TODO: it depends on LPWAN type. In sigfox, yes but no in LoRaWAN
 %Due to the broadcast nature, the BSs in networks enabling macro reception diversity do not acknowledge the received packets. Hence, the device has to repeat each packet transmission fixed times at random time interval, even if one previous trial is successful. If none of these trials is successful. the packet is lost and the device has no awareness about this.
 \begin{figure}[!ht]
@@ -35,7 +35,7 @@ Not surprisingly, macro reception diversity outperforms the traditional unicast 
 The capacity of each mode, which is the maximum supported load for a given packet loss rate target is derived. The ratio between the two capacity values is called the \emph{macro diversity gain}.
 In this chapter, we want to answer the following questions: what's the performance of ALOHA based networks supporting macro reception diversity? what's the macro diversity gain? Does the retransmission mechanism have impact to the comparison between macro diversity and traditional BS attach method?
 %TODO
-%\qsong{How to include/organize the case of known best BS...It's a question to be considered afterwards...}
+%{\qs{How to include/organize the case of known best BS...It's a question to be considered afterwards...}
 
 %Thus, devices in such networks transmit packets in a ``broadcast`` manner without attach procedure used in cellular networks. SigFox is an example applying the aforementioned macro reception diversity. 
 

@@ -54,7 +54,7 @@ P_{f,n}
 &\approx 1-\frac{ 1 }{ 1 + \left( A \theta_{T}^{\frac{2}{\gamma}} e^{\frac{2\sigma^2}{\gamma^2}}  L\right) ^{C} }
 \end{align}
 where $A$ is defined in $(\ref{eq:def_ps_2})$, $L=p\lambda_{m}/\lambda_{b}$, $C= \left( 1 +\pi \sigma^2 / (2\gamma^2) \right)^{-1/2}$. We conducted a Monte-Carlo simulation and found that the maximum difference between $(\ref{eq:mean_bx+1_step1})$ and $(\ref{eq:bs_nst_att_analytical})$ is $2.46\%$ in normalized load interval $\left[ 0.021, 0.3\right] $, which proves the accuracy of the proposed approximation formula $(\ref{eq:bs_nst_att_analytical})$
-%\qsong{Remember to put the figure into Annexe part. Here I wan to show that, the difference between approximation formula and exact integral is smaller when normalized load increase }.
+%\qs{Remember to put the figure into Annexe part. Here I wan to show that, the difference between approximation formula and exact integral is smaller when normalized load increase }.
 
 
 From $(\ref{eq:bs_nst_att_analytical})$,  the maximum supported normalized load $L_{\text{max},n}$ and normalized spatial throughput (index $n$ refers to the nearest BS attach method) is obtained:
@@ -191,7 +191,7 @@ where $\theta_{T}$ is the capture ratio, $F_{\Theta} (\theta)$ is the CDF of $\T
 
 The Laplace Transform (LT) of $\Theta$ is by definition as follows
 %TODO:....
-%x\qsong{To be more restrict, we should explain why we can remove the subscript $y_i$ in the following formula}:
+%x\qs{To be more restrict, we should explain why we can remove the subscript $y_i$ in the following formula}:
 \begin{align}
 \label{eq:lt-sinr-mrc-1}
 \mathcal{L}_{\Theta}\left( s \right) &= \mathbb{E}\left[ e^{-s\Theta}\right] \nonumber\\
@@ -238,7 +238,7 @@ With substitution $s = -i \omega$ in $\eqref{eq:lt_Theta}$ , the characteristic 
 where $\omega \geq 0$, $i$ is imaginary unit.
 
 %TODO:
-%\qsong{This paragraph should be simplified. Since in another Chapter, the same numerical technique should have been presented...}
+%\qs{This paragraph should be simplified. Since in another Chapter, the same numerical technique should have been presented...}
 As a continuous random variable, the cumulative distribution function $F_{\Theta}\left( \theta \right)$ of total SINR $\Theta$ can be directly derived from its characteristic function $\phi_{\Theta}\left(\omega\right)$. Applying mathematical techniques used in finance domain~\cite{hirsa2012computational}, we seek to calculate the Fourier transform of $e^{-\eta \theta} F_{\Theta}\left( x \right)$ where term $e^{-\eta \theta}$ is a damping function with $\eta > 0$. 
 \begin{align}
 \label{eq:intermediate_formula_1}
@@ -293,7 +293,7 @@ P_{f, \text{MRC}}  = F_{\Theta} (\theta_{T})
 \end{align}
 where $\mathcal{L} \left[ \cdot \right] $ is inverse Laplace Transform operator.
 %We verify that the packet loss rate obtained by $(?)$ and $(?)$ are the same.
-\qsong{Don't forget to talk about throughput, macro diversity gain as like what we have done in previous section.}
+\qs{Don't forget to talk about throughput, macro diversity gain as like what we have done in previous section.}
 
 %============================================================================================
 %\input{Chapter5/bs_rx_divers_mrc.tex}
